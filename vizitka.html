@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Смолин Александр — визитка</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --card-bg: #121212;
+    --accent1: #7f5af0;
+    --accent2: #2cb67d;
+    --accent3: #00d4ff;
+    --text: #f5f5f7;
+    --muted: #a0a0ab;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Ambient animated glow background */
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  body::before {
+    background: var(--accent1);
+    top: -150px;
+    left: -150px;
+    animation: float1 12s ease-in-out infinite;
+  }
+
+  body::after {
+    background: var(--accent3);
+    bottom: -150px;
+    right: -150px;
+    animation: float2 14s ease-in-out infinite;
+  }
+
+  @keyframes float1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(60px, 40px); }
+  }
+
+  @keyframes float2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-50px, -30px); }
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 48px 32px 36px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+    animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 30% 30%, #1c1c1c, #0a0a0a);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+  }
+
+  .avatar::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--accent1), var(--accent3), var(--accent2), var(--accent1));
+    z-index: -1;
+    animation: spin 6s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .avatar svg {
+    width: 44px;
+    height: 44px;
+    stroke: var(--text);
+  }
+
+  .name {
+    font-size: clamp(28px, 6vw, 36px);
+    font-weight: 800;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent3), var(--accent2), var(--accent1));
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+    text-shadow: 0 0 40px rgba(127, 90, 240, 0.35);
+  }
+
+  @keyframes shine {
+    to { background-position: 300% center; }
+  }
+
+  .role {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 320px;
+    margin: 0 auto 28px;
+  }
+
+  .divider {
+    width: 48px;
+    height: 3px;
+    margin: 0 auto 26px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent3));
+  }
+
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  .social-link {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    text-decoration: none;
+    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+  }
+
+  .social-link svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    transition: transform 0.25s ease;
+  }
+
+  .social-link:hover,
+  .social-link:focus-visible {
+    transform: translateY(-6px) scale(1.06);
+    background: rgba(44, 182, 122, 0.12);
+    border-color: var(--accent3);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.25);
+    color: var(--accent3);
+    outline: none;
+  }
+
+  .social-link:hover svg {
+    transform: scale(1.1);
+  }
+
+  .cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0a0a0a;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    background-size: 200% auto;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    overflow: hidden;
+    transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 24px rgba(44, 182, 122, 0.25);
+  }
+
+  .cta:hover,
+  .cta:focus-visible {
+    background-position: right center;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(0, 212, 255, 0.35);
+    outline: none;
+  }
+
+  .cta:active {
+    transform: translateY(0);
+  }
+
+  .cta::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+    transform: skewX(-20deg);
+    animation: sweep 2.8s ease-in-out infinite;
+  }
+
+  @keyframes sweep {
+    0% { left: -75%; }
+    50% { left: 130%; }
+    100% { left: 130%; }
+  }
+
+  .cta svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #55555f;
+    letter-spacing: 0.3px;
+  }
+
+  @media (max-width: 420px) {
+    .card {
+      padding: 40px 22px 28px;
+      border-radius: 18px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+        <path d="M9 9h.01M15 9h.01M9 12h6M9 15h4"></path>
+      </svg>
+    </div>
+
+    <h1 class="name">Смолин Александр</h1>
+    <p class="role">Сборка компьютеров на заказ,<br>замена и чистка оборудования</p>
+
+    <div class="divider"></div>
+
+    <div class="socials">
+      <a class="social-link" href="https://t.me/smolin_17" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M9.999 15.596l-.39 5.478c.559 0 .8-.24 1.093-.529l2.62-2.506 5.432 3.98c.996.55 1.703.26 1.96-.923L23.94 3.62c.365-1.443-.522-2.007-1.492-1.66L1.088 10.077C-.328 10.65-.305 11.478.844 11.83l5.52 1.722L18.36 6.13c.548-.36 1.048-.16.638.2z"/></svg>
+      </a>
+    </div>
+
+    <a class="cta" href="https://t.me/smolin_17" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      <span>Написать мне</span>
+    </a>
+
+    <p class="footer-note">Всегда на связи в Telegram</p>
+  </div>
+
+</body>
+</html>

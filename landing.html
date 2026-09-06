@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoneyPlan — умный планировщик</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --card-bg: #131316;
+    --accent1: #7f5af0;
+    --accent2: #2cb67d;
+    --accent3: #00d4ff;
+    --text: #f5f5f7;
+    --muted: #a0a0ab;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(127, 90, 240, 0.18), transparent 45%),
+      radial-gradient(circle at 85% 0%, rgba(0, 212, 255, 0.14), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(44, 182, 122, 0.14), transparent 50%);
+    overflow-x: hidden;
+  }
+
+  .wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 64px 20px 80px;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 20px 0 40px;
+    animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .badge svg { width: 14px; height: 14px; fill: var(--accent3); }
+
+  .title {
+    font-size: clamp(34px, 6.5vw, 62px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 20px;
+    letter-spacing: -1px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent3), var(--accent2), var(--accent1));
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 6s linear infinite;
+  }
+
+  @keyframes shine { to { background-position: 300% center; } }
+
+  .subtitle {
+    font-size: clamp(16px, 2.4vw, 20px);
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+
+  .subtitle b { color: var(--text); font-weight: 600; }
+
+  /* CTA button */
+  .cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 40px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #0a0a0a;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    background-size: 200% auto;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 0 0 rgba(44, 182, 122, 0.55);
+    animation: pulse 2.4s ease-out infinite, gradientMove 4s ease infinite;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .cta:hover, .cta:focus-visible {
+    transform: translateY(-3px) scale(1.02);
+    background-position: right center;
+    outline: none;
+  }
+
+  .cta:active { transform: translateY(0) scale(0.99); }
+
+  .cta svg { width: 20px; height: 20px; fill: currentColor; }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.45); }
+    70%  { box-shadow: 0 0 0 22px rgba(0, 212, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
+  }
+
+  @keyframes gradientMove {
+    0%, 100% { background-position: left center; }
+    50% { background-position: right center; }
+  }
+
+  .tg-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+
+  .tg-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+  .tg-link:hover { color: var(--accent3); }
+
+  /* CARDS */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin: 70px 0;
+  }
+
+  .card {
+    background: linear-gradient(180deg, #16161a 0%, #0f0f12 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 30px 24px;
+    text-align: left;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.1s; }
+  .card:nth-child(2) { animation-delay: 0.25s; }
+  .card:nth-child(3) { animation-delay: 0.4s; }
+
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0, 212, 255, 0.35);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    background: linear-gradient(135deg, rgba(127,90,240,0.2), rgba(0,212,255,0.2));
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .card-icon svg { width: 26px; height: 26px; stroke: var(--accent3); fill: none; }
+
+  .card h3 {
+    font-size: 18px;
+    margin: 0 0 10px;
+    font-weight: 700;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* AUDIENCE */
+  .audience {
+    background: linear-gradient(180deg, #14141750 0%, #0c0c0e50 100%);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 24px;
+    padding: 40px 32px;
+    margin-bottom: 70px;
+    opacity: 0;
+    animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
+    animation-delay: 0.3s;
+  }
+
+  .audience h2 {
+    font-size: clamp(22px, 3.5vw, 28px);
+    margin: 0 0 18px;
+    background: linear-gradient(90deg, var(--accent3), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .audience-grid p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .audience-grid strong { color: var(--text); }
+
+  /* FOOTER CTA */
+  .final {
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  .final h2 {
+    font-size: clamp(24px, 4vw, 34px);
+    margin: 0 0 14px;
+  }
+
+  .final p {
+    color: var(--muted);
+    margin: 0 0 32px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 760px) {
+    .cards { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .wrap { padding: 44px 18px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="badge">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+      Финансы под контролем
+    </div>
+    <h1 class="title">MoneyPlan — умный планировщик</h1>
+    <p class="subtitle"><b>Никакой бумаги с ручкой</b> — все расходы в твоём телефоне. Просто, быстро и всегда под рукой.</p>
+
+    <a class="cta" href="https://t.me/smolin_17" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      Начать пользоваться бесплатно
+    </a>
+    <br>
+    <a class="tg-link" href="https://t.me/smolin_17" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M9.999 15.596l-.39 5.478c.559 0 .8-.24 1.093-.529l2.62-2.506 5.432 3.98c.996.55 1.703.26 1.96-.923L23.94 3.62c.365-1.443-.522-2.007-1.492-1.66L1.088 10.077C-.328 10.65-.305 11.478.844 11.83l5.52 1.722L18.36 6.13c.548-.36 1.048-.16.638.2z"/></svg>
+      Написать в Telegram: @smolin_17
+    </a>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+          <path d="M3 9h18M8 4v16"></path>
+        </svg>
+      </div>
+      <h3>Большой функционал</h3>
+      <p>Учёт доходов и расходов, категории, регулярные платежи, цели накоплений и подробная статистика — всё в одном приложении.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 12h16M4 6h16M4 18h10"></path>
+        </svg>
+      </div>
+      <h3>Понятный интерфейс</h3>
+      <p>Разобраться можно за минуту: никаких сложных таблиц и лишних настроек — только то, что действительно нужно.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.2 21 12 17.27 5.8 21 7 14.14l-5-4.87 7.1-1.01z"></path>
+        </svg>
+      </div>
+      <h3>Умная аналитика расходов</h3>
+      <p>Приложение само подмечает, на чём вы переплачиваете, и подсказывает, как сэкономить в следующем месяце.</p>
+    </div>
+  </section>
+
+  <section class="audience">
+    <h2>Кому подходит MoneyPlan</h2>
+    <div class="audience-grid">
+      <p><strong>Студентам и молодым специалистам</strong> — чтобы стипендии и первой зарплаты хватало до конца месяца, а не до середины.</p>
+      <p><strong>Семьям</strong> — чтобы видеть общий бюджет, планировать крупные покупки и не спорить, куда ушли деньги.</p>
+      <p><strong>Фрилансерам и предпринимателям</strong> — чтобы разделять личные и рабочие траты и всегда понимать реальную прибыль.</p>
+      <p><strong>Всем, кто устал от таблиц и блокнотов</strong> — потому что телефон всегда под рукой, а привычка записывать траты формируется за пару дней.</p>
+    </div>
+  </section>
+
+  <section class="final">
+    <h2>Начните управлять деньгами уже сегодня</h2>
+    <p>Это бесплатно, займёт меньше минуты и избавит вас от хаоса в финансах.</p>
+    <a class="cta" href="https://t.me/smolin_17" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      Получить доступ
+    </a>
+  </section>
+
+</div>
+
+</body>
+</html>
