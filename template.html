@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{BUSINESS_NAME}} — {{TAGLINE}}</title>
+<style>
+  /*
+    МАСТЕР-ШАБЛОН ЛЕНДИНГА — как использовать:
+    1. Скопируйте этот файл в client-<имя>.html
+    2. Замените все {{ПЛЕЙСХОЛДЕРЫ}} реальным контентом клиента
+    3. Поправьте цвета в :root под пожелания клиента (тёмная/светлая тема — просто другие значения переменных)
+    4. Если клиент просит сайт без анимаций — добавьте класс "no-anim" тегу <body>
+    5. Перед сдачей: grep -o "{{[A-Z0-9_]*}}" client-<имя>.html не должен ничего находить
+  */
+  :root {
+    --bg: #0a0a0a;
+    --card-bg: #131316;
+    --accent1: #7f5af0;
+    --accent2: #2cb67d;
+    --accent3: #00d4ff;
+    --text: #f5f5f7;
+    --muted: #a0a0ab;
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(127, 90, 240, 0.18), transparent 45%),
+      radial-gradient(circle at 85% 0%, rgba(0, 212, 255, 0.14), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(44, 182, 122, 0.14), transparent 50%);
+    overflow-x: hidden;
+  }
+
+  body.no-anim *, body.no-anim *::before, body.no-anim *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 64px 20px 80px; }
+
+  /* SECTION: HERO */
+  .hero { text-align: center; padding: 20px 0 40px; animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px; border-radius: 999px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--muted); font-size: 13px; margin-bottom: 24px;
+  }
+
+  .title {
+    font-size: clamp(34px, 6.5vw, 62px); font-weight: 800; line-height: 1.1;
+    margin: 0 0 20px; letter-spacing: -1px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent3), var(--accent2), var(--accent1));
+    background-size: 300% auto;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shine 6s linear infinite;
+  }
+
+  @keyframes shine { to { background-position: 300% center; } }
+
+  .subtitle { font-size: clamp(16px, 2.4vw, 20px); color: var(--muted); max-width: 560px; margin: 0 auto 40px; line-height: 1.6; }
+  .subtitle b { color: var(--text); font-weight: 600; }
+
+  .cta {
+    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 18px 40px; font-size: 17px; font-weight: 700; color: #0a0a0a;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3)); background-size: 200% auto;
+    border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none;
+    animation: pulse 2.4s ease-out infinite, gradientMove 4s ease infinite;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .cta:hover, .cta:focus-visible { transform: translateY(-3px) scale(1.02); background-position: right center; outline: none; }
+  .cta:active { transform: translateY(0) scale(0.99); }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.45); }
+    70%  { box-shadow: 0 0 0 22px rgba(0, 212, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
+  }
+
+  @keyframes gradientMove { 0%, 100% { background-position: left center; } 50% { background-position: right center; } }
+
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
+    color: var(--muted); text-decoration: none; font-size: 14px; transition: color 0.2s ease;
+  }
+  .contact-link:hover { color: var(--accent3); }
+
+  /* SECTION: SERVICES */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin: 70px 0; }
+
+  .card {
+    background: linear-gradient(180deg, #16161a 0%, #0f0f12 100%);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 30px 24px; text-align: left;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.1s; }
+  .card:nth-child(2) { animation-delay: 0.25s; }
+  .card:nth-child(3) { animation-delay: 0.4s; }
+
+  .card:hover { transform: translateY(-8px); border-color: rgba(0, 212, 255, 0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+
+  .card h3 { font-size: 18px; margin: 0 0 10px; font-weight: 700; }
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+  /* SECTION: ABOUT / ADVANTAGES */
+  .about {
+    background: linear-gradient(180deg, #14141750 0%, #0c0c0e50 100%);
+    border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; padding: 40px 32px; margin-bottom: 70px;
+    opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards; animation-delay: 0.3s;
+  }
+
+  .about h2 {
+    font-size: clamp(22px, 3.5vw, 28px); margin: 0 0 18px;
+    background: linear-gradient(90deg, var(--accent3), var(--accent2));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .about-grid p { color: var(--muted); line-height: 1.7; font-size: 15px; margin: 0; }
+  .about-grid strong { color: var(--text); }
+
+  /* SECTION: CONTACT / FINAL CTA */
+  .final { text-align: center; padding-top: 10px; }
+  .final h2 { font-size: clamp(24px, 4vw, 34px); margin: 0 0 14px; }
+  .final p { color: var(--muted); margin: 0 0 32px; }
+
+  /* SECTION: FOOTER */
+  .footer { text-align: center; margin-top: 60px; color: var(--muted); font-size: 13px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 760px) {
+    .cards { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .wrap { padding: 44px 18px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- SECTION: HERO -->
+  <section class="hero">
+    <div class="badge">{{BADGE_TEXT}}</div>
+    <h1 class="title">{{BUSINESS_NAME}}</h1>
+    <p class="subtitle">{{HERO_DESCRIPTION}}</p>
+
+    <a class="cta" href="{{CTA_LINK}}" target="_blank" rel="noopener noreferrer">{{CTA_TEXT}}</a>
+    <br>
+    <a class="contact-link" href="{{CONTACT_LINK}}" target="_blank" rel="noopener noreferrer">{{CONTACT_TEXT}}</a>
+  </section>
+  <!-- /SECTION: HERO -->
+
+  <!-- SECTION: SERVICES -->
+  <section class="cards">
+    <div class="card">
+      <h3>{{SERVICE_1_TITLE}}</h3>
+      <p>{{SERVICE_1_DESCRIPTION}}</p>
+    </div>
+    <div class="card">
+      <h3>{{SERVICE_2_TITLE}}</h3>
+      <p>{{SERVICE_2_DESCRIPTION}}</p>
+    </div>
+    <div class="card">
+      <h3>{{SERVICE_3_TITLE}}</h3>
+      <p>{{SERVICE_3_DESCRIPTION}}</p>
+    </div>
+  </section>
+  <!-- /SECTION: SERVICES -->
+
+  <!-- SECTION: ABOUT / ADVANTAGES -->
+  <section class="about">
+    <h2>{{ABOUT_HEADING}}</h2>
+    <div class="about-grid">
+      <p><strong>{{ADVANTAGE_1_TITLE}}</strong> — {{ADVANTAGE_1_TEXT}}</p>
+      <p><strong>{{ADVANTAGE_2_TITLE}}</strong> — {{ADVANTAGE_2_TEXT}}</p>
+      <p><strong>{{ADVANTAGE_3_TITLE}}</strong> — {{ADVANTAGE_3_TEXT}}</p>
+      <p><strong>{{ADVANTAGE_4_TITLE}}</strong> — {{ADVANTAGE_4_TEXT}}</p>
+    </div>
+  </section>
+  <!-- /SECTION: ABOUT -->
+
+  <!-- SECTION: CONTACT -->
+  <section class="final">
+    <h2>{{FINAL_HEADING}}</h2>
+    <p>{{FINAL_SUBTEXT}}</p>
+    <a class="cta" href="{{CTA_LINK}}" target="_blank" rel="noopener noreferrer">{{CTA_TEXT}}</a>
+  </section>
+  <!-- /SECTION: CONTACT -->
+
+  <!-- SECTION: FOOTER -->
+  <footer class="footer">© {{YEAR}} {{BUSINESS_NAME}}. {{FOOTER_EXTRA}}</footer>
+  <!-- /SECTION: FOOTER -->
+
+</div>
+
+</body>
+</html>
