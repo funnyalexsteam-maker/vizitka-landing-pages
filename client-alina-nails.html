@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Алина Балашова — мастер ногтевого сервиса</title>
+<style>
+  /*
+    МАСТЕР-ШАБЛОН ЛЕНДИНГА — как использовать:
+    1. Скопируйте этот файл в client-<имя>.html
+    2. Замените все {{ПЛЕЙСХОЛДЕРЫ}} реальным контентом клиента
+    3. Поправьте цвета в :root под пожелания клиента (тёмная/светлая тема — просто другие значения переменных)
+    4. Если клиент просит сайт без анимаций — добавьте класс "no-anim" тегу <body>
+    5. Перед сдачей: grep -o "{{[A-Z0-9_]*}}" client-<имя>.html не должен ничего находить
+  */
+  :root {
+    --bg: #fff5f8;
+    --card-bg: #ffffff;
+    --accent1: #f472b6;
+    --accent2: #f9a8d4;
+    --accent3: #fda4af;
+    --text: #4a3540;
+    --muted: #9c7b88;
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(244, 114, 182, 0.16), transparent 45%),
+      radial-gradient(circle at 85% 0%, rgba(249, 168, 212, 0.18), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(253, 164, 175, 0.16), transparent 50%);
+    overflow-x: hidden;
+  }
+
+  /* STARFIELD BACKGROUND — two drifting dot layers + a few shooting stars, warm golden-pink tone */
+  .stars, .stars::before {
+    content: "";
+    position: fixed;
+    inset: -10%;
+    z-index: -1;
+    pointer-events: none;
+    background-repeat: repeat;
+  }
+
+  .stars {
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, #f4b8d0, transparent),
+      radial-gradient(1px 1px at 90px 80px, #f4b8d0, transparent),
+      radial-gradient(1.5px 1.5px at 140px 160px, #f4b8d0, transparent),
+      radial-gradient(1px 1px at 200px 40px, #f4b8d0, transparent),
+      radial-gradient(1.5px 1.5px at 260px 120px, #f4b8d0, transparent),
+      radial-gradient(1px 1px at 310px 200px, #f4b8d0, transparent),
+      radial-gradient(1.5px 1.5px at 40px 220px, #f4b8d0, transparent),
+      radial-gradient(1px 1px at 170px 260px, #f4b8d0, transparent);
+    background-size: 340px 300px;
+    opacity: 0.8;
+    animation: starsDrift 90s linear infinite;
+  }
+
+  .stars::before {
+    background-image:
+      radial-gradient(1px 1px at 60px 60px, #f4b8d0, transparent),
+      radial-gradient(1px 1px at 180px 20px, #f4b8d0, transparent),
+      radial-gradient(1px 1px at 240px 180px, #f4b8d0, transparent),
+      radial-gradient(1px 1px at 300px 90px, #f4b8d0, transparent),
+      radial-gradient(1px 1px at 100px 240px, #f4b8d0, transparent);
+    background-size: 260px 240px;
+    opacity: 0.5;
+    animation: starsDrift 140s linear infinite reverse;
+  }
+
+  @keyframes starsDrift {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-300px, -260px, 0); }
+  }
+
+  .shooting-star {
+    position: fixed;
+    z-index: -1;
+    width: 2px;
+    height: 2px;
+    background: #f4b8d0;
+    border-radius: 50%;
+    box-shadow: 0 0 6px 1px rgba(244, 184, 208, 0.9);
+    opacity: 0;
+    pointer-events: none;
+    animation: shootingStar 8s linear infinite;
+  }
+
+  .shooting-star::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 90px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(244, 184, 208, 0.9), transparent);
+    transform: translateY(-50%);
+  }
+
+  @keyframes shootingStar {
+    0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-45deg); }
+    2% { opacity: 1; }
+    15% { opacity: 0; transform: translate3d(-220px, 220px, 0) rotate(-45deg); }
+    100% { opacity: 0; transform: translate3d(-220px, 220px, 0) rotate(-45deg); }
+  }
+
+  body.no-anim *, body.no-anim *::before, body.no-anim *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 64px 20px 80px; }
+
+  /* SECTION: HERO */
+  .hero { text-align: center; padding: 20px 0 40px; animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px; border-radius: 999px;
+    background: rgba(244, 114, 182, 0.10); border: 1px solid rgba(244, 114, 182, 0.28);
+    color: var(--muted); font-size: 13px; margin-bottom: 24px;
+  }
+
+  .title {
+    font-size: clamp(34px, 6.5vw, 62px); font-weight: 800; line-height: 1.1;
+    margin: 0 0 20px; letter-spacing: -1px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent3), var(--accent2), var(--accent1));
+    background-size: 300% auto;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: shine 6s linear infinite;
+  }
+
+  @keyframes shine { to { background-position: 300% center; } }
+
+  .subtitle { font-size: clamp(16px, 2.4vw, 20px); color: var(--muted); max-width: 560px; margin: 0 auto 40px; line-height: 1.6; }
+  .subtitle b { color: var(--text); font-weight: 600; }
+
+  .cta {
+    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 18px 40px; font-size: 17px; font-weight: 700; color: #0a0a0a;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3)); background-size: 200% auto;
+    border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none;
+    animation: pulse 2.4s ease-out infinite, gradientMove 4s ease infinite;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .cta:hover, .cta:focus-visible { transform: translateY(-3px) scale(1.02); background-position: right center; outline: none; }
+  .cta:active { transform: translateY(0) scale(0.99); }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(244, 114, 182, 0.45); }
+    70%  { box-shadow: 0 0 0 22px rgba(244, 114, 182, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(244, 114, 182, 0); }
+  }
+
+  @keyframes gradientMove { 0%, 100% { background-position: left center; } 50% { background-position: right center; } }
+
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
+    color: var(--muted); text-decoration: none; font-size: 14px; transition: color 0.2s ease;
+  }
+  .contact-link:hover { color: var(--accent1); }
+
+  /* SECTION: SERVICES */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin: 70px 0; }
+
+  .card {
+    background: linear-gradient(180deg, #ffffff 0%, #fff0f5 100%);
+    border: 1px solid rgba(244, 114, 182, 0.18); border-radius: 20px; padding: 30px 24px; text-align: left;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.1s; }
+  .card:nth-child(2) { animation-delay: 0.25s; }
+  .card:nth-child(3) { animation-delay: 0.4s; }
+
+  .card:hover { transform: translateY(-8px); border-color: rgba(244, 114, 182, 0.45); box-shadow: 0 20px 40px rgba(244, 114, 182, 0.22); }
+
+  .card h3 { font-size: 18px; margin: 0 0 10px; font-weight: 700; }
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+  /* SECTION: ABOUT / ADVANTAGES */
+  .about {
+    background: linear-gradient(180deg, #14141750 0%, #0c0c0e50 100%);
+    border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; padding: 40px 32px; margin-bottom: 70px;
+    opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards; animation-delay: 0.3s;
+  }
+
+  .about h2 {
+    font-size: clamp(22px, 3.5vw, 28px); margin: 0 0 18px;
+    background: linear-gradient(90deg, var(--accent3), var(--accent2));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .about-grid p { color: var(--muted); line-height: 1.7; font-size: 15px; margin: 0; }
+  .about-grid strong { color: var(--text); }
+
+  /* SECTION: CONTACT / FINAL CTA */
+  .final { text-align: center; padding-top: 10px; }
+  .final h2 { font-size: clamp(24px, 4vw, 34px); margin: 0 0 14px; }
+  .final p { color: var(--muted); margin: 0 0 32px; }
+
+  /* SECTION: FOOTER */
+  .footer { text-align: center; margin-top: 60px; color: var(--muted); font-size: 13px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 760px) {
+    .cards { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .wrap { padding: 44px 18px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- SECTION: HERO -->
+  <section class="hero">
+    <div class="badge">Ногтевой сервис</div>
+    <h1 class="title">Алина Балашова</h1>
+    <p class="subtitle">Аккуратный маникюр и педикюр с любовью к деталям — запишитесь в пару кликов</p>
+
+    <a class="cta" href="https://t.me/Alinaaaaaa02" target="_blank" rel="noopener noreferrer">Записаться в Telegram</a>
+    <br>
+    <a class="contact-link" href="tel:+79301085518" target="_blank" rel="noopener noreferrer">+7 930 108-55-18</a>
+  </section>
+  <!-- /SECTION: HERO -->
+
+  <!-- SECTION: SERVICES -->
+  <section class="cards">
+    <div class="card">
+      <h3>Маникюр</h3>
+      <p>Классический и аппаратный маникюр с аккуратной обработкой и стойким покрытием</p>
+    </div>
+    <div class="card">
+      <h3>Педикюр</h3>
+      <p>Комфортный уход за стопами, обработка и покрытие на любой вкус</p>
+    </div>
+    <div class="card">
+      <h3>Снятие покрытия и гигиена</h3>
+      <p>Бережное снятие старого покрытия и гигиенический уход за ногтями и кожей</p>
+    </div>
+  </section>
+  <!-- /SECTION: SERVICES -->
+
+  <!-- SECTION: ABOUT / ADVANTAGES -->
+  <section class="about">
+    <h2>Почему выбирают Алину</h2>
+    <div class="about-grid">
+      <p><strong>Стерильные инструменты</strong> — каждый инструмент обрабатывается перед процедурой</p>
+      <p><strong>Качественные материалы</strong> — только проверенные бренды покрытий и составов</p>
+      <p><strong>Внимание к деталям</strong> — индивидуальный подход к каждому клиенту</p>
+      <p><strong>Удобная запись</strong> — быстро согласуем время в Telegram</p>
+    </div>
+  </section>
+  <!-- /SECTION: ABOUT -->
+
+  <!-- SECTION: CONTACT -->
+  <section class="final">
+    <h2>Запишитесь на маникюр уже сегодня</h2>
+    <p>Свободные окошки уточняйте в Telegram или по телефону</p>
+    <a class="cta" href="https://t.me/Alinaaaaaa02" target="_blank" rel="noopener noreferrer">Записаться в Telegram</a>
+  </section>
+  <!-- /SECTION: CONTACT -->
+
+  <!-- SECTION: FOOTER -->
+  <footer class="footer">© 2026 Алина Балашова. Мастер ногтевого сервиса</footer>
+  <!-- /SECTION: FOOTER -->
+
+</div>
+
+</body>
+</html>
