@@ -35,6 +35,7 @@
     padding: 24px;
     overflow-x: hidden;
     position: relative;
+    perspective: 1200px;
   }
 
   /* Ambient animated glow background */
@@ -75,6 +76,79 @@
     50% { transform: translate(-50px, -30px); }
   }
 
+  /* STARFIELD BACKGROUND — two drifting dot layers + a few shooting stars */
+  .stars, .stars::before {
+    content: "";
+    position: fixed;
+    inset: -10%;
+    z-index: -1;
+    pointer-events: none;
+    background-repeat: repeat;
+  }
+
+  .stars {
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+      radial-gradient(1px 1px at 90px 80px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 140px 160px, #fff, transparent),
+      radial-gradient(1px 1px at 200px 40px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 260px 120px, #fff, transparent),
+      radial-gradient(1px 1px at 310px 200px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 40px 220px, #fff, transparent),
+      radial-gradient(1px 1px at 170px 260px, #fff, transparent);
+    background-size: 340px 300px;
+    opacity: 0.55;
+    animation: starsDrift 90s linear infinite;
+  }
+
+  .stars::before {
+    background-image:
+      radial-gradient(1px 1px at 60px 60px, #fff, transparent),
+      radial-gradient(1px 1px at 180px 20px, #fff, transparent),
+      radial-gradient(1px 1px at 240px 180px, #fff, transparent),
+      radial-gradient(1px 1px at 300px 90px, #fff, transparent),
+      radial-gradient(1px 1px at 100px 240px, #fff, transparent);
+    background-size: 260px 240px;
+    opacity: 0.3;
+    animation: starsDrift 140s linear infinite reverse;
+  }
+
+  @keyframes starsDrift {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-300px, -260px, 0); }
+  }
+
+  .shooting-star {
+    position: fixed;
+    z-index: -1;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 6px 1px rgba(255,255,255,0.8);
+    opacity: 0;
+    pointer-events: none;
+    animation: shootingStar 8s linear infinite;
+  }
+
+  .shooting-star::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 90px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+    transform: translateY(-50%);
+  }
+
+  @keyframes shootingStar {
+    0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-45deg); }
+    2% { opacity: 1; }
+    15% { opacity: 0; transform: translate3d(-220px, 220px, 0) rotate(-45deg); }
+    100% { opacity: 0; transform: translate3d(-220px, 220px, 0) rotate(-45deg); }
+  }
+
   .card {
     position: relative;
     z-index: 1;
@@ -86,12 +160,20 @@
     padding: 48px 32px 36px;
     text-align: center;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.04);
-    animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transform-style: preserve-3d;
+    animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both,
+      cardFloat3d 7s ease-in-out 0.7s infinite;
   }
 
   @keyframes cardIn {
     from { opacity: 0; transform: translateY(24px) scale(0.98); }
     to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Ambient auto 3D tilt — no mouse/scroll needed, visible the moment the page loads */
+  @keyframes cardFloat3d {
+    0%, 100% { transform: rotateX(0deg) rotateY(0deg); }
+    50% { transform: rotateX(3deg) rotateY(-3deg); }
   }
 
   .avatar {
@@ -119,7 +201,8 @@
   }
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    from { transform: perspective(600px) rotateZ(0deg) rotateY(0deg); }
+    to   { transform: perspective(600px) rotateZ(360deg) rotateY(360deg); }
   }
 
   .avatar svg {
@@ -283,9 +366,21 @@
       border-radius: 18px;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
 </style>
 </head>
 <body>
+
+  <div class="stars" aria-hidden="true"></div>
+  <span class="shooting-star" style="top: 10%; left: 20%; animation-delay: 0s;" aria-hidden="true"></span>
+  <span class="shooting-star" style="top: 30%; left: 70%; animation-delay: 3.5s;" aria-hidden="true"></span>
+  <span class="shooting-star" style="top: 60%; left: 15%; animation-delay: 7s;" aria-hidden="true"></span>
 
   <div class="card">
     <div class="avatar">
