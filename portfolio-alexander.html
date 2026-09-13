@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Александр Смолин — разработчик</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --card-bg: #121212;
+    --accent1: #7f5af0;
+    --accent2: #2cb67d;
+    --accent3: #00d4ff;
+    --text: #f5f5f7;
+    --muted: #a0a0ab;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+    overflow-x: hidden;
+    position: relative;
+    perspective: 1200px;
+  }
+
+  body.no-anim *, body.no-anim *::before, body.no-anim *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Ambient animated glow background */
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.25;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  body::before {
+    background: var(--accent1);
+    top: -150px;
+    left: -150px;
+    animation: float1 12s ease-in-out infinite;
+  }
+
+  body::after {
+    background: var(--accent3);
+    bottom: -150px;
+    right: -150px;
+    animation: float2 14s ease-in-out infinite;
+  }
+
+  @keyframes float1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(60px, 40px); }
+  }
+
+  @keyframes float2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-50px, -30px); }
+  }
+
+  /* STARFIELD BACKGROUND — two drifting dot layers + a few shooting stars */
+  .stars, .stars::before {
+    content: "";
+    position: fixed;
+    inset: -10%;
+    z-index: -1;
+    pointer-events: none;
+    background-repeat: repeat;
+  }
+
+  .stars {
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+      radial-gradient(1px 1px at 90px 80px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 140px 160px, #fff, transparent),
+      radial-gradient(1px 1px at 200px 40px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 260px 120px, #fff, transparent),
+      radial-gradient(1px 1px at 310px 200px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 40px 220px, #fff, transparent),
+      radial-gradient(1px 1px at 170px 260px, #fff, transparent);
+    background-size: 340px 300px;
+    opacity: 0.55;
+    animation: starsDrift 90s linear infinite;
+  }
+
+  .stars::before {
+    background-image:
+      radial-gradient(1px 1px at 60px 60px, #fff, transparent),
+      radial-gradient(1px 1px at 180px 20px, #fff, transparent),
+      radial-gradient(1px 1px at 240px 180px, #fff, transparent),
+      radial-gradient(1px 1px at 300px 90px, #fff, transparent),
+      radial-gradient(1px 1px at 100px 240px, #fff, transparent);
+    background-size: 260px 240px;
+    opacity: 0.3;
+    animation: starsDrift 140s linear infinite reverse;
+  }
+
+  @keyframes starsDrift {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-300px, -260px, 0); }
+  }
+
+  .shooting-star {
+    position: fixed;
+    z-index: -1;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 6px 1px rgba(255,255,255,0.8);
+    opacity: 0;
+    pointer-events: none;
+    animation: shootingStar 8s linear infinite;
+  }
+
+  .shooting-star::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 90px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+    transform: translateY(-50%);
+  }
+
+  @keyframes shootingStar {
+    0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-45deg); }
+    2% { opacity: 1; }
+    15% { opacity: 0; transform: translate3d(-220px, 220px, 0) rotate(-45deg); }
+    100% { opacity: 0; transform: translate3d(-220px, 220px, 0) rotate(-45deg); }
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+    background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 48px 32px 36px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+    transform-style: preserve-3d;
+    animation: cardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both,
+      cardFloat3d 7s ease-in-out 0.7s infinite;
+    will-change: transform;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes cardFloat3d {
+    0%, 100% { transform: rotateX(0deg) rotateY(0deg); }
+    50% { transform: rotateX(3deg) rotateY(-3deg); }
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 30% 30%, #1c1c1c, #0a0a0a);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--accent1), var(--accent3), var(--accent2), var(--accent1));
+    z-index: -1;
+    animation: spin 6s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: perspective(600px) rotateZ(0deg) rotateY(0deg); }
+    to   { transform: perspective(600px) rotateZ(360deg) rotateY(360deg); }
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .avatar svg {
+    width: 44px;
+    height: 44px;
+    stroke: var(--text);
+  }
+
+  .name {
+    font-size: clamp(28px, 6vw, 36px);
+    font-weight: 800;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent3), var(--accent2), var(--accent1));
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+    text-shadow: 0 0 40px rgba(127, 90, 240, 0.35);
+  }
+
+  @keyframes shine {
+    to { background-position: 300% center; }
+  }
+
+  .role {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 340px;
+    margin: 0 auto 20px;
+  }
+
+  /* Service chips — the 5 directions */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto 26px;
+    max-width: 380px;
+  }
+
+  .chip {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--muted);
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+
+  .divider {
+    width: 48px;
+    height: 3px;
+    margin: 0 auto 24px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent3));
+  }
+
+  /* Portfolio links */
+  .portfolio {
+    text-align: left;
+    margin-bottom: 26px;
+  }
+
+  .portfolio-heading {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  .portfolio-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .portfolio-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .portfolio-link:hover,
+  .portfolio-link:focus-visible {
+    border-color: var(--accent3);
+    background: rgba(0, 212, 255, 0.08);
+    transform: translateX(4px);
+    outline: none;
+  }
+
+  .portfolio-link .arrow {
+    color: var(--accent3);
+    flex-shrink: 0;
+  }
+
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  .social-link {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    text-decoration: none;
+    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+  }
+
+  .social-link svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    transition: transform 0.25s ease;
+  }
+
+  .social-link:hover,
+  .social-link:focus-visible {
+    transform: translateY(-6px) scale(1.06);
+    background: rgba(44, 182, 122, 0.12);
+    border-color: var(--accent3);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.25);
+    color: var(--accent3);
+    outline: none;
+  }
+
+  .social-link:hover svg {
+    transform: scale(1.1);
+  }
+
+  .cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0a0a0a;
+    background: linear-gradient(90deg, var(--accent2), var(--accent3));
+    background-size: 200% auto;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    overflow: hidden;
+    transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 24px rgba(44, 182, 122, 0.25);
+  }
+
+  .cta:hover,
+  .cta:focus-visible {
+    background-position: right center;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(0, 212, 255, 0.35);
+    outline: none;
+  }
+
+  .cta:active {
+    transform: translateY(0);
+  }
+
+  .cta::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+    transform: skewX(-20deg);
+    animation: sweep 2.8s ease-in-out infinite;
+  }
+
+  @keyframes sweep {
+    0% { left: -75%; }
+    50% { left: 130%; }
+    100% { left: 130%; }
+  }
+
+  .cta svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* QR code panel */
+  .qr-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .qr-toggle:hover {
+    color: var(--accent3);
+  }
+
+  .qr-wrap {
+    display: none;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .qr-wrap.open {
+    display: flex;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .qr-wrap img {
+    width: 132px;
+    height: 132px;
+    border-radius: 12px;
+    background: #fff;
+    padding: 8px;
+  }
+
+  .footer-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #55555f;
+    letter-spacing: 0.3px;
+  }
+
+  @media (max-width: 420px) {
+    .card {
+      padding: 40px 22px 28px;
+      border-radius: 18px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="stars" aria-hidden="true"></div>
+  <span class="shooting-star" style="top: 10%; left: 20%; animation-delay: 0s;" aria-hidden="true"></span>
+  <span class="shooting-star" style="top: 30%; left: 70%; animation-delay: 3.5s;" aria-hidden="true"></span>
+  <span class="shooting-star" style="top: 60%; left: 15%; animation-delay: 7s;" aria-hidden="true"></span>
+
+  <div class="card" id="card">
+    <!-- Avatar: drop a real logo/photo at assets/avatar-alexander.png to replace the icon fallback -->
+    <div class="avatar">
+      <img src="assets/avatar-alexander.png" alt="Александр Смолин" onerror="this.remove(); document.getElementById('avatarFallback').hidden = false;">
+      <svg id="avatarFallback" hidden viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 3L2 12l6 9M16 3l6 9-6 9M14 3l-4 18"></path>
+      </svg>
+    </div>
+
+    <h1 class="name">Александр Смолин</h1>
+    <p class="role">Разработка под ключ: сайты, боты, автоматизация и AI</p>
+
+    <div class="chips">
+      <span class="chip">Лендинги и визитки</span>
+      <span class="chip">Telegram-боты</span>
+      <span class="chip">AI-ассистенты</span>
+      <span class="chip">Автоматизация и парсинг</span>
+      <span class="chip">Деплой серверов</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="portfolio">
+      <p class="portfolio-heading">Примеры работ</p>
+      <div class="portfolio-links">
+        <a class="portfolio-link" href="client-alina.html" target="_blank" rel="noopener noreferrer">
+          <span>Лендинг для мастера маникюра</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="portfolio-link" href="client-alina-nails.html" target="_blank" rel="noopener noreferrer">
+          <span>Ещё один пример для бьюти-ниши</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="portfolio-link" href="landing.html" target="_blank" rel="noopener noreferrer">
+          <span>Демо-лендинг для сервиса/продукта</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="socials">
+      <a class="social-link" href="https://t.me/smolin_17" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M9.999 15.596l-.39 5.478c.559 0 .8-.24 1.093-.529l2.62-2.506 5.432 3.98c.996.55 1.703.26 1.96-.923L23.94 3.62c.365-1.443-.522-2.007-1.492-1.66L1.088 10.077C-.328 10.65-.305 11.478.844 11.83l5.52 1.722L18.36 6.13c.548-.36 1.048-.16.638.2z"/></svg>
+      </a>
+    </div>
+
+    <a class="cta" href="https://t.me/smolin_17" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      <span>Написать мне</span>
+    </a>
+
+    <button class="qr-toggle" type="button" id="qrToggle" aria-expanded="false">Показать QR-код</button>
+    <div class="qr-wrap" id="qrWrap">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=https://t.me/smolin_17" alt="QR-код на Telegram" loading="lazy">
+    </div>
+
+    <p class="footer-note">Всегда на связи в Telegram</p>
+  </div>
+
+  <script>
+    (function () {
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var card = document.getElementById('card');
+
+      if (!reduceMotion && card) {
+        card.addEventListener('mousemove', function (e) {
+          var r = card.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5;
+          var y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.animationPlayState = 'paused';
+          card.style.transform = 'rotateX(' + (-y * 10).toFixed(2) + 'deg) rotateY(' + (x * 10).toFixed(2) + 'deg)';
+        });
+        card.addEventListener('mouseleave', function () {
+          card.style.transform = '';
+          card.style.animationPlayState = 'running';
+        });
+      }
+
+      var qrToggle = document.getElementById('qrToggle');
+      var qrWrap = document.getElementById('qrWrap');
+      qrToggle.addEventListener('click', function () {
+        var open = qrWrap.classList.toggle('open');
+        qrToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        qrToggle.textContent = open ? 'Скрыть QR-код' : 'Показать QR-код';
+      });
+    })();
+  </script>
+
+</body>
+</html>
