@@ -14,8 +14,10 @@
 — при необходимости подключу ваш собственный домен (обсуждается отдельно)
 
 Примеры работ:
+https://funnyalexsteam-maker.github.io/vizitka-landing-pages/vizitka-v2.html
+https://funnyalexsteam-maker.github.io/vizitka-landing-pages/portfolio-alexander.html
+https://funnyalexsteam-maker.github.io/vizitka-landing-pages/client-alina.html
 https://funnyalexsteam-maker.github.io/vizitka-landing-pages/landing.html
-https://funnyalexsteam-maker.github.io/vizitka-landing-pages/vizitka.html
 
 **Тарифы (кворки):**
 - Кворк 1 — Визитка: 1 экран, услуги/о нас/контакты — 2000₽ / 1 день
