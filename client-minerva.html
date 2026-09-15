@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>МИНЕРВА — мебель на заказ</title>
+<meta name="description" content="Мастерская мебели МИНЕРВА — кухни, гардеробные, мебель для дома и коммерческих помещений по индивидуальному проекту. Собственное производство под Санкт-Петербургом.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /*
+    DEMO-САЙТ ДЛЯ КЛИЕНТА: МИНЕРВА (мебельная мастерская)
+    Собран по мотивам их живого сайта minerva-mebel.ru, как демонстрация
+    возможного редизайна. Не заменяет их реальный сайт, публикуется как
+    портфолио-пример (см. README.md, раздел про клиентов без своего домена).
+  */
+  :root {
+    --bg: #f7f1e7;
+    --bg-alt: #efe4d2;
+    --panel: #fffaf2;
+    --ink: #2a2019;
+    --ink-soft: #4a3b2e;
+    --muted: #83705c;
+    --wood: #6b4630;
+    --wood-dark: #2b1f16;
+    --accent: #b5602f;
+    --accent-soft: #d99a5e;
+    --line: rgba(43, 31, 22, 0.14);
+    --radius: 14px;
+    --radius-lg: 28px;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', 'Segoe UI', Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body.no-anim *, body.no-anim *::before, body.no-anim *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; margin: 0; color: var(--wood-dark); }
+
+  .num {
+    display: block;
+    font-family: var(--serif);
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* DEMO BADGE */
+  .demo-badge {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: var(--wood-dark); color: #f3e7d6;
+    text-align: center; font-size: 13px; padding: 8px 16px;
+    letter-spacing: 0.5px;
+  }
+  .demo-badge b { color: var(--accent-soft); }
+
+  /* NAV */
+  header.site-nav {
+    position: sticky; top: 34px; z-index: 100;
+    background: rgba(247, 241, 231, 0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px; max-width: 1120px; margin: 0 auto;
+  }
+  .logo { font-family: var(--serif); font-size: 22px; letter-spacing: 4px; font-weight: 600; }
+  nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 22px; margin: 0; padding: 0; }
+  nav a {
+    text-decoration: none; font-size: 13px; letter-spacing: 0.5px; color: var(--ink-soft);
+    text-transform: uppercase; transition: color 0.2s ease;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero { padding: 120px 0 90px; position: relative; }
+  .hero-arrow { font-size: 28px; color: var(--accent); margin-bottom: 24px; display: inline-block; animation: bob 2.4s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  .hero h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.08; max-width: 780px; }
+  .hero p.lead { font-family: var(--serif); font-size: clamp(18px, 2.4vw, 24px); color: var(--wood); margin: 26px 0 36px; max-width: 640px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 30px; border-radius: var(--radius); font-size: 14px; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: var(--sans);
+  }
+  .btn-primary { background: var(--accent); color: #fff8f0; box-shadow: 0 10px 24px rgba(181, 96, 47, 0.28); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(181, 96, 47, 0.34); }
+  .btn-ghost { background: transparent; color: var(--wood-dark); border: 1px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SECTION SHELL */
+  section.block { padding: 90px 0; border-top: 1px solid var(--line); scroll-margin-top: 110px; }
+  section.block.alt { background: var(--bg-alt); }
+  .block-head { max-width: 620px; margin-bottom: 50px; }
+  .block-head p { color: var(--muted); font-size: 15px; line-height: 1.7; margin: 14px 0 0; }
+
+  /* CATEGORIES */
+  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .cat-card {
+    background: var(--panel); padding: 30px 22px; min-height: 130px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: background 0.25s ease;
+  }
+  .cat-card:hover { background: #fff; }
+  .icon-chip {
+    display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px;
+    border-radius: 14px; background: linear-gradient(135deg, #e6d2ac, #c79a63);
+    box-shadow: 0 10px 20px rgba(107,70,48,0.25);
+  }
+  .cat-card svg { width: 22px; height: 22px; stroke: var(--wood-dark); }
+  .cat-card span { font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+
+  /* PANEL (rounded floating card used by alt sections) */
+  .panel {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 56px 48px; box-shadow: 0 40px 80px -40px rgba(43, 31, 22, 0.35);
+  }
+  section.block.alt { background: transparent; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: start; }
+  .about-grid p { font-size: 16px; line-height: 1.8; color: var(--ink-soft); margin: 0 0 18px; }
+  .principle {
+    background: var(--bg); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    padding: 30px 32px; border-radius: var(--radius-lg); font-family: var(--serif); font-size: 18px; color: var(--wood-dark); line-height: 1.6;
+  }
+
+  /* SERVICES */
+  .svc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .svc-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 34px 28px; }
+  .svc-card .num { margin-bottom: 22px; }
+  .svc-card h3 { font-size: 18px; margin-bottom: 10px; }
+  .svc-card p { font-size: 14px; color: var(--muted); line-height: 1.65; margin: 0; }
+
+  /* PORTFOLIO */
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .pf-card { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line); background: var(--panel); }
+  .pf-photo {
+    height: 260px; position: relative; overflow: hidden;
+    background-size: cover; background-position: center;
+    transition: transform 0.6s ease;
+  }
+  .pf-card:hover .pf-photo { transform: scale(1.08); }
+  .pf-photo::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(43,31,22,0.55) 0%, transparent 45%);
+  }
+  .pf-photo::after {
+    content: attr(data-tag);
+    position: absolute; bottom: 14px; left: 16px;
+    font-size: 12px; color: rgba(255,255,255,0.9); letter-spacing: 0.5px;
+  }
+  .pf-body { padding: 20px 22px; }
+  .pf-body h3 { font-size: 16px; margin-bottom: 6px; }
+  .pf-body span { font-size: 13px; color: var(--muted); }
+  .see-more { text-align: center; margin-top: 40px; }
+
+  /* MATERIALS */
+  .mat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+  .mat-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; }
+  .mat-card h3 { font-size: 17px; margin-bottom: 12px; }
+  .mat-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0 0 10px; }
+  .brand-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .brand-chip { font-size: 12px; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--wood); }
+  .massif-band {
+    margin-top: 26px; padding: 40px 38px; border-radius: var(--radius-lg);
+    background:
+      repeating-linear-gradient(95deg, rgba(255,255,255,0.05) 0 3px, transparent 3px 22px),
+      repeating-linear-gradient(95deg, rgba(0,0,0,0.12) 0 1px, transparent 1px 90px),
+      linear-gradient(120deg, var(--wood-dark), #4a3222 55%, #6b4630);
+    color: #f3e7d6; position: relative; overflow: hidden;
+  }
+  .massif-band h3 { color: #f3e7d6; font-size: 20px; margin-bottom: 10px; }
+  .massif-band p { color: #d8c6b0; font-size: 14px; line-height: 1.7; margin: 0; max-width: 560px; }
+
+  /* PROCESS */
+  .steps { display: grid; gap: 0; }
+  .step { display: grid; grid-template-columns: 70px 1fr; gap: 24px; padding: 26px 0; border-top: 1px solid var(--line); align-items: center; }
+  .step:last-child { border-bottom: 1px solid var(--line); }
+  .step-n { font-family: var(--serif); font-size: 26px; color: var(--accent); }
+  .step h3 { font-size: 16px; margin-bottom: 6px; }
+  .step p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; }
+  .step.has-photo { grid-template-columns: 70px 160px 1fr; }
+  .step-photo {
+    width: 160px; height: 108px; border-radius: var(--radius); overflow: hidden;
+    background-size: cover; background-position: center; box-shadow: 0 14px 28px rgba(43,31,22,0.28);
+  }
+
+  /* MATERIAL SAMPLES CALLOUT */
+  .sample-callout {
+    margin-top: 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px 28px; flex-wrap: wrap;
+  }
+  .sample-callout p { margin: 0; font-size: 14px; color: var(--ink-soft); max-width: 480px; }
+
+  /* BUNDLES */
+  .bundle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .bundle-card { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line); background: var(--panel); }
+  .bundle-photo { height: 180px; background-size: cover; background-position: center; }
+  .bundle-body { padding: 22px 24px; }
+  .bundle-body h3 { font-size: 16px; margin-bottom: 8px; }
+  .bundle-body p { font-size: 13px; color: var(--muted); margin: 0 0 14px; line-height: 1.5; }
+  .bundle-body b { font-family: var(--serif); font-size: 20px; color: var(--accent); }
+
+  /* REVIEWS */
+  .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .review-slot {
+    border: 1px dashed var(--line); border-radius: var(--radius-lg); padding: 40px 24px;
+    text-align: center; font-size: 13px; color: var(--muted); background: var(--panel);
+  }
+
+  @media (max-width: 900px) { .bundle-grid, .review-grid { grid-template-columns: 1fr; } }
+
+  /* CONFIGURATOR */
+  .configurator { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 46px; align-items: start; margin-top: 10px; }
+  .cfg-group { margin-bottom: 26px; }
+  .cfg-group label { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+  .cfg-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .cfg-chip {
+    padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel);
+    font-family: var(--sans); font-size: 13px; cursor: pointer; color: var(--ink-soft); transition: all 0.2s ease;
+  }
+  .cfg-chip:hover { border-color: var(--accent-soft); }
+  .cfg-chip.active { border-color: var(--accent); color: var(--accent); background: #fff; box-shadow: 0 6px 14px rgba(181,96,47,0.18); }
+  input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .cfg-preview { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 30px; text-align: center; box-shadow: 0 30px 60px -35px rgba(43,31,22,0.3); }
+  .cfg-price { margin: 18px 0 22px; }
+  .cfg-price span { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .cfg-price b { font-family: var(--serif); font-size: 34px; color: var(--wood-dark); }
+  @media (max-width: 900px) { .configurator { grid-template-columns: 1fr; } }
+
+  /* PRICE FORM */
+  .price-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .price-card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-lg);
+    padding: 34px 32px; box-shadow: 0 30px 60px -35px rgba(43, 31, 22, 0.3);
+  }
+  form.price-form { display: grid; gap: 14px; }
+  .price-form input, .price-form textarea {
+    width: 100%; padding: 14px 16px; border-radius: var(--radius); border: 1px solid var(--line);
+    background: var(--panel); font-family: var(--sans); font-size: 14px; color: var(--ink);
+  }
+  .price-form textarea { resize: vertical; min-height: 90px; }
+  .price-form .consent { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .form-msg { display: none; margin-top: 14px; padding: 14px 16px; border-radius: var(--radius); background: #e9f2e7; color: #33552f; font-size: 14px; }
+  .form-msg.show { display: block; }
+
+  /* PARTNERS */
+  .partners-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .partner-slot {
+    border: 1px dashed var(--line); border-radius: var(--radius-lg); padding: 26px 16px;
+    text-align: center; font-size: 12px; color: var(--muted); letter-spacing: 0.5px;
+  }
+  .collab-box {
+    margin-top: 46px; display: flex; justify-content: space-between; align-items: center; gap: 24px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 34px 36px; flex-wrap: wrap;
+  }
+  .collab-box p { margin: 0; max-width: 520px; font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* CONTACTS */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+  .contact-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+  .contact-list li { font-size: 15px; color: var(--ink-soft); }
+  .contact-list b { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 4px; }
+  .social-row { display: flex; gap: 12px; margin-top: 22px; }
+  .social-row a {
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center; text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease; color: var(--wood);
+  }
+  .social-row a:hover { border-color: var(--accent); color: var(--accent); }
+  .social-row svg { width: 17px; height: 17px; }
+
+  /* FOOTER */
+  footer.site-footer { padding: 40px 0 60px; border-top: 1px solid var(--line); }
+  .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .svc-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-grid, .price-wrap, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+    .portfolio-grid, .mat-grid, .partners-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .cat-grid, .svc-grid, .portfolio-grid, .mat-grid, .partners-grid { grid-template-columns: 1fr; }
+    .hero { padding: 130px 0 60px; }
+    .step, .step.has-photo { grid-template-columns: 50px 1fr; }
+    .step-photo { grid-column: 2 / -1; width: 100%; height: 140px; margin-top: 10px; }
+    nav ul { gap: 14px 18px; }
+    .panel { padding: 36px 26px; }
+  }
+
+  /* ===== BACKGROUND FX ===== */
+  .bg-fx { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; }
+  .wood-divider {
+    height: 16px; width: 46%; margin: 34px auto; border-radius: 999px;
+    background: repeating-linear-gradient(95deg, #a9744a 0 3px, #8a5a3a 3px 6px, #6b4630 6px 10px);
+    box-shadow: 0 10px 22px rgba(43,31,22,0.28);
+  }
+  .blob-a { width: 520px; height: 520px; background: var(--accent-soft); top: -140px; left: -120px; animation: drift1 26s ease-in-out infinite alternate; }
+  .blob-b { width: 440px; height: 440px; background: var(--wood); top: 38%; right: -160px; animation: drift2 32s ease-in-out infinite alternate; }
+  .blob-c { width: 380px; height: 380px; background: #e8c48a; bottom: -160px; left: 28%; animation: drift3 22s ease-in-out infinite alternate; }
+  @keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(70px, 90px); } }
+  @keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-80px, -50px); } }
+  @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(50px, -60px) scale(1.15); } }
+
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    opacity: 0.08; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  /* ===== SCROLL PROGRESS ===== */
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent-soft)); z-index: 300; transition: width 0.1s linear; }
+
+  /* ===== NAV ACTIVE STATE ===== */
+  nav a { position: relative; }
+  nav a.active { color: var(--accent); }
+  nav a.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--accent); border-radius: 2px; }
+
+  /* ===== 3D TILT + GLARE (cards) ===== */
+  .cat-grid, .svc-grid, .portfolio-grid, .mat-grid { perspective: 900px; }
+  .tilt { transform-style: preserve-3d; will-change: transform; position: relative; overflow: hidden; }
+  .tilt::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
+    background: radial-gradient(280px circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255,255,255,0.4), transparent 60%);
+  }
+  .tilt:hover::after { opacity: 1; }
+
+  /* ===== HERO 3D SCENE ===== */
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center; position: relative; z-index: 1; }
+  .hero-copy > * { animation: heroIn 0.8s cubic-bezier(0.22,1,0.36,1) both; }
+  .hero-copy .hero-arrow { animation: bob 2.4s ease-in-out infinite, heroIn 0.6s ease both; }
+  .hero-copy h1 { animation-delay: 0.05s; }
+  .hero-copy p.lead { animation-delay: 0.18s; }
+  .hero-copy .cta-row { animation-delay: 0.3s; }
+  @keyframes heroIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+  .spotlight {
+    position: absolute; inset: -40px; pointer-events: none; z-index: 0;
+    background: radial-gradient(360px circle at var(--sx, 30%) var(--sy, 30%), rgba(255, 214, 153, 0.4), transparent 60%);
+  }
+
+  .cube-stage { perspective: 1000px; height: 300px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+  .cube-stage::before {
+    content: ""; position: absolute; width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(107,70,48,0.28), transparent 70%);
+    filter: blur(10px); z-index: 0;
+  }
+  .cube { position: relative; width: 200px; height: 200px; transform-style: preserve-3d; transform: rotateX(-14deg) rotateY(-28deg); transition: transform 0.15s ease-out; }
+  .plank {
+    position: absolute; left: 50%; top: 50%; width: 210px; height: 28px; margin-left: -105px; margin-top: -14px;
+    border-radius: 4px;
+    background:
+      repeating-linear-gradient(90deg, rgba(43,31,22,0.16) 0 2px, transparent 2px 9px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.12) 0 1px, transparent 1px 16px),
+      linear-gradient(135deg, #cda173, #8a5a3a);
+    box-shadow: 0 20px 40px rgba(43,31,22,0.35), 0 2px 0 rgba(255,255,255,0.18) inset;
+  }
+  .plank:nth-child(1) { transform: translateZ(60px) translateY(-72px); }
+  .plank:nth-child(2) { transform: translateZ(0px) translateY(0px); }
+  .plank:nth-child(3) { transform: translateZ(-60px) translateY(72px); }
+  .swatch {
+    position: absolute; width: 46px; height: 46px; border-radius: 8px; top: 8%; right: 12%;
+    background: var(--accent); box-shadow: 0 14px 26px rgba(181,96,47,0.4);
+    transform: translateZ(130px); animation: floaty 4.5s ease-in-out infinite;
+  }
+  @keyframes floaty { 0%, 100% { transform: translateZ(130px) translateY(0); } 50% { transform: translateZ(130px) translateY(-14px); } }
+
+  /* ===== BUTTON SHINE ===== */
+  .btn { position: relative; overflow: hidden; }
+  .btn::before {
+    content: ""; position: absolute; top: 0; left: -60%; width: 50%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent);
+    transform: skewX(-20deg); transition: left 0.5s ease;
+  }
+  .btn:hover::before { left: 120%; }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .cube-stage { height: 220px; order: -1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob, .swatch, .hero-copy .hero-arrow, .hero-copy > * { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-fx" aria-hidden="true"><span class="blob blob-a"></span><span class="blob blob-b"></span><span class="blob blob-c"></span></div>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="demo-badge">Демо-версия сайта · <b>МИНЕРВА</b> — пример редизайна, не заменяет действующий сайт</div>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="logo">МИНЕРВА</div>
+    <nav>
+      <ul>
+        <li><a href="#configurator">Конструктор</a></li>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#process">Как мы работаем</a></li>
+        <li><a href="#portfolio">Фото</a></li>
+        <li><a href="#materials">Материалы</a></li>
+        <li><a href="#bundles">Готовые решения</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="#partners">Партнёры</a></li>
+        <li><a href="#price">Расчёт цены</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="hero-scene">
+    <div class="spotlight" id="spotlight"></div>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="hero-arrow">↓</span>
+        <h1>Мастерская мебели, которая создаёт надёжные, функциональные и по-настоящему ваши вещи.</h1>
+        <p class="lead">Проектируем и производим мебель под индивидуальный заказ — от кухни до целого дома, с гибкостью под ваш бюджет и сроки.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#price">Рассчитать стоимость</a>
+          <a class="btn btn-ghost" href="#portfolio">Смотреть работы</a>
+        </div>
+      </div>
+      <div class="cube-stage" id="cube-stage">
+        <div class="cube" id="cube">
+          <div class="plank"></div>
+          <div class="plank"></div>
+          <div class="plank"></div>
+          <div class="swatch"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="block reveal" id="spaces">
+    <div class="block-head">
+      <span class="num">01 · Пространства</span>
+      <h2>Мебель для любого пространства</h2>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card tilt"><span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 9h18M6 9v11M18 9v11M3 20h18"/></svg></span><span>Кухни</span></div>
+      <div class="cat-card tilt"><span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="10" width="16" height="9" rx="1"/><path d="M4 10l3-5h10l3 5"/></svg></span><span>Спальня</span></div>
+      <div class="cat-card tilt"><span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 18v-6a8 8 0 0116 0v6M2 18h20"/></svg></span><span>Гостиные</span></div>
+      <div class="cat-card tilt"><span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18M9 12h.01M15 12h.01"/></svg></span><span>Гардеробные системы</span></div>
+      <div class="cat-card tilt"><span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="7" r="3"/><path d="M6 21v-4a6 6 0 0112 0v4"/></svg></span><span>Детские</span></div>
+      <div class="cat-card tilt"><span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 8h6M9 12h6"/></svg></span><span>Санузлы</span></div>
+      <div class="cat-card tilt"><span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 21V9l9-6 9 6v12M9 21v-7h6v7"/></svg></span><span>Коммерческие помещения</span></div>
+      <div class="cat-card tilt"><span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></span><span>Индивидуальный проект</span></div>
+    </div>
+  </section>
+
+  <!-- CONFIGURATOR -->
+  <section class="block reveal" id="configurator">
+    <div class="block-head">
+      <span class="num">02 · Конструктор</span>
+      <h2>Соберите свою мебель прямо сейчас</h2>
+      <p>Выберите тип, размеры и материалы — ориентировочная стоимость посчитается сразу же, без звонков и ожидания. Это демо-калькулятор для наглядности: точную цену считаем после реального замера.</p>
+    </div>
+    <div class="configurator">
+      <div class="cfg-controls">
+        <div class="cfg-group">
+          <label>Тип мебели</label>
+          <div class="cfg-chips" id="cfg-type">
+            <button type="button" class="cfg-chip active" data-rate="18000">Кухня</button>
+            <button type="button" class="cfg-chip" data-rate="14000">Гардеробная</button>
+            <button type="button" class="cfg-chip" data-rate="12000">Гостиная</button>
+            <button type="button" class="cfg-chip" data-rate="13000">Спальня</button>
+          </div>
+        </div>
+        <div class="cfg-group">
+          <label>Ширина, см — <span id="width-val">300</span></label>
+          <input type="range" id="cfg-width" min="100" max="500" value="300" step="10">
+        </div>
+        <div class="cfg-group">
+          <label>Высота, см — <span id="height-val">240</span></label>
+          <input type="range" id="cfg-height" min="200" max="280" value="240" step="5">
+        </div>
+        <div class="cfg-group">
+          <label>Материал фасада</label>
+          <div class="cfg-chips" id="cfg-material">
+            <button type="button" class="cfg-chip active" data-mult="1">ЛДСП EGGER</button>
+            <button type="button" class="cfg-chip" data-mult="1.35">МДФ крашеный</button>
+            <button type="button" class="cfg-chip" data-mult="1.8">Массив дерева</button>
+          </div>
+        </div>
+        <div class="cfg-group">
+          <label>Фурнитура</label>
+          <div class="cfg-chips" id="cfg-hardware">
+            <button type="button" class="cfg-chip active" data-add="0">Стандарт (Hettich)</button>
+            <button type="button" class="cfg-chip" data-add="15000">Премиум (Blum, доводчики)</button>
+          </div>
+        </div>
+      </div>
+      <div class="cfg-preview">
+        <div class="cube-stage" style="height:220px;">
+          <div class="cube" id="cfg-cube">
+            <div class="plank"></div>
+            <div class="plank"></div>
+            <div class="plank"></div>
+          </div>
+        </div>
+        <div class="cfg-price">
+          <span>Ориентировочная стоимость</span>
+          <b id="cfg-total">≈ 0 ₽</b>
+        </div>
+        <a class="btn btn-primary" href="#price">Получить точный расчёт</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wood-divider"></div>
+
+  <!-- ABOUT -->
+  <section class="block alt reveal" id="about">
+    <div class="panel about-grid">
+      <div>
+        <span class="num">03 · О нас</span>
+        <h2>В мастерской МИНЕРВА мы с любовью создаём мебель по вашему индивидуальному заказу</h2>
+        <p style="margin-top:22px;">От надёжной корпусной до уютной мягкой мебели — наше собственное производство находится в пригороде Санкт-Петербурга. Мы практикуем исключительно индивидуальный подход к каждому клиенту: выслушаем все ваши пожелания, идеи и даже сомнения.</p>
+      </div>
+      <div class="principle">Гибкий подход — наш главный принцип: мы подстроимся под ваш бюджет, сроки и уникальные требования, найдя оптимальное решение именно для вас.</div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="block reveal" id="services">
+    <div class="block-head">
+      <span class="num">04 · Услуги</span>
+      <h2>Что мы делаем</h2>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card tilt"><span class="num">01</span><h3>Собственное производство</h3><p>Изготавливаем вашу мебель в цехе, расположенном в пригороде Санкт-Петербурга — от распила до сборки, без подрядчиков.</p></div>
+      <div class="svc-card tilt"><span class="num">02</span><h3>Проектирование под ключ</h3><p>Поможем с нуля: предложим варианты планировок, подберём материалы и фурнитуру, разработаем эскизы и техдокументацию — превратим ваши идеи в готовый проект.</p></div>
+      <div class="svc-card tilt"><span class="num">03</span><h3>Изготовление по дизайн-проекту</h3><p>Воплотим в жизнь видение вашего дизайнера. Внимательно изучим чертежи и спецификации, гарантируя полное соответствие.</p></div>
+      <div class="svc-card tilt"><span class="num">04</span><h3>Монтаж</h3><p>Профессионально, быстро и чисто осуществим сборку и монтаж произведённой мебели на объекте.</p></div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="block alt reveal" id="process">
+    <div class="panel">
+      <div class="block-head">
+        <span class="num">05 · Процесс</span>
+        <h2>Как мы работаем</h2>
+        <p>Шесть шагов от первого разговора до мебели у вас дома — с реальными фото из нашего цеха на этапах производства.</p>
+      </div>
+      <div class="steps">
+        <div class="step has-photo"><div class="step-n">01</div><div class="step-photo" style="background-image:url('https://images.pexels.com/photos/6474506/pexels-photo-6474506.jpeg?auto=compress&cs=tinysrgb&w=640');"></div><div><h3>Знакомство с проектом</h3><p>Обсуждаем задачу, ориентировочно считаем стоимость.</p></div></div>
+        <div class="step has-photo"><div class="step-n">02</div><div class="step-photo" style="background-image:url('https://images.pexels.com/photos/4981787/pexels-photo-4981787.jpeg?auto=compress&cs=tinysrgb&w=640');"></div><div><h3>Замеры на месте</h3><p>Выезд менеджера, точные замеры, подбор материалов и фурнитуры.</p></div></div>
+        <div class="step has-photo"><div class="step-n">03</div><div class="step-photo" style="background-image:url('https://images.pexels.com/photos/5387258/pexels-photo-5387258.jpeg?auto=compress&cs=tinysrgb&w=640');"></div><div><h3>Согласование и договор</h3><p>Финальная спецификация, подписание договора, фиксация сроков.</p></div></div>
+        <div class="step has-photo"><div class="step-n">04</div><div class="step-photo" style="background-image:url('https://images.pexels.com/photos/5973966/pexels-photo-5973966.jpeg?auto=compress&cs=tinysrgb&w=640');"></div><div><h3>Технология и закупка</h3><p>Технолог готовит производственные чертежи, закупаем материалы.</p></div></div>
+        <div class="step has-photo"><div class="step-n">05</div><div class="step-photo" style="background-image:url('https://images.pexels.com/photos/7480240/pexels-photo-7480240.jpeg?auto=compress&cs=tinysrgb&w=640');"></div><div><h3>Производство</h3><p>Распил, кромление, изготовление фасадов в цехе.</p></div></div>
+        <div class="step has-photo"><div class="step-n">06</div><div class="step-photo" style="background-image:url('https://images.pexels.com/photos/5805494/pexels-photo-5805494.jpeg?auto=compress&cs=tinysrgb&w=640');"></div><div><h3>Доставка и сборка</h3><p>Монтаж на объекте, финальная регулировка каждого узла.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="block reveal" id="portfolio">
+    <div class="block-head">
+      <span class="num">06 · Работы</span>
+      <h2>Портфолио</h2>
+      <p>Несколько последних проектов — на реальных фото из нашей практики.</p>
+    </div>
+    <div class="portfolio-grid">
+      <div class="pf-card tilt"><div class="pf-photo" data-tag="Бутлерова" style="background-image:url('https://thb.tildacdn.com/tild3565-3730-4132-a238-376362616431/-/resize/800x/2O7A6855.jpg');"></div><div class="pf-body"><h3>Квартира на Бутлерова</h3><span>Кухня, гардеробная</span></div></div>
+      <div class="pf-card tilt"><div class="pf-photo" data-tag="ЖК Галактика" style="background-image:url('https://thb.tildacdn.com/tild6234-3164-4361-b839-656362323039/-/resize/800x/2O7A6867-HDR.jpg');"></div><div class="pf-body"><h3>ЖК Галактика</h3><span>Мебель для всей квартиры</span></div></div>
+      <div class="pf-card tilt"><div class="pf-photo" data-tag="Белоостровская" style="background-image:url('https://thb.tildacdn.com/tild3963-3966-4561-b637-613861653761/-/resize/800x/IMG_0409.jpg');"></div><div class="pf-body"><h3>Квартира на Белоостровской</h3><span>Гостиная, детская</span></div></div>
+    </div>
+    <div class="see-more"><a class="btn btn-ghost" href="#portfolio">Смотреть больше</a></div>
+  </section>
+
+  <div class="wood-divider"></div>
+
+  <!-- MATERIALS -->
+  <section class="block alt reveal" id="materials">
+    <div class="panel">
+      <div class="block-head">
+        <span class="num">07 · Материалы</span>
+        <h2>Материалы и фурнитура</h2>
+      </div>
+      <div class="mat-grid">
+        <div class="mat-card tilt">
+          <h3>Основа и кромка</h3>
+          <p>Наш основной материал при изготовлении корпуса мебели — ЛДСП EGGER австрийского производителя. EGGER не зря считается лидером в своей области: их ЛДСП имеет самый высокий экологический класс, высокую плотность и прекрасную влагостойкость.</p>
+          <p>Все торцы закрываются ABS-кромкой с применением PUR-клея для повышения прочности и влагостойкости изделия — при протечке воды это надолго сдерживает разбухание.</p>
+        </div>
+        <div class="mat-card tilt">
+          <h3>Фасады и фурнитура</h3>
+          <p>Для фасадов используем премиальные плиты ДСП и МДФ от EGGER и KASTAMONU — лучшие технические и эксплуатационные характеристики на рынке.</p>
+          <p>В фурнитуре отдаём предпочтение Pulse, Hettich и Blum: неприхотливы в эксплуатации, надёжны и долговечны.</p>
+          <div class="brand-row">
+            <span class="brand-chip">EGGER</span><span class="brand-chip">KASTAMONU</span>
+            <span class="brand-chip">Blum</span><span class="brand-chip">Hettich</span><span class="brand-chip">Pulse</span>
+          </div>
+        </div>
+      </div>
+      <div class="massif-band">
+        <h3>Массив и ротанг</h3>
+        <p>Недавно мастерская начала изготавливать дизайнерскую мебель из массива дерева и натурального ротанга — кровати, комоды, тумбы, журнальные и обеденные столы, стулья.</p>
+      </div>
+      <div class="sample-callout">
+        <p>Хотите потрогать материалы вживую перед заказом? Закажите бесплатную доставку образцов тканей и фасадов — так спокойнее выбирать цвет и фактуру.</p>
+        <a class="btn btn-ghost" href="#price">Заказать образцы</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUNDLES -->
+  <section class="block alt reveal" id="bundles">
+    <div class="panel">
+      <div class="block-head">
+        <span class="num">08 · Готовые решения</span>
+        <h2>Примеры готовых комплектов</h2>
+        <p>Если сложно представить свой проект с нуля — вот несколько типовых решений с ориентировочной ценой. Любой из них адаптируем под ваши размеры и вкус.</p>
+      </div>
+      <div class="bundle-grid">
+        <div class="bundle-card tilt">
+          <div class="bundle-photo" style="background-image:url('https://images.pexels.com/photos/100575/pexels-photo-100575.jpeg?auto=compress&cs=tinysrgb&w=640');"></div>
+          <div class="bundle-body">
+            <h3>Кухня «Семейная»</h3>
+            <p>3200×2400 мм, ЛДСП EGGER, фурнитура Blum с доводчиками</p>
+            <b>от 173 000 ₽</b>
+          </div>
+        </div>
+        <div class="bundle-card tilt">
+          <div class="bundle-photo" style="background-image:url('https://images.pexels.com/photos/6585745/pexels-photo-6585745.jpeg?auto=compress&cs=tinysrgb&w=640');"></div>
+          <div class="bundle-body">
+            <h3>Гардеробная «Компакт»</h3>
+            <p>2400×2400 мм, ЛДСП EGGER, фурнитура Hettich</p>
+            <b>от 84 000 ₽</b>
+          </div>
+        </div>
+        <div class="bundle-card tilt">
+          <div class="bundle-photo" style="background-image:url('https://images.pexels.com/photos/6636320/pexels-photo-6636320.jpeg?auto=compress&cs=tinysrgb&w=640');"></div>
+          <div class="bundle-body">
+            <h3>Гостиная «Массив»</h3>
+            <p>3000×2400 мм, массив дерева, фурнитура Blum</p>
+            <b>от 216 000 ₽</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="block reveal" id="reviews">
+    <div class="block-head">
+      <span class="num">09 · Отзывы</span>
+      <h2>Что говорят клиенты</h2>
+      <p>Здесь будут реальные отзывы и фото ваших клиентов — присылайте, как получите первые.</p>
+    </div>
+    <div class="review-grid">
+      <div class="review-slot">Отзыв клиента появится здесь</div>
+      <div class="review-slot">Отзыв клиента появится здесь</div>
+      <div class="review-slot">Отзыв клиента появится здесь</div>
+    </div>
+  </section>
+
+  <!-- PRICE -->
+  <section class="block alt reveal" id="price">
+    <div class="price-wrap">
+      <div>
+        <span class="num">10 · Цены</span>
+        <h2>Расчёт стоимости</h2>
+        <p style="margin-top:18px; color:var(--muted); font-size:15px; line-height:1.7;">Комплексный подход к расчёту: материалы, фурнитура, работа и монтаж — одной цифрой, без сюрпризов на финальном этапе. Оставьте заявку — вернёмся с предварительной стоимостью.</p>
+      </div>
+      <div class="price-card">
+        <form class="price-form" id="price-form">
+          <input type="text" placeholder="Имя" required>
+          <input type="tel" placeholder="Телефон" required>
+          <input type="email" placeholder="Email">
+          <textarea placeholder="Комментарии — что хотите заказать"></textarea>
+          <input type="file">
+          <button type="submit" class="btn btn-primary" style="justify-self:start;">Получить предварительную стоимость вашей мебели</button>
+          <p class="consent">Нажимая на кнопку, вы даёте согласие на обработку персональных данных.</p>
+          <div class="form-msg" id="form-msg">Спасибо! Это демо-форма — в рабочей версии заявка будет приходить вам в Telegram или на почту.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="block alt reveal" id="partners">
+    <div class="panel">
+      <div class="block-head">
+        <span class="num">11 · Партнёры</span>
+        <h2>Мы ценим доверие и профессионализм наших партнёров</h2>
+        <p>А также открыты для новых предложений от дизайн-студий и интерьерных компаний.</p>
+      </div>
+      <div class="partners-grid">
+        <div class="partner-slot">логотип партнёра</div>
+        <div class="partner-slot">логотип партнёра</div>
+        <div class="partner-slot">логотип партнёра</div>
+        <div class="partner-slot">логотип партнёра</div>
+      </div>
+      <div class="collab-box">
+        <p>Приглашаем дизайнеров интерьера к сотрудничеству: партнёрская комиссия с каждого заказа и возможность реализовать нестандартные решения.</p>
+        <a class="btn btn-primary" href="#contacts">Связаться</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="block reveal" id="contacts">
+    <div class="block-head">
+      <span class="num">12 · Контакты</span>
+      <h2>Свяжитесь с нами</h2>
+    </div>
+    <div class="contact-grid">
+      <ul class="contact-list">
+        <li><b>Телефон</b>+7 981 781-02-15</li>
+        <li><b>Email</b>minerva-client@yandex.ru</li>
+        <li><b>Шоурум</b>Кудрово, пр. Строителей, 16, вход со двора</li>
+        <li><b>Производственный цех</b>д. Новосергиевка, промышленно-складская зона, 10</li>
+      </ul>
+      <div>
+        <div class="social-row" aria-label="Мессенджеры и соцсети">
+          <a href="#contacts" title="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2z" opacity=".15"/><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2z" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a>
+          <a href="#contacts" title="Telegram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 4L2 11l6 2 2 6 3-4 5 3 3-14z"/></svg></a>
+          <a href="#contacts" title="VK"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="3"/></svg></a>
+          <a href="#contacts" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>ИП Гречиц Антон Владимирович · ИНН 860604486560 · ОГРНИП 323784700067596</span>
+    <span>© 2026 МИНЕРВА · демо-версия сайта</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('price-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('form-msg').classList.add('show');
+  });
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) entry.target.classList.add('in');
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Configurator
+  var cfgWidth = document.getElementById('cfg-width');
+  var cfgHeight = document.getElementById('cfg-height');
+  if (cfgWidth && cfgHeight) {
+    var materialColors = {
+      '1': ['#cda173', '#8a5a3a'],
+      '1.35': ['#d9d6c9', '#9aa08c'],
+      '1.8': ['#8a5a3a', '#3e2818']
+    };
+    function updateConfigurator() {
+      var typeChip = document.querySelector('#cfg-type .cfg-chip.active');
+      var matChip = document.querySelector('#cfg-material .cfg-chip.active');
+      var hwChip = document.querySelector('#cfg-hardware .cfg-chip.active');
+      var rate = parseFloat(typeChip.dataset.rate);
+      var mult = parseFloat(matChip.dataset.mult);
+      var add = parseFloat(hwChip.dataset.add);
+      var width = parseFloat(cfgWidth.value);
+      var height = parseFloat(cfgHeight.value);
+      var area = (width / 100) * (height / 100);
+      var total = Math.round((area * rate * mult + add) / 100) * 100;
+      document.getElementById('cfg-total').textContent = '≈ ' + total.toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('width-val').textContent = width;
+      document.getElementById('height-val').textContent = height;
+
+      var scale = 0.7 + ((width - 100) / 400) * 0.6;
+      var colors = materialColors[matChip.dataset.mult] || materialColors['1'];
+      document.querySelectorAll('#cfg-cube .plank').forEach(function (p) {
+        p.style.width = (210 * scale) + 'px';
+        p.style.marginLeft = (-105 * scale) + 'px';
+        p.style.background = 'linear-gradient(135deg,' + colors[0] + ',' + colors[1] + ')';
+      });
+    }
+    document.querySelectorAll('.cfg-chips').forEach(function (group) {
+      group.querySelectorAll('.cfg-chip').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          group.querySelectorAll('.cfg-chip').forEach(function (c) { c.classList.remove('active'); });
+          chip.classList.add('active');
+          updateConfigurator();
+        });
+      });
+    });
+    cfgWidth.addEventListener('input', updateConfigurator);
+    cfgHeight.addEventListener('input', updateConfigurator);
+    updateConfigurator();
+  }
+
+  // Scroll progress bar
+  var progressBar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', function () {
+    var h = document.documentElement;
+    var pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progressBar.style.width = pct + '%';
+  }, { passive: true });
+
+  // Active nav link on scroll
+  var navLinks = document.querySelectorAll('nav a');
+  var linkBySection = {};
+  navLinks.forEach(function (a) { linkBySection[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          navLinks.forEach(function (a) { a.classList.remove('active'); });
+          var link = linkBySection[entry.target.id];
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    document.querySelectorAll('section[id]').forEach(function (s) { navObserver.observe(s); });
+  }
+
+  if (!reduceMotion) {
+    // 3D tilt + glare on cards
+    document.querySelectorAll('.tilt').forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = 'rotateX(' + (-py * 8).toFixed(2) + 'deg) rotateY(' + (px * 8).toFixed(2) + 'deg) translateY(-4px)';
+        el.style.setProperty('--glare-x', (px * 100 + 50).toFixed(1) + '%');
+        el.style.setProperty('--glare-y', (py * 100 + 50).toFixed(1) + '%');
+      });
+      el.addEventListener('mouseleave', function () { el.style.transform = ''; });
+    });
+
+    // Hero 3D scene: cube parallax + spotlight follow cursor
+    var heroScene = document.getElementById('hero-scene');
+    var cube = document.getElementById('cube');
+    var spotlight = document.getElementById('spotlight');
+    if (heroScene && cube) {
+      heroScene.addEventListener('mousemove', function (e) {
+        var r = heroScene.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        cube.style.transform = 'rotateX(' + (-14 - py * 16).toFixed(2) + 'deg) rotateY(' + (-28 + px * 24).toFixed(2) + 'deg)';
+        spotlight.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        spotlight.style.setProperty('--sy', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      });
+      heroScene.addEventListener('mouseleave', function () {
+        cube.style.transform = 'rotateX(-14deg) rotateY(-28deg)';
+      });
+    }
+  }
+</script>
+
+</body>
+</html>
