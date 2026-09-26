@@ -1,0 +1,35 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Диаграмма крупно</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .kicker { font-size: 15px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+  .rule { height: 4px; width: 70px; background: var(--gold); border-radius: 2px; margin: 20px 0 40px; }
+  .bars { display: flex; align-items: flex-end; gap: 40px; height: 300px; }
+  .bar { flex: 1; background: var(--navy); border-radius: 8px 8px 0 0; position: relative; }
+  .bar.g { background: var(--gold); }
+  .bar span {
+    position: absolute; top: -40px; left: 0; right: 0; text-align: center;
+    font-size: 26px; font-weight: 700; color: var(--ink);
+  }
+  .axis { display: flex; gap: 40px; margin-top: 16px; }
+  .axis div { flex: 1; text-align: center; font-size: 17px; color: var(--grey); font-weight: 500; }
+</style>
+
+<div class="grid"></div>
+<div class="eyebrow">ДИАГРАММА ПО ВАШИМ ДАННЫМ</div>
+<div class="title">Числа берутся из вашей таблицы,<br>не рисуются на глаз</div>
+
+<div class="doc">
+  <div class="kicker">Пример: время обработки заявки, минуты</div>
+  <div class="rule"></div>
+  <div class="bars">
+    <div class="bar" style="height:47%"><span>18</span></div>
+    <div class="bar" style="height:71%"><span>27</span></div>
+    <div class="bar" style="height:55%"><span>21</span></div>
+    <div class="bar g" style="height:100%"><span>38</span></div>
+  </div>
+  <div class="axis"><div>I квартал</div><div>II квартал</div><div>III квартал</div><div>IV квартал</div></div>
+</div>
+<div class="footnote">Пришлёте цифры в любом виде: таблица, скриншот отчёта, просто текстом — перенесу в диаграмму</div>

@@ -1,0 +1,41 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Содержание с автонумерацией</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .doc { display: flex; align-items: center; justify-content: center; }
+  .page {
+    width: 700px; height: 100%;
+    background: #fff; color: var(--ink);
+    border: 1px solid #E4E8F1;
+    padding: 56px 60px;
+    font-family: "Times New Roman", serif;
+  }
+  .h { font-size: 20px; font-weight: 700; text-align: center; letter-spacing: .04em; }
+  .toc { margin-top: 34px; font-size: 17px; line-height: 2.3; }
+  .toc div { display: flex; align-items: baseline; }
+  .toc .dots { flex: 1; border-bottom: 1.5px dotted #A9B1C4; margin: 0 8px; transform: translateY(-5px); }
+  .toc .pg { font-variant-numeric: tabular-nums; }
+  .toc .sub { padding-left: 28px; font-size: 16px; color: #4A5473; }
+</style>
+
+<div class="grid"></div>
+<div class="eyebrow">СОДЕРЖАНИЕ</div>
+<div class="title">Номера страниц проставляются<br>автоматически, не вручную</div>
+
+<div class="doc">
+  <div class="page">
+    <div class="h">СОДЕРЖАНИЕ</div>
+    <div class="toc">
+      <div><span>Введение</span><span class="dots"></span><span class="pg">3</span></div>
+      <div><span>1 Нормативная база пожарной безопасности</span><span class="dots"></span><span class="pg">5</span></div>
+      <div class="sub"><span>1.1 Требования ГОСТ и СП</span><span class="dots"></span><span class="pg">6</span></div>
+      <div class="sub"><span>1.2 Ведомственные регламенты</span><span class="dots"></span><span class="pg">9</span></div>
+      <div><span>2 Анализ систем защиты объекта</span><span class="dots"></span><span class="pg">11</span></div>
+      <div><span>Заключение</span><span class="dots"></span><span class="pg">18</span></div>
+      <div><span>Список литературы</span><span class="dots"></span><span class="pg">20</span></div>
+    </div>
+  </div>
+</div>
+<div class="footnote">Если в работе поменяется хоть одна страница, номера в содержании обновятся сами, не разъедутся</div>

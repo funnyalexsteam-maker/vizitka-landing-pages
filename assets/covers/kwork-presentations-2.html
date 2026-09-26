@@ -1,0 +1,35 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Схема крупно</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .flow { display: flex; align-items: center; gap: 22px; margin-top: 46px; }
+  .node {
+    flex: 1; background: #F1F4FA; border: 2px solid #DDE3EF; border-radius: 14px;
+    padding: 36px 20px; text-align: center; font-size: 24px; font-weight: 700; line-height: 1.3;
+  }
+  .node.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .node small { display: block; font-size: 15px; font-weight: 500; color: var(--grey); margin-top: 8px; }
+  .node.on small { color: #B9C2DE; }
+  .arr { color: var(--gold); font-size: 34px; font-weight: 700; }
+  .kicker { font-size: 15px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+  .rule { height: 4px; width: 70px; background: var(--gold); border-radius: 2px; margin: 20px 0 0; }
+</style>
+
+<div class="grid"></div>
+<div class="eyebrow">СХЕМА ИЗ ВАШИХ ДАННЫХ</div>
+<div class="title">Схему строю по фактам,<br>не беру картинки из интернета</div>
+
+<div class="doc">
+  <div class="kicker">Пример: обработка заявки</div>
+  <div class="rule"></div>
+  <div class="flow">
+    <div class="node">Заявка<small>поступила в CRM</small></div>
+    <div class="arr">›</div>
+    <div class="node on">Проверка<small>соответствие критериям</small></div>
+    <div class="arr">›</div>
+    <div class="node">Решение<small>ответ клиенту</small></div>
+  </div>
+</div>
+<div class="footnote">Пришлёте свой процесс, регламент или ГОСТ — построю схему по нему, а не по шаблону</div>

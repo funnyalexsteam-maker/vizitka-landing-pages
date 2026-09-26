@@ -1,0 +1,170 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Обложка: реферат по ГОСТ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --navy: #141B33;
+    --gold: #D4A24C;
+    --red: #C4523E;
+    --green: #2E7D5B;
+    --ink: #1A2038;
+    --grey: #8D96AE;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 900px;
+    background: radial-gradient(120% 90% at 18% 0%, #1E2747 0%, #141B33 58%, #0E1428 100%);
+    font-family: "Golos Text", sans-serif;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(212,162,76,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,162,76,.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .head { position: absolute; top: 58px; left: 66px; right: 66px; }
+  h1 {
+    font-family: "Unbounded", sans-serif;
+    font-size: 60px; font-weight: 700; line-height: 1.04; letter-spacing: -.02em;
+  }
+  h1 em { font-style: normal; color: var(--gold); }
+  .sub { margin-top: 18px; font-size: 25px; color: #C3CBDF; font-weight: 500; }
+  .sub b { color: #fff; font-weight: 600; }
+
+  .strip {
+    position: absolute; top: 296px; left: 66px; right: 66px;
+    display: flex; gap: 14px;
+  }
+  .chip {
+    background: rgba(255,255,255,.06);
+    border: 1.5px solid rgba(212,162,76,.34);
+    border-radius: 999px;
+    padding: 13px 24px;
+    font-size: 21px; font-weight: 600; color: #E7ECF7;
+  }
+  .chip b { color: var(--gold); font-weight: 700; }
+
+  .badge {
+    position: absolute; right: 66px; top: 58px;
+    background: var(--gold); color: var(--navy);
+    font-family: "Unbounded", sans-serif; font-weight: 700;
+    font-size: 21px; padding: 13px 22px; border-radius: 999px;
+    box-shadow: 0 10px 30px rgba(212,162,76,.3);
+  }
+
+  .compare {
+    position: absolute; left: 66px; right: 66px; bottom: 58px;
+    display: grid; grid-template-columns: 1fr 74px 1fr; align-items: center; gap: 0;
+  }
+  .col { position: relative; }
+  .tag {
+    position: absolute; top: -17px; left: 22px; z-index: 3;
+    font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    padding: 7px 15px; border-radius: 999px; color: #fff;
+  }
+  .tag.bad { background: var(--red); }
+  .tag.good { background: var(--green); }
+
+  .sheet {
+    background: #fff; color: var(--ink);
+    border-radius: 8px; padding: 38px 40px 30px;
+    height: 442px; box-shadow: 0 26px 60px rgba(0,0,0,.45);
+    overflow: hidden;
+  }
+  .sheet.bad { transform: rotate(-1.6deg); }
+  .sheet.good { transform: rotate(1.6deg); }
+
+  /* левая, плохая */
+  .bad .t1 { font-family: "Times New Roman", serif; font-size: 27px; font-weight: 700; text-align: left; }
+  .bad .t2 { font-family: Arial, sans-serif; font-size: 15px; margin-top: 7px; }
+  .bad .t3 { font-family: "Times New Roman", serif; font-size: 19px; margin-top: 26px; font-weight: 700; }
+  .bad p { font-family: Arial, sans-serif; font-size: 13.5px; line-height: 1.35; margin-top: 9px; text-align: left; }
+  .bad .tbl { margin-top: 16px; border: 1px solid #C9CFDD; }
+  .bad .tbl div { padding: 5px 8px; font-size: 12.5px; border-bottom: 1px solid #E2E6EF; font-family: Arial, sans-serif; }
+  .mark {
+    position: absolute; background: rgba(196,82,62,.14);
+    border: 1.5px dashed var(--red); border-radius: 4px;
+  }
+  .mlabel {
+    position: absolute; background: var(--red); color: #fff;
+    font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+  }
+
+  /* правая, хорошая */
+  .good .t1 { font-family: "Times New Roman", serif; font-size: 22px; font-weight: 700; text-align: center; line-height: 1.5; letter-spacing: .01em; }
+  .good .t2 { font-family: "Times New Roman", serif; font-size: 14.5px; text-align: center; margin-top: 20px; line-height: 1.75; }
+  .good .t3 { font-family: "Times New Roman", serif; font-size: 16px; font-weight: 700; text-align: center; margin-top: 22px; }
+  .good .toc { font-family: "Times New Roman", serif; font-size: 13.5px; margin-top: 10px; line-height: 1.78; }
+  .good .toc div { display: flex; align-items: baseline; }
+  .good .toc .dots { flex: 1; border-bottom: 1.5px dotted #A9B1C4; margin: 0 7px; transform: translateY(-4px); }
+  .good .pg { font-variant-numeric: tabular-nums; }
+
+  .arrow {
+    text-align: center; font-family: "Unbounded", sans-serif;
+    font-size: 40px; color: var(--gold); font-weight: 700;
+  }
+</style>
+
+<div class="grid"></div>
+
+<div class="head">
+  <h1>Реферат и курсовая<br><em>по ГОСТ</em></h1>
+  <div class="sub">Титульник, содержание, таблицы, источники. <b>За 1-2 дня</b></div>
+</div>
+
+<div class="strip">
+  <div class="chip">ГОСТ <b>7.32</b> и <b>7.0.5</b></div>
+  <div class="chip">Или <b>по методичке</b> кафедры</div>
+  <div class="chip">Автостили, правки <b>за минуты</b></div>
+</div>
+
+<div class="badge">от 1 000 ₽</div>
+
+<div class="compare">
+  <div class="col">
+    <div class="tag bad">Было</div>
+    <div class="sheet bad">
+      <div class="t1">Анализ систем противопожарной защиты</div>
+      <div class="t2">Реферат. Студент Петров</div>
+      <div class="t3">Введение</div>
+      <p>Актуальность темы обусловлена ростом требований к системам защиты. В данной работе рассматриваются основные подходы, применяемые на объектах различного назначения, а также анализируется нормативная база.</p>
+      <p>Целью работы является изучение действующих требований и выработка предложений.</p>
+      <div class="tbl">
+        <div>Таблица 1</div>
+        <div>Показатель — значение</div>
+        <div>Время эвакуации — 4 мин</div>
+      </div>
+      <div class="mark" style="left:42px; top:46px; width:330px; height:40px;"></div>
+      <div class="mlabel" style="left:42px; top:14px;">титульника нет, шрифты разные</div>
+      <div class="mark" style="left:42px; top:296px; width:330px; height:72px;"></div>
+      <div class="mlabel" style="left:42px; top:374px;">подпись таблицы не по ГОСТ</div>
+    </div>
+  </div>
+
+  <div class="arrow">›</div>
+
+  <div class="col">
+    <div class="tag good">Стало</div>
+    <div class="sheet good">
+      <div class="t1">МИНИСТЕРСТВО ОБРАЗОВАНИЯ<br>И НАУКИ РОССИЙСКОЙ ФЕДЕРАЦИИ</div>
+      <div class="t2">
+        РЕФЕРАТ<br>
+        по дисциплине «Пожарная безопасность»<br>
+        на тему: «Анализ систем противопожарной защиты»
+      </div>
+      <div class="t3">СОДЕРЖАНИЕ</div>
+      <div class="toc">
+        <div><span>Введение</span><span class="dots"></span><span class="pg">3</span></div>
+        <div><span>1 Нормативная база</span><span class="dots"></span><span class="pg">5</span></div>
+        <div><span>2 Анализ требований</span><span class="dots"></span><span class="pg">11</span></div>
+        <div><span>Заключение</span><span class="dots"></span><span class="pg">18</span></div>
+        <div><span>Список литературы</span><span class="dots"></span><span class="pg">20</span></div>
+      </div>
+    </div>
+  </div>
+</div>

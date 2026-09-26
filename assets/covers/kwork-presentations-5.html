@@ -1,0 +1,53 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Простыня текста против одной мысли</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .compare {
+    position: absolute; left: 66px; right: 66px; top: 232px; bottom: 64px;
+    display: grid; grid-template-columns: 1fr 64px 1fr; align-items: center;
+  }
+  .tag {
+    position: absolute; top: -18px; left: 24px; z-index: 3;
+    font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    padding: 7px 15px; border-radius: 999px; color: #fff;
+  }
+  .tag.bad { background: var(--red); }
+  .tag.good { background: var(--green); }
+  .col { position: relative; height: 100%; }
+  .slide {
+    background: #fff; color: var(--ink); border-radius: 10px;
+    height: 100%; padding: 40px 40px; box-shadow: 0 28px 64px rgba(0,0,0,.4);
+  }
+  .bad .slide { font-size: 16px; line-height: 1.55; overflow: hidden; }
+  .bad .h { font-size: 22px; font-weight: 700; margin-bottom: 14px; }
+  .good .slide { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .good .k { font-size: 15px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+  .good .big { font-family: "Unbounded", sans-serif; font-size: 46px; font-weight: 700; line-height: 1.15; margin-top: 18px; }
+  .good .sub { font-size: 17px; color: var(--grey); margin-top: 16px; }
+  .arrow { text-align: center; font-family: "Unbounded", sans-serif; font-size: 40px; color: var(--gold); font-weight: 700; }
+</style>
+
+<div class="grid"></div>
+<div class="eyebrow">СТИЛЬ ОФОРМЛЕНИЯ</div>
+<div class="title">Один слайд — одна мысль,<br>не полотно текста</div>
+
+<div class="compare">
+  <div class="col bad">
+    <div class="tag bad">Так не делаю</div>
+    <div class="slide">
+      <div class="h">Выводы по результатам анализа</div>
+      В ходе выполненной работы был проведён анализ существующих подходов к решению поставленной задачи, в результате которого установлено, что наиболее эффективным методом является комплексный подход, учитывающий совокупность факторов, влияющих на итоговый результат, включая нормативные требования, экономическую целесообразность и технические ограничения, характерные для рассматриваемого класса объектов и систем.
+    </div>
+  </div>
+  <div class="arrow">›</div>
+  <div class="col good">
+    <div class="tag good">Так делаю</div>
+    <div class="slide">
+      <div class="k">Главный вывод</div>
+      <div class="big">Комплексный подход<br>снижает риск на 38%</div>
+      <div class="sub">Учитывает нормативы, экономику и технические ограничения</div>
+    </div>
+  </div>
+</div>

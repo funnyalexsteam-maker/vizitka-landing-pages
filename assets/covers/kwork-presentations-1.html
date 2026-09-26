@@ -1,0 +1,167 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Обложка: презентации</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --navy: #141B33;
+    --navy-2: #1E2747;
+    --gold: #D4A24C;
+    --paper: #FFFFFF;
+    --ink: #1A2038;
+    --grey: #8D96AE;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 900px;
+    background: radial-gradient(120% 90% at 18% 0%, #1E2747 0%, #141B33 58%, #0E1428 100%);
+    font-family: "Golos Text", sans-serif;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+  }
+  .grain {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(212,162,76,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,162,76,.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .head { position: absolute; top: 62px; left: 66px; right: 66px; }
+  h1 {
+    font-family: "Unbounded", sans-serif;
+    font-size: 62px; font-weight: 700; line-height: 1.04;
+    letter-spacing: -.02em;
+  }
+  h1 em { font-style: normal; color: var(--gold); }
+  .sub {
+    margin-top: 20px; font-size: 26px; color: #C3CBDF; font-weight: 500;
+  }
+  .sub b { color: #fff; font-weight: 600; }
+
+  .stage { position: absolute; left: 0; right: 0; bottom: 0; height: 560px; }
+  .slide {
+    position: absolute;
+    width: 386px; height: 340px;
+    background: var(--paper);
+    border-radius: 10px;
+    box-shadow: 0 30px 70px rgba(0,0,0,.45);
+    padding: 24px 26px;
+    color: var(--ink);
+    transform-origin: bottom center;
+  }
+  /* нахлёст только краями, иначе соседний слайд съедает заголовок */
+  .s1 { left: 34px;  bottom: 62px; transform: rotate(-7deg); }
+  .s2 { left: 407px; bottom: 96px; transform: rotate(-1.5deg); z-index: 2; }
+  .s3 { left: 780px; bottom: 62px; transform: rotate(5deg); }
+
+  .s-kicker { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  .s-title { font-size: 23px; font-weight: 700; line-height: 1.2; margin-top: 10px; letter-spacing: -.01em; }
+  .s-rule { height: 3px; width: 54px; background: var(--gold); border-radius: 2px; margin: 13px 0 15px; }
+
+  /* слайд 1: титул */
+  .s1 .meta { font-size: 14px; color: var(--grey); line-height: 1.7; margin-top: 4px; }
+  .s1 .gost { margin-top: 18px; font-size: 12px; font-weight: 600; color: var(--ink); border: 1.5px solid #D9DEEA; border-radius: 6px; padding: 6px 10px; display: inline-block; }
+
+  /* слайд 2: схема */
+  .flow { display: flex; align-items: center; gap: 9px; margin-top: 4px; }
+  .node {
+    flex: 1; background: #F1F4FA; border: 1.5px solid #DDE3EF; border-radius: 7px;
+    padding: 13px 8px; text-align: center; font-size: 12.5px; font-weight: 600; line-height: 1.25;
+  }
+  .node.on { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .arr { color: var(--gold); font-size: 17px; font-weight: 700; }
+  .cap { margin-top: 16px; font-size: 12px; color: var(--grey); }
+
+  /* слайд 3: диаграмма */
+  .bars { display: flex; align-items: flex-end; gap: 14px; height: 132px; margin-top: 6px; }
+  .bar { flex: 1; background: var(--navy); border-radius: 4px 4px 0 0; position: relative; }
+  .bar.g { background: var(--gold); }
+  .bar span {
+    position: absolute; top: -21px; left: 0; right: 0; text-align: center;
+    font-size: 12.5px; font-weight: 700; color: var(--ink);
+  }
+  .axis { display: flex; gap: 14px; margin-top: 7px; }
+  .axis div { flex: 1; text-align: center; font-size: 11.5px; color: var(--grey); }
+
+  /* полоса преимуществ закрывает пустоту между заголовком и слайдами */
+  .strip {
+    position: absolute; top: 300px; left: 66px; right: 66px;
+    display: flex; gap: 14px;
+  }
+  .chip {
+    background: rgba(255,255,255,.06);
+    border: 1.5px solid rgba(212,162,76,.34);
+    border-radius: 999px;
+    padding: 13px 24px;
+    font-size: 21px; font-weight: 600; color: #E7ECF7;
+  }
+  .chip b { color: var(--gold); font-weight: 700; }
+
+  .badge {
+    position: absolute; right: 66px; top: 62px;
+    background: var(--gold); color: var(--navy);
+    font-family: "Unbounded", sans-serif; font-weight: 700;
+    font-size: 21px; padding: 13px 22px; border-radius: 999px;
+    box-shadow: 0 10px 30px rgba(212,162,76,.3);
+  }
+</style>
+
+<div class="grain"></div>
+
+<div class="head">
+  <h1>Презентация<br>из <em>ваших материалов</em></h1>
+  <div class="sub">По методичке, ГОСТ или брендбуку. <b>От 12 до 40 слайдов</b></div>
+</div>
+
+<div class="strip">
+  <div class="chip"><b>Схемы</b> по вашим данным</div>
+  <div class="chip">Строго <b>по методичке</b></div>
+  <div class="chip">Файл <b>PowerPoint</b></div>
+</div>
+
+<div class="badge">от 1 000 ₽</div>
+
+<div class="stage">
+  <!-- титульный -->
+  <div class="slide s1">
+    <div class="s-kicker">Титульный лист</div>
+    <div class="s-title">Анализ систем<br>противопожарной защиты</div>
+    <div class="s-rule"></div>
+    <div class="meta">
+      Курсовая работа<br>
+      Выполнил: студент группы 341<br>
+      Руководитель: доц. Иванов А. П.
+    </div>
+    <div class="gost">Оформлено по ГОСТ 7.32</div>
+  </div>
+
+  <!-- схема -->
+  <div class="slide s2">
+    <div class="s-kicker">Схема процесса</div>
+    <div class="s-title">Как устроен разбор заявки</div>
+    <div class="s-rule"></div>
+    <div class="flow">
+      <div class="node">Заявка</div>
+      <div class="arr">›</div>
+      <div class="node on">Проверка</div>
+      <div class="arr">›</div>
+      <div class="node">Решение</div>
+    </div>
+    <div class="cap">Схемы строю по вашим данным, не беру картинки из интернета</div>
+  </div>
+
+  <!-- диаграмма -->
+  <div class="slide s3">
+    <div class="s-kicker">Диаграмма по данным</div>
+    <div class="s-title">Время обработки, минуты</div>
+    <div class="s-rule"></div>
+    <div class="bars">
+      <div class="bar" style="height:46%"><span>18</span></div>
+      <div class="bar" style="height:68%"><span>27</span></div>
+      <div class="bar" style="height:54%"><span>21</span></div>
+      <div class="bar g" style="height:96%"><span>38</span></div>
+    </div>
+    <div class="axis"><div>I кв.</div><div>II кв.</div><div>III кв.</div><div>IV кв.</div></div>
+  </div>
+</div>

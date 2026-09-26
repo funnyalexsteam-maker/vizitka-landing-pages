@@ -1,0 +1,46 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Что прислать для заказа</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .doc { display: flex; flex-direction: column; justify-content: center; gap: 0; padding: 0 70px; }
+  .step { display: flex; align-items: flex-start; gap: 28px; padding: 30px 0; border-top: 1px solid #EEF1F7; }
+  .step:first-child { border-top: none; }
+  .num {
+    flex: none; width: 56px; height: 56px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Unbounded", sans-serif; font-size: 22px; font-weight: 700;
+  }
+  .txt .h { font-size: 22px; font-weight: 700; color: var(--ink); }
+  .txt .p { font-size: 16.5px; color: #57607D; margin-top: 6px; line-height: 1.45; }
+</style>
+
+<div class="grid"></div>
+<div class="eyebrow">ЧТО ПРИСЛАТЬ ДЛЯ ЗАКАЗА</div>
+<div class="title">Три пункта — и можно приступать</div>
+
+<div class="doc">
+  <div class="step">
+    <div class="num">1</div>
+    <div class="txt">
+      <div class="h">Файл работы в Word</div>
+      <div class="p">Текст реферата, курсовой или отчёта — оформляю ваш готовый текст, не пишу с нуля</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">2</div>
+    <div class="txt">
+      <div class="h">Методичка кафедры</div>
+      <div class="p">Если её нет — оформлю по ГОСТ 7.32, этого достаточно в большинстве вузов</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">3</div>
+    <div class="txt">
+      <div class="h">Замечания научрука, если есть</div>
+      <div class="p">Если уже были правки по оформлению — учту их сразу, чтобы не пересдавать дважды</div>
+    </div>
+  </div>
+</div>

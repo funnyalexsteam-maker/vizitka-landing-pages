@@ -1,0 +1,36 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Список литературы по ГОСТ 7.0.5</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .doc { display: flex; align-items: center; justify-content: center; }
+  .page {
+    width: 780px; height: 100%;
+    background: #fff; color: var(--ink);
+    border: 1px solid #E4E8F1;
+    padding: 56px 60px;
+    font-family: "Times New Roman", serif;
+  }
+  .h { font-size: 20px; font-weight: 700; text-align: center; letter-spacing: .04em; }
+  .list { margin-top: 30px; font-size: 15.5px; line-height: 1.85; counter-reset: src; }
+  .list li { list-style: none; padding-left: 34px; position: relative; margin-bottom: 10px; text-align: justify; }
+  .list li::before { counter-increment: src; content: counter(src) "."; position: absolute; left: 0; font-weight: 700; }
+</style>
+
+<div class="grid"></div>
+<div class="eyebrow">СПИСОК ЛИТЕРАТУРЫ</div>
+<div class="title">Оформление источников<br>по ГОСТ 7.0.5, со ссылками в тексте</div>
+
+<div class="doc">
+  <div class="page">
+    <div class="h">СПИСОК ЛИТЕРАТУРЫ</div>
+    <ul class="list">
+      <li>Технический регламент о требованиях пожарной безопасности : Федеральный закон от 22.07.2008 № 123-ФЗ. — М., 2008. — 143 с.</li>
+      <li>Собурь С. В. Пожарная безопасность предприятия : учеб. пособие. — 15-е изд. — М. : Пожкнига, 2023. — 480 с.</li>
+      <li>Кузнецова О. А. Оценка пожарного риска на производственных объектах // Пожаровзрывобезопасность. — 2024. — № 3. — С. 45–52.</li>
+      <li>СП 2.13130.2020. Системы противопожарной защиты. Обеспечение огнестойкости объектов защиты. — Введ. 2020-09-24. — М. : Стандартинформ, 2020.</li>
+    </ul>
+  </div>
+</div>
+<div class="footnote">Каждый источник в тексте помечается ссылкой вида [2, с. 47], пронумерован в порядке упоминания или по алфавиту</div>

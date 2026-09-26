@@ -1,0 +1,39 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Таблица с подписью по ГОСТ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .doc { display: flex; align-items: center; justify-content: center; }
+  .page {
+    width: 820px; height: 100%;
+    background: #fff; color: var(--ink);
+    border: 1px solid #E4E8F1;
+    padding: 56px 56px;
+    font-family: "Times New Roman", serif;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .cap { font-size: 15.5px; text-align: right; margin-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 15.5px; }
+  th, td { border: 1px solid #1A2038; padding: 10px 14px; text-align: left; }
+  th { font-weight: 700; background: #F4F1EA; }
+  .src { margin-top: 14px; font-size: 14px; color: #57607D; }
+</style>
+
+<div class="grid"></div>
+<div class="eyebrow">ТАБЛИЦЫ И РИСУНКИ</div>
+<div class="title">Подписи «Таблица 1» и «Рисунок 1»<br>по ГОСТ, а не как получилось</div>
+
+<div class="doc">
+  <div class="page">
+    <div class="cap">Таблица 1 — Классы пожарной опасности строительных конструкций</div>
+    <table>
+      <tr><th>Класс</th><th>Обозначение</th><th>Предел огнестойкости</th></tr>
+      <tr><td>К0</td><td>Непожароопасные</td><td>не менее REI 150</td></tr>
+      <tr><td>К1</td><td>Малопожароопасные</td><td>не менее REI 90</td></tr>
+      <tr><td>К2</td><td>Умереннопожароопасные</td><td>не менее REI 45</td></tr>
+    </table>
+    <div class="src">Источник: СП 2.13130.2020, таблица 4</div>
+  </div>
+</div>
+<div class="footnote">Нумерация таблиц и рисунков сквозная по всей работе, подпись строго над или под объектом</div>

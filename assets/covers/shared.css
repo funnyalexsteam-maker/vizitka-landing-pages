@@ -1,0 +1,50 @@
+/* Общие токены и базовые классы для галереи кворков "презентации" и "реферат".
+   Подключается всеми файлами kwork-*-N.html, чтобы не дублировать палитру. */
+:root {
+  --navy: #141B33;
+  --navy-2: #1E2747;
+  --gold: #D4A24C;
+  --paper: #FFFFFF;
+  --ink: #1A2038;
+  --grey: #8D96AE;
+  --red: #C4523E;
+  --green: #2E7D5B;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  width: 1200px; height: 900px;
+  background: radial-gradient(120% 90% at 18% 0%, #1E2747 0%, #141B33 58%, #0E1428 100%);
+  font-family: "Golos Text", sans-serif;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+.grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(212,162,76,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,162,76,.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.eyebrow {
+  position: absolute; top: 64px; left: 66px;
+  font-size: 15px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold);
+}
+.title {
+  position: absolute; top: 98px; left: 66px; right: 66px;
+  font-family: "Unbounded", sans-serif; font-size: 44px; font-weight: 700;
+  letter-spacing: -.015em; line-height: 1.12;
+}
+
+/* большая белая карточка-документ по центру, для слайдов/страниц крупным планом */
+.doc {
+  position: absolute; left: 66px; right: 66px; top: 232px; bottom: 64px;
+  background: var(--paper); color: var(--ink);
+  border-radius: 14px; box-shadow: 0 34px 80px rgba(0,0,0,.45);
+  padding: 52px 60px;
+}
+.footnote {
+  position: absolute; left: 66px; right: 66px; bottom: 26px;
+  font-size: 15px; color: #98A2BC;
+}
