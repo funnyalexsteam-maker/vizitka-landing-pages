@@ -11,7 +11,7 @@ Kwork и FL.ru показывают продавца без отзывов то�
 | # | Работа | Где лежит | Под какой кворк |
 |---|---|---|---|
 | 1 | Сайт-визитка для мастера маникюра | `client-alina.html`, `client-alina-nails.html` | Лендинг |
-| 2 | Сайт для студии Minerva | `client-minerva.html`, `client-minerva-mono.html` | Лендинг |
+| 2 | ~~Сайт для студии Minerva~~ — устарело, см. ниже | `client-minerva.html`, `client-minerva-mono.html` | — |
 | 3 | Лендинг-демо, расширенная версия | `vizitka-v2.html` (чипы услуг, статистика, QR, параллакс) | Лендинг |
 | 4 | Личная визитка с портфолио | `portfolio-alexander.html` | Лендинг, все кворки как ссылка |
 | 5 | Демо-бот бронирования | `D:\Projects\Freelance\booking-bot-demo` (grammy, запись на время) | Бот |
@@ -19,6 +19,8 @@ Kwork и FL.ru показывают продавца без отзывов то�
 | 7 | Бот автопостинга в канал | `beregi-vremya-bot`: публикует по расписанию | Бот, автоматизация |
 | 8 | Презентация по ГО и приватизации | `Personal\PresentaciiIPSA\Смолин_ГО_приватизация.pptx` | Презентация |
 | 9 | Курсовая с расчётами и моделью | `Personal\prognoz_ofp` (зональная модель, ветка master) | Реферат, презентация |
+
+**Уточнение к строке 2 (28.09.2026):** `client-minerva.html`/`client-minerva-mono.html` сейчас содержат анонимный демо-редизайн мебельной фабрики («ОРЕХ», pro-bono проект, [[mebel_factory_project]]), с баннером «демо-версия сайта, не заменяет действующий сайт». Это питч, а не сданная клиенту работа — для портфолио лендингов не годится. Как пример лендинга вместо него использовать `vizitka-v2.html` (CompService) или `landing.html` (MoneyPlan).
 
 Живые ссылки на 1-4 уже опубликованы через GitHub Pages:
 https://funnyalexsteam-maker.github.io/vizitka-landing-pages/<файл>.html
