@@ -691,5 +691,269 @@
 <div class="toast" id="toast"></div>
 
 <!-- SCRIPTS -->
+<script>
+/* ============ НАСТРОЙКИ МАГАЗИНА — заменить на реальные ============ */
+const CONFIG = {
+  brand: 'КОЗЛИК',
+  phone: '+7 (900) 000-00-69',
+  telegram: 'kozlik_parts',          // без @
+  email: 'zakaz@kozlik-parts.ru',
+  address: 'г. Москва, ул. Автозаводская, 69, склад 3',
+  hours: 'Пн–Пт 9:00–19:00, Сб 10:00–16:00',
+  mapLabel: 'Склад «Козлик»'
+};
+
+/* ============ УЗЛЫ (категории) ============ */
+const ICONS = {
+  engine: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M8 18h6l3-4h12l3 4h4v6h4v-4h2v14h-2v-4h-4v6h-6l-4 4H18l-4-4H8z"/><path d="M8 24H4M14 14v-4h12"/></svg>',
+  cooling: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="8" y="8" width="32" height="32" rx="3"/><path d="M14 8v32M20 8v32M26 8v32M32 8v32"/><path d="M8 16h32M8 32h32" opacity=".5"/></svg>',
+  transmission: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="20" r="8"/><circle cx="17" cy="20" r="3"/><circle cx="32" cy="31" r="6"/><circle cx="32" cy="31" r="2"/><path d="M17 9v3M17 28v3M6 20h3M25 20h3M9 12l2 2M23 26l2 2M9 28l2-2M23 14l2-2M32 22v3M32 37v3M23 31h3M38 31h3"/></svg>',
+  suspension: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 22c8 8 32 8 40 0"/><path d="M8 26c7 5 25 5 32 0"/><path d="M12 30c6 3 18 3 24 0"/><circle cx="6" cy="20" r="3"/><circle cx="42" cy="20" r="3"/><path d="M24 33v8"/></svg>',
+  brakes: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="5"/><path d="M11 18a14 14 0 0 1 8-8M37 30a14 14 0 0 1-8 8" stroke-width="5"/></svg>',
+  wheels: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="24" cy="24" r="19"/><circle cx="24" cy="24" r="11"/><circle cx="24" cy="24" r="3"/><path d="M24 5v4M24 39v4M5 24h4M39 24h4M10.5 10.5l3 3M34.5 34.5l3 3M10.5 37.5l3-3M34.5 13.5l3-3"/></svg>',
+  electrics: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M26 4 12 27h11l-3 17 16-24H25z"/></svg>',
+  body: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 30v-8l6-2 4-8h16v8h10l4 4v6z"/><circle cx="13" cy="32" r="4"/><circle cx="35" cy="32" r="4"/><path d="M17 20h13"/></svg>',
+  cabin: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 36V16c0-4 3-7 7-7h22c4 0 7 3 7 7v20"/><path d="M6 24h36M16 9v27M32 9v27"/></svg>'
+};
+
+const CATS = {
+  engine:       { name: 'Двигатель',      desc: 'Рядная «четвёрка» 2,1 л: поршневая, ГРМ, питание, смазка.' },
+  cooling:      { name: 'Охлаждение',     desc: 'Радиатор, помпа, термостат, облицовка и вентилятор.' },
+  transmission: { name: 'Трансмиссия',    desc: 'КПП, раздатка, карданы, мосты и сцепление.' },
+  suspension:   { name: 'Подвеска',       desc: 'Рессоры, рычажные амортизаторы, шкворни, втулки.' },
+  brakes:       { name: 'Тормоза',        desc: 'Барабанные тормоза: цилиндры, колодки, барабаны.' },
+  wheels:       { name: 'Колёса',         desc: 'Диски 16", шины 6,50–16, ступицы и подшипники.' },
+  electrics:    { name: 'Электрика',      desc: 'Фары, фонари, генератор, реле, проводка.' },
+  body:         { name: 'Кузов',          desc: 'Крылья, капот, двери, бамперы, пороги, облицовка.' },
+  cabin:        { name: 'Тент и салон',   desc: 'Тенты, дуги, сиденья, стёкла и уплотнители.' }
+};
+
+/* ============ ТОВАРЫ (цены — демо) ============
+   cond: new — новая, ussr — оригинал СССР, rest — восстановленная */
+const PARTS = [
+  { id: 1,  cat: 'engine', name: 'Поршневая группа, комплект на 4 цилиндра', sku: '69-1004015', price: 18900, cond: 'new', stock: 7 },
+  { id: 2,  cat: 'engine', name: 'Прокладка головки блока цилиндров', sku: '69-1003020', price: 950, cond: 'new', stock: 34 },
+  { id: 3,  cat: 'engine', name: 'Карбюратор К-22Г, после переборки', sku: 'K22G-1107010', price: 12400, cond: 'rest', stock: 3 },
+  { id: 4,  cat: 'engine', name: 'Бензонасос механический', sku: '69-1106010', price: 3200, cond: 'new', stock: 12 },
+  { id: 5,  cat: 'engine', name: 'Вкладыши коренные, ремонт 0,25', sku: '69-1000102', price: 2600, cond: 'ussr', stock: 5 },
+  { id: 6,  cat: 'engine', name: 'Распредвал с шестернёй', sku: '69-1006015', price: 9800, cond: 'ussr', stock: 2 },
+  { id: 7,  cat: 'cooling', name: 'Радиатор 3-рядный медный', sku: '69-1301010', price: 21500, cond: 'new', stock: 4 },
+  { id: 8,  cat: 'cooling', name: 'Насос водяной (помпа) в сборе', sku: '69-1307010', price: 4700, cond: 'new', stock: 9 },
+  { id: 9,  cat: 'cooling', name: 'Термостат 70 °C', sku: '69-1306010', price: 890, cond: 'new', stock: 21 },
+  { id: 10, cat: 'cooling', name: 'Крыльчатка вентилятора 4-лопастная', sku: '69-1308010', price: 2300, cond: 'ussr', stock: 6 },
+  { id: 11, cat: 'transmission', name: 'Коробка передач в сборе', sku: '69-1700010', price: 38000, cond: 'rest', stock: 2 },
+  { id: 12, cat: 'transmission', name: 'Раздаточная коробка в сборе', sku: '69-1800010', price: 42000, cond: 'rest', stock: 1 },
+  { id: 13, cat: 'transmission', name: 'Диск сцепления ведомый', sku: '69-1601130', price: 3900, cond: 'new', stock: 14 },
+  { id: 14, cat: 'transmission', name: 'Вал карданный передний', sku: '69-2203010', price: 11200, cond: 'ussr', stock: 3 },
+  { id: 15, cat: 'transmission', name: 'Главная пара заднего моста 5,125', sku: '69-2402165', price: 16500, cond: 'ussr', stock: 2 },
+  { id: 16, cat: 'transmission', name: 'Шарнир равных угловых скоростей', sku: '69-2304055', price: 7400, cond: 'new', stock: 8 },
+  { id: 17, cat: 'suspension', name: 'Рессора передняя в сборе', sku: '69-2902012', price: 9600, cond: 'new', stock: 6 },
+  { id: 18, cat: 'suspension', name: 'Рессора задняя в сборе', sku: '69-2912012', price: 11400, cond: 'new', stock: 5 },
+  { id: 19, cat: 'suspension', name: 'Амортизатор рычажный', sku: '69-2905006', price: 5800, cond: 'rest', stock: 8 },
+  { id: 20, cat: 'suspension', name: 'Шкворень поворотного кулака, пара', sku: '69-2304019', price: 1900, cond: 'new', stock: 17 },
+  { id: 21, cat: 'suspension', name: 'Втулки рессор, комплект на машину', sku: '69-2902027', price: 1650, cond: 'new', stock: 25 },
+  { id: 22, cat: 'brakes', name: 'Главный тормозной цилиндр', sku: '69-3505010', price: 3400, cond: 'new', stock: 11 },
+  { id: 23, cat: 'brakes', name: 'Колодки тормозные, комплект на ось', sku: '69-3501090', price: 2800, cond: 'new', stock: 19 },
+  { id: 24, cat: 'brakes', name: 'Цилиндр колёсный', sku: '69-3501040', price: 1300, cond: 'new', stock: 30 },
+  { id: 25, cat: 'brakes', name: 'Барабан тормозной', sku: '69-3501070', price: 4900, cond: 'ussr', stock: 4 },
+  { id: 26, cat: 'wheels', name: 'Диск колеса 16" разборный', sku: '69-3101015', price: 6200, cond: 'rest', stock: 10 },
+  { id: 27, cat: 'wheels', name: 'Шина 6,50–16 «военная ёлка»', sku: 'TYRE-65016', price: 8700, cond: 'new', stock: 16 },
+  { id: 28, cat: 'wheels', name: 'Подшипник ступицы, комплект', sku: '69-3103020', price: 1450, cond: 'new', stock: 22 },
+  { id: 29, cat: 'electrics', name: 'Фара в сборе со стеклом', sku: 'FG-2-3711010', price: 3600, cond: 'new', stock: 12 },
+  { id: 30, cat: 'electrics', name: 'Генератор 12 В (переделка под 12 В)', sku: 'G-12-3701000', price: 8900, cond: 'rest', stock: 4 },
+  { id: 31, cat: 'electrics', name: 'Фонарь задний', sku: 'FP-3716010', price: 1200, cond: 'new', stock: 20 },
+  { id: 32, cat: 'electrics', name: 'Жгут проводки, полный комплект', sku: '69-3724010', price: 7900, cond: 'new', stock: 5 },
+  { id: 33, cat: 'body', name: 'Крыло переднее правое', sku: '69-8403010', price: 14800, cond: 'new', stock: 3 },
+  { id: 34, cat: 'body', name: 'Капот', sku: '69-8402010', price: 17500, cond: 'new', stock: 2 },
+  { id: 35, cat: 'body', name: 'Дверь передняя левая, каркас', sku: '69-6100015', price: 13200, cond: 'new', stock: 3 },
+  { id: 36, cat: 'body', name: 'Облицовка радиатора', sku: '69-8401010', price: 9900, cond: 'new', stock: 4 },
+  { id: 37, cat: 'body', name: 'Бампер передний', sku: '69-2803012', price: 5400, cond: 'new', stock: 6 },
+  { id: 38, cat: 'cabin', name: 'Тент брезентовый ГАЗ-69А', sku: 'TENT-69A', price: 24500, cond: 'new', stock: 5 },
+  { id: 39, cat: 'cabin', name: 'Дуги тента, комплект', sku: '69-8808010', price: 8600, cond: 'new', stock: 4 },
+  { id: 40, cat: 'cabin', name: 'Сиденье водителя в сборе', sku: '69-6800010', price: 11900, cond: 'rest', stock: 2 },
+  { id: 41, cat: 'cabin', name: 'Стекло ветровое с уплотнителем', sku: '69-5206010', price: 4300, cond: 'new', stock: 7 },
+  { id: 42, cat: 'cabin', name: 'Руль в сборе', sku: '69-3402015', price: 5200, cond: 'ussr', stock: 3 }
+];
+
+const COND = { new: ['new', 'Новая'], ussr: ['ussr', 'СССР, консервация'], rest: ['rest', 'Восстановлена'] };
+const rub = n => n.toLocaleString('ru-RU') + ' ₽';
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* ---------- контакты из CONFIG ---------- */
+document.querySelectorAll('[data-cfg]').forEach(el => {
+  const k = el.dataset.cfg, v = CONFIG[k];
+  if (k === 'phone') { el.textContent = v; el.href = 'tel:' + v.replace(/[^\d+]/g, ''); }
+  else if (k === 'telegram') { el.textContent = '@' + v; el.href = 'https://t.me/' + v; }
+  else if (k === 'email') { el.textContent = v; el.href = 'mailto:' + v; }
+  else el.textContent = v;
+});
+$('#year').textContent = new Date().getFullYear();
+$('#statCount').textContent = PARTS.length;
+
+/* ---------- бегущая строка ---------- */
+(() => {
+  const words = Object.values(CATS).map(c => '<span>' + c.name + '</span>').join('');
+  $('#strip').innerHTML = words + words;
+})();
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+/* ============ КАТАЛОГ ============ */
+const state = { cat: 'all', q: '' };
+
+function renderTabs() {
+  const tabs = [['all', 'Все', PARTS.length]].concat(
+    Object.entries(CATS).map(([k, c]) => [k, c.name, PARTS.filter(p => p.cat === k).length]));
+  $('#tabs').innerHTML = tabs.map(([k, n, c]) =>
+    `<button class="tab${state.cat === k ? ' on' : ''}" data-cat="${k}">${n}<span class="n">${c}</span></button>`).join('');
+}
+
+function renderGrid() {
+  const q = state.q.trim().toLowerCase();
+  const list = PARTS.filter(p => (state.cat === 'all' || p.cat === state.cat) &&
+    (!q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q)));
+  $('#grid').innerHTML = list.length ? list.map(p => {
+    const [cls, label] = COND[p.cond];
+    return `<article class="card" data-id="${p.id}">
+      <div class="card-visual"><span class="badge ${cls}">${label}</span>${ICONS[p.cat]}</div>
+      <div class="meta"><span>${esc(p.sku)}</span><span class="stock${p.stock < 4 ? ' low' : ''}">${p.stock < 4 ? 'Осталось ' + p.stock : 'В наличии'}</span></div>
+      <h3>${esc(p.name)}</h3>
+      <button class="show-3d" data-cat="${p.cat}">◎ Показать на машине — ${CATS[p.cat].name}</button>
+      <div class="card-bottom"><span class="price">${rub(p.price)}</span><button class="add" data-add="${p.id}">В корзину</button></div>
+    </article>`;
+  }).join('') : `<div class="empty">Ничего не нашли по запросу «${esc(state.q)}».<br><a href="#request">Оставьте заявку</a> — подберём деталь под заказ.</div>`;
+}
+
+$('#tabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  state.cat = b.dataset.cat; renderTabs(); renderGrid();
+});
+$('#search').addEventListener('input', e => { state.q = e.target.value; renderGrid(); });
+
+function showCatInCatalog(cat) {
+  state.cat = cat; state.q = ''; $('#search').value = '';
+  renderTabs(); renderGrid();
+  $('#catalog').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* 3D-наклон карточек за курсором */
+$('#grid').addEventListener('pointermove', e => {
+  const c = e.target.closest('.card'); if (!c || e.pointerType !== 'mouse') return;
+  const r = c.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+  c.style.transform = `perspective(900px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-4px)`;
+});
+$('#grid').addEventListener('pointerout', e => {
+  const c = e.target.closest('.card'); if (c && !c.contains(e.relatedTarget)) c.style.transform = '';
+});
+
+/* ============ КОРЗИНА ============ */
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem('gaz69-cart')) || {}; } catch (e) {}
+const saveCart = () => { try { localStorage.setItem('gaz69-cart', JSON.stringify(cart)); } catch (e) {} };
+const byId = id => PARTS.find(p => p.id === +id);
+
+function addToCart(id, btn) {
+  cart[id] = (cart[id] || 0) + 1; saveCart(); renderCart();
+  const cb = $('#cartBtn'); cb.classList.remove('bump'); void cb.offsetWidth; cb.classList.add('bump');
+  if (btn) { const t = btn.textContent; btn.textContent = '✓ Добавлено'; btn.classList.add('done'); setTimeout(() => { btn.textContent = t; btn.classList.remove('done'); }, 1200); }
+  toast('«' + byId(id).name + '» — в корзине');
+}
+
+function renderCart() {
+  const ids = Object.keys(cart).filter(id => byId(id));
+  const count = ids.reduce((s, id) => s + cart[id], 0);
+  const total = ids.reduce((s, id) => s + cart[id] * byId(id).price, 0);
+  const cc = $('#cartCount'); cc.textContent = count; cc.classList.toggle('show', count > 0);
+  $('#cartTotal').textContent = rub(total);
+  $('#cartList').innerHTML = ids.length ? ids.map(id => {
+    const p = byId(id);
+    return `<div class="ci">
+      <div class="ci-ico">${ICONS[p.cat]}</div>
+      <div><b>${esc(p.name)}</b><small>${esc(p.sku)} · ${rub(p.price)}</small>
+        <div class="qty"><button data-dec="${id}">−</button><span>${cart[id]}</span><button data-inc="${id}">+</button></div></div>
+      <div><div class="sum">${rub(p.price * cart[id])}</div><button class="rm" data-rm="${id}">Убрать</button></div>
+    </div>`;
+  }).join('') : '<div class="cart-empty">Корзина пуста.<br>Выберите узел на 3D-машине или в каталоге.</div>';
+  $('#orderForm').style.display = ids.length ? '' : 'none';
+}
+
+$('#cartList').addEventListener('click', e => {
+  const t = e.target;
+  if (t.dataset.inc) cart[t.dataset.inc]++;
+  else if (t.dataset.dec) { if (--cart[t.dataset.dec] <= 0) delete cart[t.dataset.dec]; }
+  else if (t.dataset.rm) delete cart[t.dataset.rm];
+  else return;
+  saveCart(); renderCart();
+});
+
+const openCart = () => { $('#cart').classList.add('open'); $('#overlay').classList.add('show'); };
+const closeCart = () => { $('#cart').classList.remove('open'); $('#overlay').classList.remove('show'); };
+$('#cartBtn').addEventListener('click', openCart);
+$('#cartClose').addEventListener('click', closeCart);
+$('#overlay').addEventListener('click', closeCart);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCart(); closePartDrawer && closePartDrawer(); } });
+
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-add]'); if (a) addToCart(a.dataset.add, a);
+  const s = e.target.closest('.show-3d'); if (s) { window.scrollTo({ top: 0, behavior: 'smooth' }); selectCat(s.dataset.cat); }
+});
+
+/* Заказ и заявка: без сервера — открываем письмо с готовым текстом.
+   Для приёма в Telegram-бот подключите свой endpoint в sendLead(). */
+function sendLead(subject, body) {
+  location.href = 'mailto:' + CONFIG.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+}
+$('#orderForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const lines = Object.keys(cart).map(id => `${byId(id).sku} — ${byId(id).name} × ${cart[id]} = ${rub(byId(id).price * cart[id])}`);
+  sendLead('Заказ с сайта', `Имя: ${$('#ordName').value}\nТелефон: ${$('#ordPhone').value}\n\n${lines.join('\n')}\n\nИтого: ${$('#cartTotal').textContent}`);
+  toast('Заказ сформирован — мы перезвоним');
+});
+$('#requestForm').addEventListener('submit', e => {
+  e.preventDefault();
+  sendLead('Запрос детали под заказ', `Имя: ${$('#rqName').value}\nКонтакт: ${$('#rqPhone').value}\n\n${$('#rqText').value}`);
+  toast('Запрос отправлен — ответим в течение дня');
+  e.target.reset();
+});
+
+/* ============ ПАНЕЛЬ УЗЛА (общая для 3D и каталога) ============ */
+let onCatSelect = null;   // заполняет 3D-сцена
+function openPartDrawer(cat) {
+  const c = CATS[cat];
+  $('#dpEyebrow').textContent = 'Узел на схеме';
+  $('#dpTitle').textContent = c.name;
+  $('#dpDesc').textContent = c.desc;
+  $('#dpList').innerHTML = PARTS.filter(p => p.cat === cat).map(p => `
+    <div class="dp-item"><b>${esc(p.name)}</b><span class="price">${rub(p.price)}</span>
+      <small>${esc(p.sku)} · ${COND[p.cond][1]}</small><button class="add-mini" data-add="${p.id}">+ В корзину</button></div>`).join('');
+  $('#dpAll').onclick = e => { e.preventDefault(); showCatInCatalog(cat); };
+  $('#drawerPart').classList.add('open');
+}
+function closePartDrawer() {
+  $('#drawerPart').classList.remove('open');
+  document.querySelectorAll('.pin.active').forEach(p => p.classList.remove('active'));
+  if (onCatSelect) onCatSelect(null);
+}
+function selectCat(cat) {
+  openPartDrawer(cat);
+  document.querySelectorAll('.pin').forEach(p => p.classList.toggle('active', p.dataset.cat === cat));
+  if (onCatSelect) onCatSelect(cat);
+}
+$('#dpClose').addEventListener('click', closePartDrawer);
+
+/* ---------- появление блоков ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+renderTabs(); renderGrid(); renderCart();
+</script>
+<!-- 3D -->
 </body>
 </html>
