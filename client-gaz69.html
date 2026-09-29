@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>КОЗЛИК — запчасти для ГАЗ-69 и ГАЗ-69А</title>
-<meta name="description" content="Запчасти для ГАЗ-69 и ГАЗ-69А: двигатель, трансмиссия, подвеска, кузов, тент. Интерактивный 3D-каталог — выберите узел прямо на машине.">
+<title>NEXT·ДЕТАЛЬ — запчасти для ГАЗель NEXT</title>
+<meta name="description" content="Запчасти для ГАЗель NEXT: двигатель, трансмиссия, подвеска, кабина, платформа и тент. Интерактивный 3D-каталог — выберите узел прямо на машине.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   /*
-    САЙТ МАГАЗИНА ЗАПЧАСТЕЙ ГАЗ-69.
+    САЙТ МАГАЗИНА ЗАПЧАСТЕЙ ГАЗЕЛЬ NEXT.
     Контакты, адрес и реквизиты — в объекте CONFIG в начале <script>.
     Товары — в массиве PARTS (там же). Цены и остатки демонстрационные.
   */
@@ -119,13 +119,16 @@
   #scene { position: absolute; inset: 72px 0 0 0; z-index: 1; cursor: grab; touch-action: pan-y; }
   #scene:active { cursor: grabbing; }
   #scene canvas { display: block; width: 100% !important; height: 100% !important; }
+  .scene-shade { position: absolute; inset: 72px 0 0 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(90deg, rgba(14,16,14,.88) 0%, rgba(14,16,14,.55) 30%, rgba(14,16,14,0) 55%),
+                linear-gradient(0deg, var(--bg) 0%, rgba(14,16,14,0) 18%); }
   .scene-fallback { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); text-align: center; padding: 40px; }
 
   .hero-copy { position: relative; z-index: 3; max-width: 470px; padding-top: 9vh; pointer-events: none; }
   .hero-copy > * { pointer-events: auto; }
   .hero-copy { transition: opacity .5s; }
   @media (min-width: 821px) { .hero.focus .hero-copy { opacity: .12; } .hero.focus .hero-copy > * { pointer-events: none; } }
-  .hero h1 { font-size: clamp(38px, 5.2vw, 70px); line-height: 1.02; margin: 18px 0 20px; }
+  .hero h1 { font-size: clamp(36px, 4.6vw, 62px); line-height: 1.02; margin: 18px 0 20px; }
   .hero h1 .accent { color: var(--brass); }
   .hero-lead { color: var(--muted); font-size: 17px; margin: 0 0 30px; max-width: 420px; }
   .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -394,6 +397,7 @@
     .hero { min-height: auto; display: flex; flex-direction: column; }
     .hero-copy { padding-top: 40px; max-width: none; }
     .hero-stats { gap: 22px; }
+    .scene-shade { display: none; }
     #scene, .pins { position: relative; inset: auto; height: 62vh; min-height: 420px; }
     .pins { position: absolute; left: 0; right: 0; bottom: 0; top: auto; }
     .scene-wrap { position: relative; }
@@ -426,8 +430,8 @@
 <header class="header">
   <div class="wrap">
     <a class="logo" href="#top">
-      <span class="logo-mark">69</span>
-      <span class="logo-text">КОЗЛИК<small>ЗАПЧАСТИ ДЛЯ ГАЗ-69</small></span>
+      <span class="logo-mark">N</span>
+      <span class="logo-text">NEXT·ДЕТАЛЬ<small>ЗАПЧАСТИ ДЛЯ ГАЗЕЛЬ NEXT</small></span>
     </a>
     <nav class="nav">
       <a href="#top">3D-подбор</a>
@@ -449,9 +453,9 @@
 <section class="hero" id="top">
   <div class="wrap">
     <div class="hero-copy">
-      <span class="eyebrow">ГАЗ-69 · ГАЗ-69А · УАЗ-69</span>
-      <h1>Запчасти<br>на&nbsp;«козлика»&nbsp;—<br><span class="accent">прямо на&nbsp;машине</span></h1>
-      <p class="hero-lead">Покрутите 3D-модель и нажмите на нужный узел: двигатель, мосты, рессоры, тент. Покажем всё, что есть для него на складе.</p>
+      <span class="eyebrow">ГАЗель NEXT · бортовая · фургон · Citiline</span>
+      <h1>Запчасти<br>на&nbsp;ГАЗель&nbsp;NEXT<br><span class="accent">прямо на&nbsp;машине</span></h1>
+      <p class="hero-lead">Покрутите 3D-модель и нажмите на нужный узел: двигатель, мост, рессоры, оптику, тент. Покажем всё, что есть для него на складе.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#catalog">Открыть каталог</a>
         <a class="btn btn-ghost" href="#request">Найти деталь под заказ</a>
@@ -466,6 +470,7 @@
 
   <div class="scene-wrap">
     <div id="scene"><div class="scene-fallback" id="sceneFallback">Загружаем 3D-модель…</div></div>
+    <div class="scene-shade"></div>
     <div class="pins" id="pins"></div>
   </div>
 
@@ -483,10 +488,10 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>Вращать
     </button>
     <div class="swatches" id="swatches">
-      <button class="swatch on" data-color="#55623a" style="background:#55623a" title="Защитный"></button>
-      <button class="swatch" data-color="#b9a878" style="background:#b9a878" title="Песочный"></button>
-      <button class="swatch" data-color="#4d6a7c" style="background:#4d6a7c" title="Серо-голубой"></button>
-      <button class="swatch" data-color="#8c2f24" style="background:#8c2f24" title="Вишнёвый"></button>
+      <button class="swatch on" data-color="#ecedea" style="background:#ecedea" title="Белый"></button>
+      <button class="swatch" data-color="#9ba3aa" style="background:#9ba3aa" title="Серебристый"></button>
+      <button class="swatch" data-color="#2c4f86" style="background:#2c4f86" title="Синий"></button>
+      <button class="swatch" data-color="#a3261e" style="background:#a3261e" title="Красный"></button>
     </div>
   </div>
   <div class="scene-hint">
@@ -514,9 +519,9 @@
     <div class="section-head reveal">
       <div>
         <span class="eyebrow">Каталог</span>
-        <h2>Всё для ГАЗ-69<br>по узлам</h2>
+        <h2>Всё для ГАЗель NEXT<br>по узлам</h2>
       </div>
-      <p>Новые детали, оригинал времён СССР с консервации и восстановленные узлы. Каждую позицию проверяем перед отправкой.</p>
+      <p>Оригинальные детали ГАЗ, проверенные аналоги и восстановленные агрегаты. Каждую позицию проверяем перед отправкой.</p>
     </div>
     <div class="cat-controls reveal">
       <div class="tabs" id="tabs"></div>
@@ -542,20 +547,20 @@
       <div class="feature reveal">
         <span class="num">02</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>
-        <h3>Оригинал с консервации</h3>
-        <p>Детали советского производства в заводской смазке и упаковке — для точной реставрации.</p>
+        <h3>Оригинал и аналоги</h3>
+        <p>Детали с конвейера ГАЗ и проверенные аналоги — подскажем, где можно сэкономить без риска.</p>
       </div>
       <div class="feature reveal">
         <span class="num">03</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg>
         <h3>Восстановим ваш узел</h3>
-        <p>Переборка мостов, раздатки, КПП и карбюратора. Гарантия на работу — 6 месяцев.</p>
+        <p>Переборка КПП, заднего моста, ТНВД и турбины. Гарантия на работу — 6 месяцев.</p>
       </div>
       <div class="feature reveal">
         <span class="num">04</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
         <h3>Доставка по России и СНГ</h3>
-        <p>СДЭК, Почта, ПЭК и Деловые Линии. Крупные узлы упаковываем в обрешётку.</p>
+        <p>СДЭК, Почта, ПЭК и Деловые Линии. Кабинные детали и стёкла упаковываем в обрешётку.</p>
       </div>
     </div>
   </div>
@@ -573,7 +578,7 @@
       <form class="form" id="requestForm">
         <div class="field"><label for="rqName">Имя</label><input id="rqName" required placeholder="Как к вам обращаться"></div>
         <div class="field"><label for="rqPhone">Телефон или Telegram</label><input id="rqPhone" required placeholder="+7 … или @username"></div>
-        <div class="field"><label for="rqText">Что ищете</label><textarea id="rqText" rows="3" required placeholder="Например: крышка раздаточной коробки, ГАЗ-69А 1962 г."></textarea></div>
+        <div class="field"><label for="rqText">Что ищете</label><textarea id="rqText" rows="3" required placeholder="Например: рулевой механизм, ГАЗель NEXT 2019 г., дизель 2.8"></textarea></div>
         <button class="btn btn-primary" type="submit">Отправить запрос</button>
         <span class="form-note">Ответим в течение рабочего дня.</span>
       </form>
@@ -591,7 +596,7 @@
       <div class="step reveal">
         <span class="k">01 — Заказ</span>
         <h3>Оформите корзину</h3>
-        <p>Менеджер перезвонит, уточнит модификацию и год выпуска, чтобы деталь точно подошла.</p>
+        <p>Менеджер перезвонит, уточнит VIN, модификацию и год выпуска, чтобы деталь точно подошла.</p>
       </div>
       <div class="step reveal">
         <span class="k">02 — Оплата</span>
@@ -612,20 +617,20 @@
   <div class="wrap history">
     <div class="reveal">
       <span class="eyebrow">О машине</span>
-      <h2 style="font-size:clamp(30px,4vw,48px);line-height:1.08;margin:14px 0 18px">Двадцать лет<br>на конвейере</h2>
-      <p class="history-lead">ГАЗ-69 — первый массовый советский полноприводный внедорожник послевоенного поколения. Простой, ремонтопригодный и почти неубиваемый, он служил армии, колхозам и геологам, а сегодня — одна из самых любимых машин у реставраторов.</p>
+      <h2 style="font-size:clamp(30px,4vw,48px);line-height:1.08;margin:14px 0 18px">Рабочая лошадка<br>малого бизнеса</h2>
+      <p class="history-lead">ГАЗель NEXT — второе поколение самого массового лёгкого коммерческого автомобиля в России. Бортовые, фургоны, микроавтобусы, эвакуаторы и изотермы — у всех одна база, а значит, и большинство запчастей общие.</p>
       <div class="specs">
-        <div><span>Двигатель</span><b>2,1 л, 55 л.с.</b></div>
-        <div><span>Привод</span><b>4×4, передний отключаемый</b></div>
-        <div><span>Коробка</span><b>3-ступ. + раздатка</b></div>
-        <div><span>Колёса</span><b>6,50–16</b></div>
+        <div><span>Дизель</span><b>2.8 л, до 150 л.с.</b></div>
+        <div><span>Бензин</span><b>2.7 л</b></div>
+        <div><span>Коробка</span><b>5-ступ. механика</b></div>
+        <div><span>Колёса</span><b>185/75 R16C</b></div>
       </div>
     </div>
     <div class="timeline reveal">
-      <div class="tl"><b>1953</b><p>Начало серийного выпуска на Горьковском автозаводе. Два варианта кузова: ГАЗ-69 с грузовым отсеком и пятиместный ГАЗ-69А.</p></div>
-      <div class="tl"><b>1954–1956</b><p>Производство переносят в Ульяновск — будущий УАЗ. С 1956 года машину выпускают только там.</p></div>
-      <div class="tl"><b>1960-е</b><p>Машину поставляют более чем в 50 стран, собирают по лицензии в Румынии и КНДР.</p></div>
-      <div class="tl"><b>1973</b><p>Конвейер останавливают, на смену приходит УАЗ-469. Всего выпущено более 600 тысяч «козликов».</p></div>
+      <div class="tl"><b>2013</b><p>Старт выпуска бортовой ГАЗели NEXT на Горьковском автозаводе: новая кабина, рулевое с рейкой, дисковые тормоза спереди.</p></div>
+      <div class="tl"><b>2014</b><p>Появляются цельнометаллический фургон и микроавтобус на той же платформе.</p></div>
+      <div class="tl"><b>Позже</b><p>Модификации Citiline, полноприводные и удлинённые версии, пассажирские и спецмашины.</p></div>
+      <div class="tl"><b>Сегодня</b><p>Сотни тысяч машин в работе — поэтому держим на складе всё, что ломается чаще всего.</p></div>
     </div>
   </div>
 </section>
@@ -669,7 +674,7 @@
 
 <footer class="footer">
   <div class="wrap">
-    <span>© <span id="year"></span> <span data-cfg="brand">КОЗЛИК</span> — запчасти для ГАЗ-69. Цены на сайте не являются публичной офертой.</span>
+    <span>© <span id="year"></span> <span data-cfg="brand">NEXT·ДЕТАЛЬ</span> — запчасти для ГАЗель NEXT. Цены на сайте не являются публичной офертой.</span>
     <span>3D-модель — стилизованная схема для навигации по каталогу.</span>
   </div>
 </footer>
@@ -697,13 +702,13 @@
 <script>
 /* ============ НАСТРОЙКИ МАГАЗИНА — заменить на реальные ============ */
 const CONFIG = {
-  brand: 'КОЗЛИК',
+  brand: 'NEXT·ДЕТАЛЬ',
   phone: '+7 (900) 000-00-69',
-  telegram: 'kozlik_parts',          // без @
-  email: 'zakaz@kozlik-parts.ru',
+  telegram: 'next_detal',          // без @
+  email: 'zakaz@next-detal.ru',
   address: 'г. Москва, ул. Автозаводская, 69, склад 3',
   hours: 'Пн–Пт 9:00–19:00, Сб 10:00–16:00',
-  mapLabel: 'Склад «Козлик»'
+  mapLabel: 'Склад NEXT·ДЕТАЛЬ'
 };
 
 /* ============ УЗЛЫ (категории) ============ */
@@ -720,65 +725,65 @@ const ICONS = {
 };
 
 const CATS = {
-  engine:       { name: 'Двигатель',      desc: 'Рядная «четвёрка» 2,1 л: поршневая, ГРМ, питание, смазка.' },
-  cooling:      { name: 'Охлаждение',     desc: 'Радиатор, помпа, термостат, облицовка и вентилятор.' },
-  transmission: { name: 'Трансмиссия',    desc: 'КПП, раздатка, карданы, мосты и сцепление.' },
-  suspension:   { name: 'Подвеска',       desc: 'Рессоры, рычажные амортизаторы, шкворни, втулки.' },
-  brakes:       { name: 'Тормоза',        desc: 'Барабанные тормоза: цилиндры, колодки, барабаны.' },
-  wheels:       { name: 'Колёса',         desc: 'Диски 16", шины 6,50–16, ступицы и подшипники.' },
-  electrics:    { name: 'Электрика',      desc: 'Фары, фонари, генератор, реле, проводка.' },
-  body:         { name: 'Кузов',          desc: 'Крылья, капот, двери, бамперы, пороги, облицовка.' },
-  cabin:        { name: 'Тент и салон',   desc: 'Тенты, дуги, сиденья, стёкла и уплотнители.' }
+  engine:       { name: 'Двигатель',        desc: 'Дизель 2.8 и бензин 2.7: ГРМ, фильтры, форсунки, прокладки.' },
+  cooling:      { name: 'Охлаждение',       desc: 'Радиатор, интеркулер, помпа, термостат, вентилятор.' },
+  transmission: { name: 'Трансмиссия',      desc: 'Сцепление, КПП, карданный вал, задний мост.' },
+  suspension:   { name: 'Подвеска',         desc: 'Рессоры, амортизаторы, стабилизатор, рулевые тяги.' },
+  brakes:       { name: 'Тормоза',          desc: 'Диски и колодки спереди, барабаны сзади, суппорты.' },
+  wheels:       { name: 'Колёса',           desc: 'Диски R16, шины 185/75 R16C, ступичные подшипники.' },
+  electrics:    { name: 'Электрика',        desc: 'Фары, фонари, генератор, стартер, датчики.' },
+  body:         { name: 'Кабина',           desc: 'Капот, двери, бампер, зеркала, стёкла, облицовка.' },
+  cabin:        { name: 'Платформа и тент', desc: 'Борта, замки бортов, тенты, дуги, пол платформы.' }
 };
 
 /* ============ ТОВАРЫ (цены — демо) ============
-   cond: new — новая, ussr — оригинал СССР, rest — восстановленная */
+   cond: new — новая, ussr — оригинал ГАЗ, rest — восстановленная */
 const PARTS = [
-  { id: 1,  cat: 'engine', name: 'Поршневая группа, комплект на 4 цилиндра', sku: '69-1004015', price: 18900, cond: 'new', stock: 7 },
-  { id: 2,  cat: 'engine', name: 'Прокладка головки блока цилиндров', sku: '69-1003020', price: 950, cond: 'new', stock: 34 },
-  { id: 3,  cat: 'engine', name: 'Карбюратор К-22Г, после переборки', sku: 'K22G-1107010', price: 12400, cond: 'rest', stock: 3 },
-  { id: 4,  cat: 'engine', name: 'Бензонасос механический', sku: '69-1106010', price: 3200, cond: 'new', stock: 12 },
-  { id: 5,  cat: 'engine', name: 'Вкладыши коренные, ремонт 0,25', sku: '69-1000102', price: 2600, cond: 'ussr', stock: 5 },
-  { id: 6,  cat: 'engine', name: 'Распредвал с шестернёй', sku: '69-1006015', price: 9800, cond: 'ussr', stock: 2 },
-  { id: 7,  cat: 'cooling', name: 'Радиатор 3-рядный медный', sku: '69-1301010', price: 21500, cond: 'new', stock: 4 },
-  { id: 8,  cat: 'cooling', name: 'Насос водяной (помпа) в сборе', sku: '69-1307010', price: 4700, cond: 'new', stock: 9 },
-  { id: 9,  cat: 'cooling', name: 'Термостат 70 °C', sku: '69-1306010', price: 890, cond: 'new', stock: 21 },
-  { id: 10, cat: 'cooling', name: 'Крыльчатка вентилятора 4-лопастная', sku: '69-1308010', price: 2300, cond: 'ussr', stock: 6 },
-  { id: 11, cat: 'transmission', name: 'Коробка передач в сборе', sku: '69-1700010', price: 38000, cond: 'rest', stock: 2 },
-  { id: 12, cat: 'transmission', name: 'Раздаточная коробка в сборе', sku: '69-1800010', price: 42000, cond: 'rest', stock: 1 },
-  { id: 13, cat: 'transmission', name: 'Диск сцепления ведомый', sku: '69-1601130', price: 3900, cond: 'new', stock: 14 },
-  { id: 14, cat: 'transmission', name: 'Вал карданный передний', sku: '69-2203010', price: 11200, cond: 'ussr', stock: 3 },
-  { id: 15, cat: 'transmission', name: 'Главная пара заднего моста 5,125', sku: '69-2402165', price: 16500, cond: 'ussr', stock: 2 },
-  { id: 16, cat: 'transmission', name: 'Шарнир равных угловых скоростей', sku: '69-2304055', price: 7400, cond: 'new', stock: 8 },
-  { id: 17, cat: 'suspension', name: 'Рессора передняя в сборе', sku: '69-2902012', price: 9600, cond: 'new', stock: 6 },
-  { id: 18, cat: 'suspension', name: 'Рессора задняя в сборе', sku: '69-2912012', price: 11400, cond: 'new', stock: 5 },
-  { id: 19, cat: 'suspension', name: 'Амортизатор рычажный', sku: '69-2905006', price: 5800, cond: 'rest', stock: 8 },
-  { id: 20, cat: 'suspension', name: 'Шкворень поворотного кулака, пара', sku: '69-2304019', price: 1900, cond: 'new', stock: 17 },
-  { id: 21, cat: 'suspension', name: 'Втулки рессор, комплект на машину', sku: '69-2902027', price: 1650, cond: 'new', stock: 25 },
-  { id: 22, cat: 'brakes', name: 'Главный тормозной цилиндр', sku: '69-3505010', price: 3400, cond: 'new', stock: 11 },
-  { id: 23, cat: 'brakes', name: 'Колодки тормозные, комплект на ось', sku: '69-3501090', price: 2800, cond: 'new', stock: 19 },
-  { id: 24, cat: 'brakes', name: 'Цилиндр колёсный', sku: '69-3501040', price: 1300, cond: 'new', stock: 30 },
-  { id: 25, cat: 'brakes', name: 'Барабан тормозной', sku: '69-3501070', price: 4900, cond: 'ussr', stock: 4 },
-  { id: 26, cat: 'wheels', name: 'Диск колеса 16" разборный', sku: '69-3101015', price: 6200, cond: 'rest', stock: 10 },
-  { id: 27, cat: 'wheels', name: 'Шина 6,50–16 «военная ёлка»', sku: 'TYRE-65016', price: 8700, cond: 'new', stock: 16 },
-  { id: 28, cat: 'wheels', name: 'Подшипник ступицы, комплект', sku: '69-3103020', price: 1450, cond: 'new', stock: 22 },
-  { id: 29, cat: 'electrics', name: 'Фара в сборе со стеклом', sku: 'FG-2-3711010', price: 3600, cond: 'new', stock: 12 },
-  { id: 30, cat: 'electrics', name: 'Генератор 12 В (переделка под 12 В)', sku: 'G-12-3701000', price: 8900, cond: 'rest', stock: 4 },
-  { id: 31, cat: 'electrics', name: 'Фонарь задний', sku: 'FP-3716010', price: 1200, cond: 'new', stock: 20 },
-  { id: 32, cat: 'electrics', name: 'Жгут проводки, полный комплект', sku: '69-3724010', price: 7900, cond: 'new', stock: 5 },
-  { id: 33, cat: 'body', name: 'Крыло переднее правое', sku: '69-8403010', price: 14800, cond: 'new', stock: 3 },
-  { id: 34, cat: 'body', name: 'Капот', sku: '69-8402010', price: 17500, cond: 'new', stock: 2 },
-  { id: 35, cat: 'body', name: 'Дверь передняя левая, каркас', sku: '69-6100015', price: 13200, cond: 'new', stock: 3 },
-  { id: 36, cat: 'body', name: 'Облицовка радиатора', sku: '69-8401010', price: 9900, cond: 'new', stock: 4 },
-  { id: 37, cat: 'body', name: 'Бампер передний', sku: '69-2803012', price: 5400, cond: 'new', stock: 6 },
-  { id: 38, cat: 'cabin', name: 'Тент брезентовый ГАЗ-69А', sku: 'TENT-69A', price: 24500, cond: 'new', stock: 5 },
-  { id: 39, cat: 'cabin', name: 'Дуги тента, комплект', sku: '69-8808010', price: 8600, cond: 'new', stock: 4 },
-  { id: 40, cat: 'cabin', name: 'Сиденье водителя в сборе', sku: '69-6800010', price: 11900, cond: 'rest', stock: 2 },
-  { id: 41, cat: 'cabin', name: 'Стекло ветровое с уплотнителем', sku: '69-5206010', price: 4300, cond: 'new', stock: 7 },
-  { id: 42, cat: 'cabin', name: 'Руль в сборе', sku: '69-3402015', price: 5200, cond: 'ussr', stock: 3 }
+  { id: 1,  cat: 'engine', name: 'Комплект ГРМ (цепь, успокоители, натяжитель), дизель 2.8', sku: 'NX-1006100', price: 16900, cond: 'new', stock: 6 },
+  { id: 2,  cat: 'engine', name: 'Прокладка ГБЦ, дизель 2.8', sku: 'NX-1003020', price: 3400, cond: 'new', stock: 14 },
+  { id: 3,  cat: 'engine', name: 'Форсунка топливная, дизель 2.8', sku: 'NX-1112010', price: 18500, cond: 'rest', stock: 4 },
+  { id: 4,  cat: 'engine', name: 'Турбокомпрессор, дизель 2.8', sku: 'NX-1118010', price: 42000, cond: 'rest', stock: 2 },
+  { id: 5,  cat: 'engine', name: 'Фильтр топливный тонкой очистки', sku: 'NX-1117010', price: 1450, cond: 'new', stock: 40 },
+  { id: 6,  cat: 'engine', name: 'Ремень приводной поликлиновой', sku: 'NX-1308020', price: 1900, cond: 'new', stock: 22 },
+  { id: 7,  cat: 'cooling', name: 'Радиатор охлаждения алюминиевый', sku: 'NX-1301010', price: 14800, cond: 'new', stock: 5 },
+  { id: 8,  cat: 'cooling', name: 'Интеркулер', sku: 'NX-1172010', price: 12900, cond: 'new', stock: 3 },
+  { id: 9,  cat: 'cooling', name: 'Насос водяной (помпа)', sku: 'NX-1307010', price: 5600, cond: 'new', stock: 9 },
+  { id: 10, cat: 'cooling', name: 'Бачок расширительный с крышкой', sku: 'NX-1311010', price: 1700, cond: 'new', stock: 12 },
+  { id: 11, cat: 'transmission', name: 'Комплект сцепления (корзина, диск, выжимной)', sku: 'NX-1601000', price: 13500, cond: 'new', stock: 8 },
+  { id: 12, cat: 'transmission', name: 'КПП 5-ступенчатая в сборе', sku: 'NX-1700010', price: 89000, cond: 'rest', stock: 1 },
+  { id: 13, cat: 'transmission', name: 'Вал карданный с промопорой', sku: 'NX-2200010', price: 17800, cond: 'new', stock: 3 },
+  { id: 14, cat: 'transmission', name: 'Подшипник промежуточной опоры', sku: 'NX-2202080', price: 1600, cond: 'new', stock: 18 },
+  { id: 15, cat: 'transmission', name: 'Редуктор заднего моста', sku: 'NX-2402010', price: 46000, cond: 'rest', stock: 2 },
+  { id: 16, cat: 'transmission', name: 'Полуось задняя', sku: 'NX-2403070', price: 6900, cond: 'new', stock: 6 },
+  { id: 17, cat: 'suspension', name: 'Рессора задняя в сборе', sku: 'NX-2912012', price: 15400, cond: 'new', stock: 4 },
+  { id: 18, cat: 'suspension', name: 'Рессора передняя в сборе', sku: 'NX-2902012', price: 11200, cond: 'new', stock: 5 },
+  { id: 19, cat: 'suspension', name: 'Амортизатор передний газомасляный', sku: 'NX-2905006', price: 3900, cond: 'new', stock: 16 },
+  { id: 20, cat: 'suspension', name: 'Амортизатор задний газомасляный', sku: 'NX-2915006', price: 3700, cond: 'new', stock: 14 },
+  { id: 21, cat: 'suspension', name: 'Наконечник рулевой тяги', sku: 'NX-3414056', price: 1350, cond: 'new', stock: 30 },
+  { id: 22, cat: 'brakes', name: 'Колодки тормозные передние, комплект', sku: 'NX-3501800', price: 2600, cond: 'new', stock: 35 },
+  { id: 23, cat: 'brakes', name: 'Диск тормозной передний', sku: 'NX-3501077', price: 3900, cond: 'new', stock: 20 },
+  { id: 24, cat: 'brakes', name: 'Колодки тормозные задние, барабанные', sku: 'NX-3502090', price: 2900, cond: 'new', stock: 24 },
+  { id: 25, cat: 'brakes', name: 'Суппорт передний в сборе', sku: 'NX-3501010', price: 7800, cond: 'rest', stock: 5 },
+  { id: 26, cat: 'wheels', name: 'Диск колёсный R16 штампованный', sku: 'NX-3101015', price: 4600, cond: 'new', stock: 20 },
+  { id: 27, cat: 'wheels', name: 'Шина 185/75 R16C всесезонная', sku: 'TYRE-1857516', price: 7900, cond: 'new', stock: 28 },
+  { id: 28, cat: 'wheels', name: 'Подшипник ступицы передней', sku: 'NX-3103020', price: 2300, cond: 'new', stock: 17 },
+  { id: 29, cat: 'electrics', name: 'Фара головного света левая', sku: 'NX-3711011', price: 9800, cond: 'new', stock: 6 },
+  { id: 30, cat: 'electrics', name: 'Генератор 14 В, 120 А', sku: 'NX-3701010', price: 14500, cond: 'rest', stock: 4 },
+  { id: 31, cat: 'electrics', name: 'Фонарь задний комбинированный', sku: 'NX-3716010', price: 2400, cond: 'new', stock: 15 },
+  { id: 32, cat: 'electrics', name: 'Стартер редукторный', sku: 'NX-3708010', price: 11800, cond: 'new', stock: 5 },
+  { id: 33, cat: 'body', name: 'Бампер передний', sku: 'NX-2803010', price: 8900, cond: 'new', stock: 5 },
+  { id: 34, cat: 'body', name: 'Капот', sku: 'NX-8402010', price: 16500, cond: 'new', stock: 3 },
+  { id: 35, cat: 'body', name: 'Дверь передняя левая в сборе', sku: 'NX-6100015', price: 24900, cond: 'new', stock: 2 },
+  { id: 36, cat: 'body', name: 'Зеркало заднего вида с подогревом', sku: 'NX-8201020', price: 4700, cond: 'new', stock: 11 },
+  { id: 37, cat: 'body', name: 'Стекло ветровое', sku: 'NX-5206010', price: 11500, cond: 'new', stock: 4 },
+  { id: 38, cat: 'cabin', name: 'Тент на платформу 3 м, ПВХ', sku: 'NX-TENT-3', price: 26500, cond: 'new', stock: 4 },
+  { id: 39, cat: 'cabin', name: 'Каркас тента (дуги, стойки), комплект', sku: 'NX-8808010', price: 14200, cond: 'new', stock: 3 },
+  { id: 40, cat: 'cabin', name: 'Борт боковой алюминиевый', sku: 'NX-8500510', price: 9800, cond: 'new', stock: 6 },
+  { id: 41, cat: 'cabin', name: 'Замок борта, пара', sku: 'NX-8500770', price: 1200, cond: 'new', stock: 25 },
+  { id: 42, cat: 'cabin', name: 'Настил пола платформы, фанера', sku: 'NX-8500015', price: 7400, cond: 'new', stock: 5 }
 ];
 
-const COND = { new: ['new', 'Новая'], ussr: ['ussr', 'СССР, консервация'], rest: ['rest', 'Восстановлена'] };
+const COND = { new: ['new', 'Новая'], ussr: ['ussr', 'Оригинал ГАЗ'], rest: ['rest', 'Восстановлена'] };
 const rub = n => n.toLocaleString('ru-RU') + ' ₽';
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -858,8 +863,8 @@ $('#grid').addEventListener('pointerout', e => {
 
 /* ============ КОРЗИНА ============ */
 let cart = {};
-try { cart = JSON.parse(localStorage.getItem('gaz69-cart')) || {}; } catch (e) {}
-const saveCart = () => { try { localStorage.setItem('gaz69-cart', JSON.stringify(cart)); } catch (e) {} };
+try { cart = JSON.parse(localStorage.getItem('next-cart')) || {}; } catch (e) {}
+const saveCart = () => { try { localStorage.setItem('next-cart', JSON.stringify(cart)); } catch (e) {} };
 const byId = id => PARTS.find(p => p.id === +id);
 
 function addToCart(id, btn) {
@@ -962,7 +967,7 @@ renderTabs(); renderGrid(); renderCart();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script>
-/* ============ 3D-МОДЕЛЬ ГАЗ-69 ============
+/* ============ 3D-МОДЕЛЬ ГАЗЕЛЬ NEXT ============
    Машина собрана из примитивов по узлам (CATS). Клик по узлу или метке —
    открывается панель с деталями, остальные узлы становятся полупрозрачными. */
 (function () {
@@ -1020,59 +1025,111 @@ renderTabs(); renderGrid(); renderCart();
   /* --- свет --- */
   scene.add(new THREE.HemisphereLight(0xe6ecd9, 0x16180f, 0.55));
   const key = new THREE.DirectionalLight(0xfff0d6, 1.7);
-  key.position.set(4, 8, 5); key.castShadow = true;
+  key.position.set(5, 10, 6); key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048);
-  Object.assign(key.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: 1, far: 20 });
+  Object.assign(key.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: 1, far: 30 });
   key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02;
   scene.add(key);
   const rim = new THREE.DirectionalLight(0xa9b8ff, 0.7); rim.position.set(-6, 3, -5); scene.add(rim);
   const warm = new THREE.PointLight(0xe3aa3e, 0.6, 8); warm.position.set(3, 0.6, 2.5); scene.add(warm);
 
-  /* --- подиум --- */
+  /* --- фон: панорама вечернего города + асфальтовая площадка --- */
   (() => {
-    const cv = document.createElement('canvas'); cv.width = cv.height = 256;
-    const cx = cv.getContext('2d'), gr = cx.createRadialGradient(128, 128, 20, 128, 128, 128);
-    gr.addColorStop(0, '#fff'); gr.addColorStop(.55, '#aaa'); gr.addColorStop(1, '#000');
-    cx.fillStyle = gr; cx.fillRect(0, 0, 256, 256);
-    const ground = new THREE.Mesh(new THREE.CircleGeometry(8, 64), new THREE.MeshStandardMaterial({
-      color: col(0x1b1f19), roughness: .9, metalness: .1, transparent: true, alphaMap: new THREE.CanvasTexture(cv) }));
+    const cv = document.createElement('canvas'); cv.width = 4096; cv.height = 1024;
+    const c = cv.getContext('2d'), HZ = 740;              // линия горизонта на холсте
+    const sky = c.createLinearGradient(0, 0, 0, HZ);
+    sky.addColorStop(0, '#0b111c'); sky.addColorStop(.45, '#1d2842'); sky.addColorStop(.78, '#5a4a5c'); sky.addColorStop(1, '#d7874a');
+    c.fillStyle = sky; c.fillRect(0, 0, 4096, HZ);
+    const sun = (x) => {
+      const g = c.createRadialGradient(x, HZ, 10, x, HZ, 520);
+      g.addColorStop(0, 'rgba(255,196,120,.95)'); g.addColorStop(.25, 'rgba(240,140,70,.45)'); g.addColorStop(1, 'rgba(240,140,70,0)');
+      c.fillStyle = g; c.fillRect(x - 520, HZ - 520, 1040, 520);
+    };
+    sun(1500);
+    for (let i = 0; i < 160; i++) { c.fillStyle = `rgba(255,255,255,${Math.random() * .5})`; c.fillRect(Math.random() * 4096, Math.random() * 300, 2, 2); }
+    let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const skyline = (base, hMin, hMax, colr, winP, winC) => {
+      for (let x = 0; x < 4096;) {
+        const w = 40 + rnd() * 110, h = hMin + rnd() * (hMax - hMin);
+        c.fillStyle = colr; c.fillRect(x, base - h, w, h + 2);
+        if (rnd() < .18) c.fillRect(x + w * .45, base - h - 40, 4, 40);   // антенна
+        for (let wy = base - h + 10; wy < base - 12; wy += 16)
+          for (let wx = x + 7; wx < x + w - 10; wx += 13)
+            if (rnd() < winP) { c.fillStyle = winC; c.fillRect(wx, wy, 6, 8); c.fillStyle = colr; }
+        x += w + rnd() * 8;
+      }
+    };
+    c.fillStyle = '#2b2f45'; c.beginPath(); c.moveTo(0, HZ);
+    for (let x = 0; x <= 4096; x += 64) c.lineTo(x, HZ - 90 - Math.sin(x / 400) * 40 - Math.sin(x / 170) * 15);
+    c.lineTo(4096, HZ); c.fill();
+    skyline(HZ, 60, 220, '#1b2032', .12, 'rgba(255,214,150,.55)');
+    skyline(HZ + 4, 30, 140, '#11141d', .2, 'rgba(255,200,120,.9)');
+    const low = c.createLinearGradient(0, HZ, 0, 1024);
+    low.addColorStop(0, '#171a22'); low.addColorStop(1, '#101216');
+    c.fillStyle = low; c.fillRect(0, HZ, 4096, 1024 - HZ);
+    const tex = new THREE.CanvasTexture(cv); tex.encoding = THREE.sRGBEncoding; tex.anisotropy = 4;
+    const pano = new THREE.Mesh(new THREE.CylinderGeometry(22, 22, 14, 96, 1, true),
+      new THREE.MeshBasicMaterial({ map: tex, side: THREE.BackSide, fog: false, depthWrite: false }));
+    pano.position.y = 14 / 2 - 14 * (1 - HZ / 1024) + 1.2;   // горизонт на высоте ~1.2 м
+    pano.rotation.y = -.6;
+    scene.add(pano);
+    scene.fog = new THREE.Fog(0x14171e, 14, 24);
+
+    // асфальт с разметкой
+    const gc = document.createElement('canvas'); gc.width = gc.height = 1024;
+    const g = gc.getContext('2d');
+    g.fillStyle = '#23262b'; g.fillRect(0, 0, 1024, 1024);
+    for (let i = 0; i < 9000; i++) { const v = 25 + Math.random() * 30 | 0; g.fillStyle = `rgb(${v},${v + 2},${v + 5})`; g.fillRect(Math.random() * 1024, Math.random() * 1024, 2, 2); }
+    g.fillStyle = 'rgba(227,170,62,.55)';
+    for (let i = 0; i < 6; i++) g.fillRect(170 + i * 140, 250, 8, 520);   // парковочные линии
+    const gt = new THREE.CanvasTexture(gc); gt.encoding = THREE.sRGBEncoding; gt.anisotropy = 4;
+    const ground = new THREE.Mesh(new THREE.CircleGeometry(22, 96), new THREE.MeshStandardMaterial({ map: gt, roughness: .85, metalness: .05 }));
     ground.rotation.x = -PI / 2; ground.receiveShadow = true; scene.add(ground);
-    [2.7, 3.35].forEach((r, i) => {
-      const ring = new THREE.Mesh(new THREE.RingGeometry(r, r + (i ? .01 : .02), 128),
-        new THREE.MeshBasicMaterial({ color: 0xe3aa3e, transparent: true, opacity: i ? .15 : .35 }));
-      ring.rotation.x = -PI / 2; ring.position.y = .003; scene.add(ring);
+    gt.wrapS = gt.wrapT = THREE.RepeatWrapping; gt.repeat.set(3, 3);
+    [4.4, 5.2].forEach((r, i) => {
+      const ring = new THREE.Mesh(new THREE.RingGeometry(r, r + (i ? .015 : .03), 160),
+        new THREE.MeshBasicMaterial({ color: 0xe3aa3e, transparent: true, opacity: i ? .18 : .4 }));
+      ring.rotation.x = -PI / 2; ring.position.y = .004; scene.add(ring);
     });
-    const grid = new THREE.GridHelper(14, 28, 0x93a562, 0x93a562);
-    grid.material.transparent = true; grid.material.opacity = .06; grid.position.y = .001; scene.add(grid);
+    // фонари площадки
+    [[-7, -6], [7, -7], [-8, 6]].forEach(([x, z]) => {
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(.06, .08, 5, 10), std(0x2a2d33, .6, .6));
+      pole.position.set(x, 2.5, z); scene.add(pole);
+      const lamp = new THREE.Mesh(new THREE.BoxGeometry(.7, .12, .3), std(0x2a2d33, .6, .6, { emissive: col(0xffd9a0), emissiveIntensity: 1.2 }));
+      lamp.position.set(x + (x < 0 ? .3 : -.3), 5, z); scene.add(lamp);
+      const pl = new THREE.PointLight(0xffc98a, .5, 12); pl.position.set(x, 4.6, z); scene.add(pl);
+    });
   })();
 
   /* --- материалы --- */
-  const std = (c, r, m, extra) => new THREE.MeshStandardMaterial(Object.assign({ color: col(c), roughness: r, metalness: m }, extra));
+  function std(c, r, m, extra) { return new THREE.MeshStandardMaterial(Object.assign({ color: col(c), roughness: r, metalness: m }, extra)); }
   const M = {
-    paint: new THREE.MeshPhysicalMaterial({ color: col(0x55623a), roughness: .5, metalness: .2, clearcoat: .4, clearcoatRoughness: .35 }),
-    dark: std(0x23261f, .7, .4),
-    frame: std(0x191b17, .8, .3),
+    paint: new THREE.MeshPhysicalMaterial({ color: col(0xecedea), roughness: .32, metalness: .15, clearcoat: .8, clearcoatRoughness: .15 }),
+    plastic: std(0x2b2d31, .7, .1),
+    dark: std(0x222428, .6, .4),
+    frame: std(0x17181b, .75, .35),
     rubber: std(0x151515, .92, 0),
-    chrome: std(0xe8e8e8, .15, 1),
-    canvas: std(0x5f5c43, .95, 0),
-    canvasDark: std(0x46442f, .95, 0),
-    glass: new THREE.MeshPhysicalMaterial({ color: col(0xaecbc6), roughness: .05, metalness: .1, transparent: true, opacity: .22 }),
-    window: std(0x252a25, .2, .1, { transparent: true, opacity: .7 }),
-    lens: std(0xfff6dc, .1, 0, { emissive: col(0xffe7a8), emissiveIntensity: .9 }),
-    red: std(0xb3261e, .3, 0, { emissive: col(0x7a120c), emissiveIntensity: .8 }),
-    engine: std(0x3f463a, .45, .55),
-    head: std(0x8a7b4a, .35, .65),
-    radiator: std(0x2b2b27, .5, .6),
-    copper: std(0xa86b3c, .35, .8),
-    seat: std(0x3d2c22, .75, 0)
+    chrome: std(0xe8e8e8, .12, 1),
+    steel: std(0xa0a5ab, .4, .7),
+    alu: std(0xb9bec3, .35, .75),
+    canvas: std(0x4b5a69, .95, 0),
+    canvasDark: std(0x3a4652, .95, 0),
+    glass: new THREE.MeshPhysicalMaterial({ color: col(0x1a2129), roughness: .05, metalness: .6, clearcoat: 1, side: THREE.DoubleSide }),
+    headGlass: new THREE.MeshPhysicalMaterial({ color: col(0x2b3440), roughness: .08, metalness: .7, clearcoat: 1 }),
+    lens: std(0xfff6dc, .1, 0, { emissive: col(0xfff0d0), emissiveIntensity: 1.1 }),
+    amber: std(0xe39a2e, .3, 0, { emissive: col(0x8a4a0a), emissiveIntensity: .8 }),
+    red: std(0xb3261e, .3, 0, { emissive: col(0x7a120c), emissiveIntensity: .9 }),
+    engine: std(0x3a3e44, .45, .6),
+    head: std(0x8b1f1f, .4, .3),
+    radiator: std(0x2b2d30, .5, .6)
   };
 
   /* --- структура: узел -> группа --- */
   const car = new THREE.Group(); scene.add(car);
   const groups = {}; Object.keys(CATS).forEach(k => { groups[k] = new THREE.Group(); car.add(groups[k]); });
   const EX = {   // смещения для режима «Разобрать»
-    engine: V(.35, 1.25, 0), cooling: V(.95, .55, 0), transmission: V(0, 0, 0), suspension: V(0, .05, 0),
-    brakes: V(0, 0, 0), wheels: V(0, 0, 0), electrics: V(.15, .8, 0), body: V(0, .55, 0), cabin: V(0, 1.35, 0)
+    engine: V(.6, 1.9, 0), cooling: V(1.3, .7, 0), transmission: V(0, 0, 0), suspension: V(0, .05, 0),
+    brakes: V(0, 0, 0), wheels: V(0, 0, 0), electrics: V(.35, .85, 0), body: V(.2, .7, 0), cabin: V(-.4, 1.3, 0)
   };
   const meshes = [], nodes = [];
 
@@ -1103,213 +1160,202 @@ renderTabs(); renderGrid(); renderCart();
     const d = b.clone().sub(a), m = part(cat, new THREE.CylinderGeometry(r, r, d.length(), 14), mat, a.clone().add(b).multiplyScalar(.5), null, ex);
     m.quaternion.setFromUnitVectors(V(0, 1, 0), d.normalize()); return m;
   }
-  function bend(geo, k, axis) {  // изгиб для рессор и крыши
+  function bend(geo, k, axis) {
     const p = geo.attributes.position;
     for (let i = 0; i < p.count; i++) { const a = axis === 'z' ? p.getZ(i) : p.getX(i); p.setY(i, p.getY(i) + k * a * a); }
     geo.computeVertexNormals(); return geo;
   }
   function extrude(shape, depth, bevel) {
-    return new THREE.ExtrudeGeometry(shape, { depth, curveSegments: 28, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 3 });
+    return new THREE.ExtrudeGeometry(shape, { depth, curveSegments: 28, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 4 });
   }
 
-  /* ---------- КУЗОВ ---------- */
-  const R = .39, W = .24, BASE = 1.15, TRACK = .72;
+  /* Габариты ГАЗели NEXT (бортовая, м): база 3,15; колёса R16; задние спаренные */
+  const R = .36, W = .2, FX = 1.9, RX = -1.25, FT = .86, RT = .78;
+
+  /* ---------- КАБИНА ---------- */
   (() => {
-    // корыто кузова с задними арками
     const s = new THREE.Shape();
-    s.moveTo(-1.86, .62); s.lineTo(-1.64, .62);
-    s.absarc(-BASE, .38, .47, PI - .33, .33, true);
-    s.lineTo(-.66, .62); s.lineTo(.62, .62); s.lineTo(.62, 1.18); s.lineTo(-1.86, 1.18); s.closePath();
-    const tub = part('body', extrude(s, 1.6, .03), M.paint, V(0, 0, -.8));
-    // передние крылья
-    const f = new THREE.Shape();
-    f.moveTo(.6, .66); f.lineTo(.6, 1.02); f.lineTo(1.3, 1.02);
-    f.quadraticCurveTo(1.74, 1.0, 1.78, .74); f.lineTo(1.78, .6);
-    f.absarc(BASE, .38, .47, .33, PI - .33, false); f.lineTo(.6, .6); f.closePath();
-    const fg = extrude(f, .36, .03);
-    part('body', fg, M.paint, V(0, 0, .47));
-    part('body', fg, M.paint, V(0, 0, -.83));
-    // капот на шарнире
+    s.moveTo(.55, .62); s.lineTo(1.47, .62);
+    s.absarc(FX, .36, .5, PI - .55, .55, true);
+    s.lineTo(2.72, .55); s.lineTo(2.8, .62); s.lineTo(2.8, .98); s.lineTo(2.74, 1.03); s.lineTo(2.06, 1.1); s.lineTo(2.04, 1.3);
+    s.quadraticCurveTo(1.6, 1.75, 1.28, 2.04); s.quadraticCurveTo(1.2, 2.12, 1.0, 2.12);
+    s.lineTo(.66, 2.12); s.quadraticCurveTo(.56, 2.12, .55, 2.0); s.closePath();
+    part('body', extrude(s, 1.94, .05), M.paint, V(0, 0, -.97));
+    // капот на шарнире у лобового стекла
     const h = new THREE.Shape();
-    h.moveTo(-.46, 0); h.lineTo(.46, 0); h.lineTo(.46, .2); h.quadraticCurveTo(.46, .3, .32, .3);
-    h.lineTo(-.32, .3); h.quadraticCurveTo(-.46, .3, -.46, .2); h.closePath();
-    const hg = extrude(h, 1.03, .012); hg.rotateY(PI / 2);
-    const hoodPivot = new THREE.Group(); hoodPivot.position.set(.62, 1.1, 0);
-    const hood = new THREE.Mesh(hg, M.paint); hood.position.y = -.3; hoodPivot.add(hood);
-    const seam = new THREE.Mesh(new THREE.BoxGeometry(1.0, .012, .02), M.dark); seam.position.set(.52, .005, 0); hoodPivot.add(seam);
+    h.moveTo(0, 0); h.quadraticCurveTo(.4, -.06, .72, -.18); h.lineTo(.72, -.27); h.lineTo(.02, -.2); h.closePath();
+    const hoodPivot = new THREE.Group(); hoodPivot.position.set(2.04, 1.3, 0);
+    const hood = new THREE.Mesh(extrude(h, 1.84, .03), M.paint); hood.position.z = -.92; hoodPivot.add(hood);
     addNode('body', hoodPivot);
     car.userData.hood = hoodPivot;
-    // облицовка радиатора с вертикальными прорезями
-    box('body', .04, .46, .9, M.paint, V(1.69, .85, 0));
-    for (let i = -5; i <= 5; i++) box('body', .03, .34, .026, M.dark, V(1.712, .84, i * .07));
-    // бамперы и кронштейны
-    box('body', .11, .13, 1.8, M.paint, V(1.87, .55, 0));
-    box('body', .09, .11, 1.5, M.paint, V(-1.92, .56, 0));
-    [-.42, .42].forEach(z => { rod('body', V(1.72, .57, z), V(1.84, .55, z), .025, M.frame); });
-    // двери: швы, петли, ручки
+    // лобовое стекло
+    const a = V(2.02, 1.33, 0), b = V(1.28, 2.03, 0), d = b.clone().sub(a);
+    const ws = box('body', d.length() * .96, .014, 1.84, M.glass, a.clone().add(b).multiplyScalar(.5).add(V(.035, .035, 0)));
+    ws.rotation.z = Math.atan2(d.y, d.x);
+    // боковые стёкла, двери, ручки, зеркала, подножки
+    const win = new THREE.Shape();
+    win.moveTo(.7, 1.42); win.lineTo(1.86, 1.42); win.lineTo(1.3, 1.97); win.lineTo(.7, 1.97); win.closePath();
+    const wg = new THREE.ShapeGeometry(win);
     [1, -1].forEach(sd => {
-      const z = sd * .837;
-      box('body', .012, .5, .01, M.dark, V(.5, .9, z));
-      box('body', .012, .5, .01, M.dark, V(-.42, .9, z));
-      box('body', .1, .022, .02, M.chrome, V(-.3, 1.07, sd * .845));
-      box('body', .04, .07, .02, M.dark, V(.53, 1.05, sd * .842));
-      box('body', .04, .07, .02, M.dark, V(.53, .74, sd * .842));
+      part('body', wg, M.glass, V(0, 0, sd * 1.024));
+      box('body', .012, 1.25, .01, M.dark, V(.66, 1.3, sd * 1.024));
+      box('body', .6, .012, .01, M.dark, V(1.9, .98, sd * 1.024), [0, 0, -.1]);
+      box('body', .12, .03, .025, M.plastic, V(.82, 1.3, sd * 1.03));
+      rod('body', V(1.86, 1.5, sd * 1.0), V(1.92, 1.56, sd * 1.2), .025, M.plastic);
+      box('body', .07, .32, .2, M.plastic, V(1.92, 1.62, sd * 1.27));
+      box('body', .005, .28, .17, M.glass, V(1.88, 1.62, sd * 1.27));
+      box('body', .9, .05, .12, M.plastic, V(1.0, .55, sd * .98));
     });
+    // облицовка радиатора: хромированная рамка, тёмные ламели
+    box('body', .04, .3, 1.12, M.chrome, V(2.81, .86, 0));
+    box('body', .045, .24, 1.02, M.dark, V(2.815, .86, 0));
+    [.8, .86, .92].forEach(y => box('body', .05, .018, 1.0, M.chrome, V(2.82, y, 0)));
+    // бампер
+    box('body', .18, .26, 2.0, M.plastic, V(2.83, .5, 0));
+    box('body', .04, .08, 1.1, M.dark, V(2.925, .48, 0));
   })();
 
-  /* ---------- ТЕНТ И САЛОН ---------- */
+  /* ---------- ПЛАТФОРМА И ТЕНТ ---------- */
   (() => {
-    const ws = new THREE.Group(); ws.position.set(.62, 1.13, 0); ws.rotation.z = .1;
-    const add = (g, mat, x, y, z) => { const m = new THREE.Mesh(g, mat); m.position.set(x, y, z); ws.add(m); return m; };
-    [-.8, .8].forEach(z => add(new THREE.BoxGeometry(.05, .62, .05), M.paint, 0, .31, z));
-    add(new THREE.BoxGeometry(.05, .05, 1.65), M.paint, 0, .62, 0);
-    add(new THREE.BoxGeometry(.05, .05, 1.65), M.paint, 0, .02, 0);
-    add(new THREE.BoxGeometry(.045, .56, .03), M.paint, 0, .31, 0);
-    add(new THREE.BoxGeometry(.01, .56, 1.54), M.glass, 0, .31, 0);
-    [-.38, .38].forEach(z => { const w = add(new THREE.BoxGeometry(.012, .3, .012), M.dark, .03, .16, z); w.rotation.x = .6; });
-    addNode('cabin', ws);
-    // тент
-    box('cabin', 2.42, .04, 1.7, M.canvas, V(-.67, 1.885, 0)).geometry = bend(new THREE.BoxGeometry(2.42, .04, 1.7, 1, 1, 14), -.06, 'z');
-    box('cabin', .04, .15, 1.66, M.canvas, V(.54, 1.81, 0), [0, 0, .25]);
+    const L = 3.3, cx = -1.2;
+    box('cabin', L, .08, 2.12, M.dark, V(cx, .94, 0));
+    [.3, -.5, -1.3, -2.1, -2.75].forEach(x => box('cabin', .07, .1, 2.12, M.frame, V(x, .85, 0)));
     [1, -1].forEach(sd => {
-      box('cabin', 2.4, .72, .03, M.canvas, V(-.67, 1.53, sd * .83));
-      [.15, -.55, -1.25].forEach(x => box('cabin', .5, .3, .006, M.window, V(x, 1.6, sd * .847)));
-      [-.2, -.9, -1.6].forEach(x => box('cabin', .035, .74, .036, M.canvasDark, V(x, 1.53, sd * .832)));
+      box('cabin', L, .42, .04, M.alu, V(cx, 1.19, sd * 1.06));
+      [1.05, 1.33].forEach(y => box('cabin', L, .03, .05, M.steel, V(cx, y, sd * 1.075)));
+      [-.35, -1.2, -2.05].forEach(x => box('cabin', .05, .42, .05, M.steel, V(x, 1.19, sd * 1.075)));
+      box('cabin', L, 1.05, .03, M.canvas, V(cx, 1.93, sd * 1.06));
+      [.1, -.75, -1.6, -2.45].forEach(x => box('cabin', .04, 1.05, .036, M.canvasDark, V(x, 1.93, sd * 1.063)));
+      box('cabin', L, .04, .036, M.canvasDark, V(cx, 1.43, sd * 1.063));
     });
-    box('cabin', .03, .72, 1.66, M.canvas, V(-1.87, 1.53, 0));
-    box('cabin', .006, .26, .7, M.window, V(-1.888, 1.6, 0));
-    // сиденья, панель, руль, рычаг КПП
-    [-.38, .38].forEach(z => {
-      box('cabin', .46, .1, .5, M.seat, V(.02, 1.25, z));
-      box('cabin', .08, .5, .5, M.seat, V(-.24, 1.5, z), [0, 0, .12]);
-    });
-    box('cabin', .46, .1, 1.3, M.seat, V(-.95, 1.25, 0));
-    box('cabin', .08, .5, 1.3, M.seat, V(-1.22, 1.5, 0), [0, 0, .12]);
-    box('cabin', .12, .2, 1.52, M.paint, V(.5, 1.26, 0));
-    const a = V(.26, 1.5, .38), b = V(.52, 1.2, .38);
-    rod('cabin', a, b, .018, M.dark);
-    const sw = part('cabin', new THREE.TorusGeometry(.19, .017, 10, 36), M.dark, a);
-    sw.quaternion.setFromUnitVectors(V(0, 0, 1), b.clone().sub(a).normalize());
-    rod('cabin', V(.28, 1.19, 0), V(.16, 1.45, 0), .012, M.dark);
-    part('cabin', new THREE.SphereGeometry(.03, 12, 10), M.dark, V(.16, 1.46, 0));
+    box('cabin', .04, .42, 2.12, M.alu, V(.43, 1.19, 0));
+    box('cabin', .04, .42, 2.12, M.alu, V(-2.84, 1.19, 0));
+    box('cabin', .03, 1.05, 2.12, M.canvas, V(.43, 1.93, 0));
+    box('cabin', .03, 1.05, 2.12, M.canvas, V(-2.84, 1.93, 0));
+    part('cabin', bend(new THREE.BoxGeometry(L + .04, .05, 2.16, 1, 1, 16), -.05, 'z'), M.canvas, V(cx, 2.47, 0));
+    [-.5, .5].forEach(z => box('cabin', .04, .08, .1, M.chrome, V(-2.87, 1.3, z)));
   })();
 
-  /* ---------- ДВИГАТЕЛЬ ---------- */
+  /* ---------- ДВИГАТЕЛЬ (дизель 2.8 под капотом) ---------- */
   (() => {
-    box('engine', .62, .3, .28, M.engine, V(1.08, .81, 0));
-    box('engine', .6, .08, .24, M.head, V(1.08, 1.0, 0));
-    for (let i = 0; i < 8; i++) box('engine', .014, .035, .22, M.head, V(.84 + i * .068, 1.05, 0));
-    box('engine', .56, .08, .24, M.dark, V(1.08, .62, 0));
-    part('engine', new THREE.CylinderGeometry(.17, .17, .12, 28).rotateZ(PI / 2), M.engine, V(.72, .78, 0));
-    part('engine', new THREE.CylinderGeometry(.13, .13, .09, 28), M.dark, V(.93, 1.03, -.22));
-    part('engine', new THREE.CylinderGeometry(.05, .05, .14, 16), M.engine, V(.93, .93, -.22));
-    for (let i = 0; i < 4; i++) rod('engine', V(.86 + i * .15, 1.05, .1), V(1.0 + i * .02, 1.07, .2), .007, M.red);
-    part('engine', new THREE.CylinderGeometry(.045, .045, .16, 16), M.dark, V(1.25, .75, -.2));
-    rod('engine', V(.95, .72, -.17), V(.7, .45, -.3), .03, M.dark);
-    rod('engine', V(.7, .45, -.3), V(-1.95, .43, -.36), .03, M.dark);
-    part('engine', new THREE.CylinderGeometry(.075, .075, .55, 20).rotateZ(PI / 2), M.dark, V(-1.0, .43, -.36));
+    box('engine', .55, .3, .5, M.engine, V(2.25, .75, 0));
+    box('engine', .5, .08, .42, M.head, V(2.25, .94, 0));
+    box('engine', .45, .1, .4, M.dark, V(2.25, .55, 0));
+    part('engine', new THREE.CylinderGeometry(.2, .2, .15, 28).rotateZ(PI / 2), M.engine, V(1.9, .72, 0));
+    part('engine', new THREE.CylinderGeometry(.075, .075, .12, 20), M.steel, V(2.1, .8, -.36));
+    rod('engine', V(2.45, .9, .2), V(2.1, .95, .35), .045, M.dark);
+    rod('engine', V(2.05, .72, -.3), V(1.4, .45, -.55), .035, M.dark);
+    rod('engine', V(1.4, .45, -.55), V(-2.7, .42, -.6), .035, M.dark);
+    part('engine', new THREE.CylinderGeometry(.11, .11, .6, 22).rotateZ(PI / 2), M.dark, V(.1, .42, -.6));
   })();
 
   /* ---------- ОХЛАЖДЕНИЕ ---------- */
   let fan;
   (() => {
-    box('cooling', .07, .44, .8, M.radiator, V(1.6, .84, 0));
-    for (let i = 0; i < 10; i++) box('cooling', .072, .006, .78, M.copper, V(1.6, .66 + i * .04, 0));
-    box('cooling', .09, .06, .5, M.copper, V(1.6, 1.08, 0));
-    part('cooling', new THREE.CylinderGeometry(.02, .02, .04, 12), M.chrome, V(1.6, 1.13, 0));
-    fan = new THREE.Group(); fan.position.set(1.49, .84, 0);
-    const hub = new THREE.Mesh(new THREE.CylinderGeometry(.035, .035, .05, 16).rotateZ(PI / 2), M.dark); fan.add(hub);
-    for (let i = 0; i < 4; i++) {
-      const bl = new THREE.Mesh(new THREE.BoxGeometry(.012, .19, .065), M.dark);
-      const piv = new THREE.Group(); piv.rotation.x = i * PI / 2; bl.position.y = .11; bl.rotation.y = .35; piv.add(bl); fan.add(piv);
+    box('cooling', .06, .38, 1.1, M.radiator, V(2.7, .82, 0));
+    for (let i = 0; i < 9; i++) box('cooling', .062, .006, 1.08, M.alu, V(2.7, .66 + i * .04, 0));
+    box('cooling', .05, .16, 1.0, M.alu, V(2.74, .57, 0));
+    part('cooling', new THREE.CylinderGeometry(.06, .06, .12, 16), std(0xf2f2ee, .3, 0, { transparent: true, opacity: .85 }), V(2.45, .96, .45));
+    fan = new THREE.Group(); fan.position.set(2.6, .8, 0);
+    fan.add(new THREE.Mesh(new THREE.CylinderGeometry(.04, .04, .05, 16).rotateZ(PI / 2), M.dark));
+    for (let i = 0; i < 6; i++) {
+      const bl = new THREE.Mesh(new THREE.BoxGeometry(.012, .16, .06), M.dark);
+      const piv = new THREE.Group(); piv.rotation.x = i * PI / 3; bl.position.y = .1; bl.rotation.y = .35; piv.add(bl); fan.add(piv);
     }
     addNode('cooling', fan);
-    rod('cooling', V(1.56, 1.02, .05), V(1.36, .99, .05), .025, M.dark);
-    rod('cooling', V(1.56, .68, .08), V(1.38, .72, .08), .025, M.dark);
+    rod('cooling', V(2.66, .98, .3), V(2.45, .92, .2), .03, M.dark);
   })();
 
-  /* ---------- ЭЛЕКТРИКА ---------- */
+  /* ---------- ЭЛЕКТРИКА И ОПТИКА ---------- */
   (() => {
     [1, -1].forEach(sd => {
-      const z = sd * .645;
-      part('electrics', new THREE.CylinderGeometry(.105, .11, .1, 28).rotateZ(PI / 2), M.paint, V(1.73, .88, z));
-      part('electrics', new THREE.TorusGeometry(.104, .014, 10, 32).rotateY(PI / 2), M.chrome, V(1.785, .88, z));
-      part('electrics', new THREE.SphereGeometry(.1, 24, 12, 0, PI * 2, 0, .55).rotateZ(-PI / 2), M.lens, V(1.705, .88, z));
-      box('electrics', .03, .08, .06, M.red, V(-1.9, .96, sd * .68));
-      part('electrics', new THREE.SphereGeometry(.03, 12, 10), M.lens, V(1.52, 1.0, sd * .72));
+      box('electrics', .02, .15, .42, M.headGlass, V(2.806, .9, sd * .72));
+      box('electrics', .022, .026, .36, M.lens, V(2.812, .86, sd * .73));
+      box('electrics', .34, .15, .02, M.headGlass, V(2.64, .93, sd * 1.024), [0, 0, -.12]);
+      part('electrics', new THREE.CylinderGeometry(.05, .05, .03, 20).rotateZ(PI / 2), M.lens, V(2.93, .44, sd * .74));
+      box('electrics', .1, .04, .02, M.amber, V(2.2, .92, sd * 1.03));
+      box('electrics', .05, .15, .12, M.red, V(-2.87, .78, sd * .88));
     });
-    part('electrics', new THREE.CylinderGeometry(.07, .07, .22, 20).rotateZ(PI / 2), M.dark, V(1.3, .9, .28));
-    box('electrics', .26, .2, .17, M.dark, V(.8, .9, -.3));
-    [-.05, .05].forEach((dx, i) => part('electrics', new THREE.CylinderGeometry(.015, .015, .03, 10), i ? M.red : M.chrome, V(.8 + dx, 1.01, -.3)));
+    box('electrics', .28, .2, .18, M.dark, V(2.3, .88, .55));
+    part('electrics', new THREE.CylinderGeometry(.07, .07, .2, 20).rotateZ(PI / 2), M.steel, V(2.45, .66, .32));
   })();
 
   /* ---------- РАМА И ПОДВЕСКА ---------- */
   (() => {
-    [-.42, .42].forEach(z => box('suspension', 3.75, .13, .06, M.frame, V(-.1, .57, z)));
-    [1.72, .7, -.6, -1.85].forEach(x => box('suspension', .06, .1, .84, M.frame, V(x, .57, 0)));
-    [BASE, -BASE].forEach(x => [-.42, .42].forEach(z => {
-      for (let i = 0; i < 5; i++) {
-        const len = 1 - i * .15;
-        part('suspension', bend(new THREE.BoxGeometry(len, .016, .055, 16, 1, 1), .09), M.dark, V(x, .49 - i * .018, z));
+    [-.45, .45].forEach(z => box('suspension', 5.2, .16, .07, M.frame, V(-.2, .64, z)));
+    [2.2, 1.0, -.2, -1.4, -2.6].forEach(x => box('suspension', .07, .1, .9, M.frame, V(x, .64, 0)));
+    [[FX, 1.1, 4], [RX, 1.45, 6]].forEach(([x, L0, n]) => [-.45, .45].forEach(z => {
+      for (let i = 0; i < n; i++) {
+        const len = L0 - i * (L0 * .7 / n);
+        part('suspension', bend(new THREE.BoxGeometry(len, .018, .07, 16, 1, 1), .06), M.dark, V(x, .47 - i * .02, z));
       }
-      [-.5, .5].forEach(dx => part('suspension', new THREE.CylinderGeometry(.026, .026, .07, 12).rotateX(PI / 2), M.frame, V(x + dx, .515, z)));
-      rod('suspension', V(x + .22, .44, z * 1.18), V(x + .3, .6, z * 1.18), .024, M.dark);
+      rod('suspension', V(x + .25, .4, z * 1.35), V(x + .3, .66, z * 1.35), .028, M.steel);
     }));
-    rod('suspension', V(1.38, .42, -.62), V(1.38, .42, .62), .016, M.dark);
+    rod('suspension', V(FX, R + .02, -.78), V(FX, R + .02, .78), .045, M.frame);
+    rod('suspension', V(2.3, .45, -.75), V(2.3, .45, .75), .018, M.dark);
+    rod('suspension', V(2.15, .42, -.7), V(2.15, .42, .7), .016, M.steel);
   })();
 
   /* ---------- ТРАНСМИССИЯ ---------- */
   (() => {
-    box('transmission', .36, .22, .22, M.engine, V(.46, .66, 0));
-    box('transmission', .3, .24, .3, M.engine, V(.05, .5, .08));
-    rod('transmission', V(.2, .46, .12), V(1.08, .4, .1), .03, M.dark);
-    rod('transmission', V(-.1, .46, .12), V(-1.05, .4, .1), .03, M.dark);
-    [BASE, -BASE].forEach(x => {
-      rod('transmission', V(x, R, -.6), V(x, R, .6), .05, M.frame);
-      const d = part('transmission', new THREE.SphereGeometry(.15, 24, 16), M.frame, V(x, R, .1)); d.scale.set(1, .9, .8);
-    });
+    box('transmission', .5, .22, .26, M.engine, V(1.5, .68, 0));
+    rod('transmission', V(1.25, .64, 0), V(-.1, .5, 0), .035, M.dark);
+    rod('transmission', V(-.1, .5, 0), V(RX + .1, R + .02, 0), .035, M.dark);
+    box('transmission', .1, .12, .14, M.frame, V(-.1, .55, 0));
+    rod('transmission', V(RX, R, -1.0), V(RX, R, 1.0), .06, M.frame);
+    const d = part('transmission', new THREE.SphereGeometry(.19, 24, 16), M.frame, V(RX, R, 0)); d.scale.set(1, .9, .8);
   })();
 
   /* ---------- КОЛЁСА И ТОРМОЗА ---------- */
-  const tireGeo = new THREE.CylinderGeometry(R - .005, R - .005, W - .1, 44).rotateX(PI / 2);
-  const wallGeo = new THREE.TorusGeometry(R - .06, .06, 14, 44);
-  const treadGeo = new THREE.BoxGeometry(.05, .034, W * .44);
-  function wheel(x, y, z, sd, brake) {
+  const tireGeo = new THREE.CylinderGeometry(R - .005, R - .005, W - .09, 44).rotateX(PI / 2);
+  const wallGeo = new THREE.TorusGeometry(R - .055, .055, 14, 44);
+  const treadGeo = new THREE.BoxGeometry(.045, .03, W * .4);
+  function wheel(x, y, z, sd, opt) {
     const g = new THREE.Group(); g.position.set(x, y, z);
     g.add(new THREE.Mesh(tireGeo, M.rubber));
-    [-1, 1].forEach(s => { const t = new THREE.Mesh(wallGeo, M.rubber); t.position.z = s * (W / 2 - .06); g.add(t); });
-    const tread = new THREE.InstancedMesh(treadGeo, M.rubber, 52), dm = new THREE.Object3D();
-    for (let i = 0; i < 26; i++) [-1, 1].forEach((s, j) => {
-      const a = (i + j * .5) / 26 * PI * 2;
-      dm.position.set(Math.cos(a) * (R + .004), Math.sin(a) * (R + .004), s * W * .22);
-      dm.rotation.set(0, 0, a + PI / 2); dm.rotateY(s * .42); dm.updateMatrix();
+    [-1, 1].forEach(s => { const t = new THREE.Mesh(wallGeo, M.rubber); t.position.z = s * (W / 2 - .055); g.add(t); });
+    const tread = new THREE.InstancedMesh(treadGeo, M.rubber, 60), dm = new THREE.Object3D();
+    for (let i = 0; i < 30; i++) [-1, 1].forEach((s, j) => {
+      const a = (i + j * .5) / 30 * PI * 2;
+      dm.position.set(Math.cos(a) * (R + .003), Math.sin(a) * (R + .003), s * W * .2);
+      dm.rotation.set(0, 0, a + PI / 2); dm.rotateY(s * .3); dm.updateMatrix();
       tread.setMatrixAt(i * 2 + j, dm.matrix);
     });
     g.add(tread);
-    const rimM = new THREE.Mesh(new THREE.CylinderGeometry(R * .6, R * .6, W - .03, 30).rotateX(PI / 2), M.paint); g.add(rimM);
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(R * .47, .014, 8, 36), M.dark); ring.position.z = sd * (W / 2 - .01); g.add(ring);
-    const cap = new THREE.Mesh(new THREE.CylinderGeometry(.085, .11, .07, 24).rotateX(PI / 2), M.chrome); cap.position.z = sd * (W / 2 + .01); g.add(cap);
-    for (let i = 0; i < 6; i++) {
-      const a = i / 6 * PI * 2, n = new THREE.Mesh(new THREE.CylinderGeometry(.014, .014, .03, 8).rotateX(PI / 2), M.chrome);
-      n.position.set(Math.cos(a) * .15, Math.sin(a) * .15, sd * (W / 2 - .005)); g.add(n);
+    g.add(new THREE.Mesh(new THREE.CylinderGeometry(R * .62, R * .62, W - .02, 30).rotateX(PI / 2), M.steel));
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(R * .45, .012, 8, 36), M.dark); ring.position.z = sd * (W / 2 - .01); g.add(ring);
+    if (opt.cap) {
+      const cap = new THREE.Mesh(new THREE.CylinderGeometry(.07, .09, .06, 24).rotateX(PI / 2), M.chrome); cap.position.z = sd * (W / 2 + .01); g.add(cap);
+      for (let i = 0; i < 6; i++) {
+        const a = i / 6 * PI * 2, n = new THREE.Mesh(new THREE.CylinderGeometry(.013, .013, .03, 8).rotateX(PI / 2), M.chrome);
+        n.position.set(Math.cos(a) * .125, Math.sin(a) * .125, sd * (W / 2 - .005)); g.add(n);
+      }
     }
-    addNode('wheels', g, V(0, 0, sd * .55));
-    if (brake) {
+    if (opt.rot) g.rotation.set(opt.rot[0], opt.rot[1], opt.rot[2]);
+    addNode('wheels', g, opt.ex || V(0, 0, sd * .6));
+    if (opt.brake === 'disc') {
+      const bz = z - sd * (W / 2 + .04);
+      part('brakes', new THREE.CylinderGeometry(.15, .15, .03, 30).rotateX(PI / 2), M.steel, V(x, y, bz), null, V(0, 0, sd * .35));
+      box('brakes', .12, .1, .08, std(0xb32a22, .4, .3), V(x - .12, y + .08, bz), [0, 0, .5], V(0, 0, sd * .35));
+    } else if (opt.brake === 'drum') {
       const bz = z - sd * (W / 2 + .05);
-      part('brakes', new THREE.CylinderGeometry(.21, .21, .1, 30).rotateX(PI / 2), M.frame, V(x, y, bz), null, V(0, 0, sd * .3));
-      part('brakes', new THREE.CylinderGeometry(.235, .235, .015, 30).rotateX(PI / 2), M.dark, V(x, y, bz - sd * .06), null, V(0, 0, sd * .3));
+      part('brakes', new THREE.CylinderGeometry(.2, .2, .1, 30).rotateX(PI / 2), M.frame, V(x, y, bz), null, V(0, 0, sd * .3));
     }
   }
-  [[BASE, 1], [BASE, -1], [-BASE, 1], [-BASE, -1]].forEach(([x, sd]) => wheel(x, R, sd * TRACK, sd, true));
-  wheel(-.75, 1.0, -.97, -1, false);  // запасное колесо на левом борту
+  [1, -1].forEach(sd => {
+    wheel(FX, R, sd * FT, sd, { cap: true, brake: 'disc' });
+    wheel(RX, R, sd * (RT + .11), sd, { cap: true, ex: V(0, 0, sd * .75) });
+    wheel(RX, R, sd * (RT - .11), sd, { cap: false, brake: 'drum', ex: V(0, 0, sd * .5) });
+  });
+  wheel(-2.35, .42, 0, 1, { cap: false, rot: [PI / 2, 0, 0], ex: V(-.6, 0, 0) });   // запаска под рамой
 
   /* ---------- МЕТКИ ---------- */
   const PINS = {
-    engine: V(1.1, 1.14, 0), cooling: V(1.72, .8, .2), transmission: V(-.1, .42, .5),
-    suspension: V(-.62, .5, .45), brakes: V(-BASE, R, .92), wheels: V(BASE, R, .92),
-    electrics: V(1.8, .88, .645), body: V(-.1, .9, .86), cabin: V(-.6, 1.95, 0)
+    engine: V(2.35, 1.2, 0), cooling: V(2.84, .86, .3), transmission: V(.2, .56, 0),
+    suspension: V(RX + .7, .5, .5), brakes: V(FX, R, FT + .13), wheels: V(RX, R, RT + .11 + .13),
+    electrics: V(2.82, .92, .74), body: V(1.2, 1.1, 1.04), cabin: V(-1.2, 1.95, 1.08)
   };
-  const PIN_EX = { wheels: V(0, 0, .55), brakes: V(0, 0, .3) };
+  const PIN_EX = { wheels: V(0, 0, .75), brakes: V(0, 0, .35) };
   const pinEls = {};
   Object.keys(PINS).forEach(k => {
     const b = document.createElement('button');
@@ -1323,21 +1369,22 @@ renderTabs(); renderGrid(); renderCart();
 
   /* ---------- КАМЕРА ---------- */
   const controls = THREE.OrbitControls ? new THREE.OrbitControls(camera, renderer.domElement) : null;
-  const HOME = { pos: V(5.4, 2.5, 5.8), tgt: V(0, .85, 0) };
+  const HOME = { pos: V(8.4, 3.2, 8.8), tgt: V(0, 1.2, 0) };
+  const EXPLODE_VIEW = [V(10.5, 5.5, 10.5), V(0, 1.7, 0)];
   const VIEWS = {
-    engine: [V(4.2, 3.3, 3.4), V(.9, .9, 0)], cooling: [V(4.4, 1.5, 1.4), V(1.5, .85, 0)],
-    transmission: [V(1.2, .75, 4.4), V(0, .45, 0)], suspension: [V(-.2, .8, 3.8), V(-.7, .5, .3)],
-    brakes: [V(-1.4, .9, 3.4), V(-1.15, .42, .6)], wheels: [V(2.8, 1.1, 3.2), V(1.15, .45, .6)],
-    electrics: [V(4.2, 1.5, 2.8), V(1.6, .9, .3)], body: [V(1.8, 1.7, 5.6), V(-.1, .9, 0)],
-    cabin: [V(2.6, 3.6, 3.8), V(-.5, 1.5, 0)]
+    engine: [V(6.2, 4.4, 4.2), V(2.2, .95, 0)], cooling: [V(6.8, 1.7, 2.2), V(2.6, .85, 0)],
+    transmission: [V(1.0, 1.0, 6.2), V(.2, .5, 0)], suspension: [V(-.6, 1.1, 5.2), V(-1.0, .5, .3)],
+    brakes: [V(3.2, 1.1, 4.2), V(1.9, .42, .8)], wheels: [V(-.2, 1.2, 4.7), V(-1.25, .42, .8)],
+    electrics: [V(6.2, 1.9, 3.6), V(2.6, 1.0, .4)], body: [V(5.2, 2.3, 6.4), V(1.4, 1.3, 0)],
+    cabin: [V(1.6, 4.4, 8.0), V(-1.2, 1.7, 0)]
   };
-  const distK = () => camera.aspect < .8 ? 2.1 : camera.aspect < 1.2 ? 1.25 : 1;
+  const distK = () => camera.aspect < .8 ? 2.0 : camera.aspect < 1.2 ? 1.25 : 1;
   const scaled = (pos, tgt) => tgt.clone().add(pos.clone().sub(tgt).multiplyScalar(distK()));
   camera.position.copy(scaled(HOME.pos, HOME.tgt));
   if (controls) {
     controls.target.copy(HOME.tgt);
-    Object.assign(controls, { enableDamping: true, dampingFactor: .08, enablePan: false, minDistance: 2.6, maxDistance: 14,
-      maxPolarAngle: PI / 2 - .04, autoRotate: true, autoRotateSpeed: .7, rotateSpeed: .7 });
+    Object.assign(controls, { enableDamping: true, dampingFactor: .08, enablePan: false, minDistance: 3.5, maxDistance: 17,
+      maxPolarAngle: PI / 2 - .06, autoRotate: true, autoRotateSpeed: .6, rotateSpeed: .7 });
     controls.addEventListener('start', () => { tween = null; setSpin(false); });
   } else camera.lookAt(HOME.tgt);
 
@@ -1377,7 +1424,7 @@ renderTabs(); renderGrid(); renderCart();
     if (!t) return;
     const n = t.dataset.tool;
     if (n === 'reset') { closePartDrawer(); setSpin(true); exploded = false; toolBtn('explode').classList.remove('on'); }
-    if (n === 'explode') { exploded = !exploded; t.classList.toggle('on', exploded); setSpin(false); if (!selected) flyTo(V(6.5, 3.6, 6.6), V(0, 1.2, 0)); }
+    if (n === 'explode') { exploded = !exploded; t.classList.toggle('on', exploded); setSpin(false); if (!selected) flyTo(EXPLODE_VIEW[0], EXPLODE_VIEW[1]); }
     if (n === 'hood') { setHood(!hoodOpen); hoodAuto = false; }
     if (n === 'spin') setSpin(!(controls && controls.autoRotate));
   });
