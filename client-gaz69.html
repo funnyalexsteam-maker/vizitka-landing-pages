@@ -123,6 +123,8 @@
 
   .hero-copy { position: relative; z-index: 3; max-width: 470px; padding-top: 9vh; pointer-events: none; }
   .hero-copy > * { pointer-events: auto; }
+  .hero-copy { transition: opacity .5s; }
+  @media (min-width: 821px) { .hero.focus .hero-copy { opacity: .12; } .hero.focus .hero-copy > * { pointer-events: none; } }
   .hero h1 { font-size: clamp(38px, 5.2vw, 70px); line-height: 1.02; margin: 18px 0 20px; }
   .hero h1 .accent { color: var(--brass); }
   .hero-lead { color: var(--muted); font-size: 17px; margin: 0 0 30px; max-width: 420px; }
@@ -156,13 +158,14 @@
     opacity: 0; transform: translateX(-6px); transition: opacity .2s, transform .2s;
   }
   .pin:hover .pin-dot, .pin.active .pin-dot { background: var(--brass); color: #1b1606; transform: scale(1.12); }
-  .pin:hover .pin-label, .pin.active .pin-label { opacity: 1; transform: none; }
+  .pin:hover .pin-label, .pin.active .pin-label, .pin.hov .pin-label { opacity: 1; transform: none; }
+  .pin.hov .pin-dot { background: var(--brass); color: #1b1606; }
   .pin.hidden { opacity: .22; }
   .pins.off .pin { opacity: 0; pointer-events: none; }
 
   /* панель инструментов сцены */
   .scene-tools {
-    position: absolute; z-index: 4; left: 50%; bottom: 28px; transform: translateX(-50%);
+    position: absolute; z-index: 4; right: 24px; bottom: 28px;
     display: flex; gap: 6px; padding: 6px; border-radius: 14px;
     background: rgba(20,23,19,.82); border: 1px solid var(--line-2); backdrop-filter: blur(10px);
   }
@@ -175,7 +178,7 @@
   .swatches { display: flex; align-items: center; gap: 6px; padding: 0 8px; border-left: 1px solid var(--line); }
   .swatch { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; padding: 0; }
   .swatch.on { border-color: var(--text); }
-  .scene-hint { position: absolute; z-index: 3; right: 28px; bottom: 36px; color: var(--muted); font-size: 12px; display: flex; gap: 8px; align-items: center; }
+  .scene-hint { position: absolute; z-index: 3; right: 30px; bottom: 90px; color: var(--muted); font-size: 12px; display: flex; gap: 8px; align-items: center; }
 
   /* выезжающая панель узла */
   .drawer-part {
@@ -371,11 +374,11 @@
   .total b { font-family: var(--head); font-size: 28px; font-weight: 400; }
 
   .toast {
-    position: fixed; z-index: 120; left: 50%; bottom: 28px; transform: translate(-50%, 140%);
-    padding: 14px 20px; border-radius: 12px; background: var(--panel-2); border: 1px solid var(--line-2);
-    font-weight: 700; font-size: 14px; transition: transform .35s cubic-bezier(.22,1,.36,1); box-shadow: 0 20px 40px rgba(0,0,0,.5);
+    position: fixed; z-index: 120; left: 50%; bottom: 28px; transform: translate(-50%, 200%);
+    padding: 14px 20px; border-radius: 12px; background: var(--panel-2); opacity: 0; border: 1px solid var(--line-2);
+    font-weight: 700; font-size: 14px; transition: transform .35s cubic-bezier(.22,1,.36,1), opacity .35s; box-shadow: 0 20px 40px rgba(0,0,0,.5);
   }
-  .toast.show { transform: translate(-50%, 0); }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
 
   .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s, transform .8s cubic-bezier(.22,1,.36,1); }
   .reveal.in { opacity: 1; transform: none; }
@@ -394,10 +397,10 @@
     #scene, .pins { position: relative; inset: auto; height: 62vh; min-height: 420px; }
     .pins { position: absolute; left: 0; right: 0; bottom: 0; top: auto; }
     .scene-wrap { position: relative; }
-    .scene-tools { bottom: 14px; max-width: calc(100% - 24px); overflow-x: auto; }
+    .scene-tools { bottom: 14px; left: 12px; right: 12px; overflow-x: auto; }
     .scene-hint { display: none; }
     .pin-label { display: none; }
-    .drawer-part { position: fixed; top: auto; left: 0; right: 0; bottom: 0; width: auto; max-height: 72vh; border-radius: 22px 22px 0 0; transform: translateY(105%); z-index: 60; }
+    .drawer-part { position: fixed; top: auto; left: 0; right: 0; bottom: 0; width: auto; max-height: 50vh; border-radius: 22px 22px 0 0; transform: translateY(105%); z-index: 60; }
     .drawer-part.open { transform: none; }
     .request, .contacts, .delivery { grid-template-columns: 1fr; }
     .request { padding: 28px 22px; }
@@ -447,7 +450,7 @@
   <div class="wrap">
     <div class="hero-copy">
       <span class="eyebrow">ГАЗ-69 · ГАЗ-69А · УАЗ-69</span>
-      <h1>Запчасти<br>на «козлика» —<br><span class="accent">прямо на&nbsp;машине</span></h1>
+      <h1>Запчасти<br>на&nbsp;«козлика»&nbsp;—<br><span class="accent">прямо на&nbsp;машине</span></h1>
       <p class="hero-lead">Покрутите 3D-модель и нажмите на нужный узел: двигатель, мосты, рессоры, тент. Покажем всё, что есть для него на складе.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#catalog">Открыть каталог</a>
@@ -902,7 +905,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCart(
 
 document.addEventListener('click', e => {
   const a = e.target.closest('[data-add]'); if (a) addToCart(a.dataset.add, a);
-  const s = e.target.closest('.show-3d'); if (s) { window.scrollTo({ top: 0, behavior: 'smooth' }); selectCat(s.dataset.cat); }
+  const s = e.target.closest('.show-3d'); if (s) { if (window.innerWidth > 820) window.scrollTo({ top: 0, behavior: 'smooth' }); selectCat(s.dataset.cat); }
 });
 
 /* Заказ и заявка: без сервера — открываем письмо с готовым текстом.
@@ -945,6 +948,7 @@ function selectCat(cat) {
   openPartDrawer(cat);
   document.querySelectorAll('.pin').forEach(p => p.classList.toggle('active', p.dataset.cat === cat));
   if (onCatSelect) onCatSelect(cat);
+  if (window.innerWidth <= 820) window.scrollTo({ top: $('#scene').getBoundingClientRect().top + scrollY - 72, behavior: 'smooth' });
 }
 $('#dpClose').addEventListener('click', closePartDrawer);
 
@@ -955,5 +959,542 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 renderTabs(); renderGrid(); renderCart();
 </script>
 <!-- 3D -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+/* ============ 3D-МОДЕЛЬ ГАЗ-69 ============
+   Машина собрана из примитивов по узлам (CATS). Клик по узлу или метке —
+   открывается панель с деталями, остальные узлы становятся полупрозрачными. */
+(function () {
+  const host = $('#scene'), pinsEl = $('#pins');
+  function fallback(msg) {
+    $('#sceneFallback').innerHTML = msg + '<br><br>' + Object.entries(CATS).map(([k, c]) =>
+      `<button class="tab" style="margin:4px" onclick="selectCat('${k}')">${c.name}</button>`).join('');
+    $('#sceneTools').style.display = 'none';
+  }
+  if (!window.THREE) return fallback('3D-модель не загрузилась. Выберите узел:');
+
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  } catch (e) { return fallback('Ваш браузер не поддерживает 3D. Выберите узел:'); }
+  $('#sceneFallback').remove();
+
+  const V = (x, y, z) => new THREE.Vector3(x, y, z);
+  const col = hex => new THREE.Color(hex).convertSRGBToLinear();
+  const PI = Math.PI;
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  host.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+
+  /* --- окружение для отражений (без внешних HDR) --- */
+  (() => {
+    const env = new THREE.Scene();
+    const g = new THREE.SphereGeometry(20, 32, 16);
+    const p = g.attributes.position, cols = [];
+    const top = new THREE.Color(0x7d8670), bot = new THREE.Color(0x0b0c0a);
+    for (let i = 0; i < p.count; i++) {
+      const c = bot.clone().lerp(top, Math.max(0, Math.min(1, (p.getY(i) / 20 + 0.15) / 1.1)));
+      cols.push(c.r, c.g, c.b);
+    }
+    g.setAttribute('color', new THREE.Float32BufferAttribute(cols, 3));
+    env.add(new THREE.Mesh(g, new THREE.MeshBasicMaterial({ side: THREE.BackSide, vertexColors: true })));
+    const panel = (w, h, pos, k, c = 0xffffff) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(c).multiplyScalar(k), side: THREE.DoubleSide }));
+      m.position.copy(pos); m.lookAt(0, 0, 0); env.add(m);
+    };
+    panel(12, 4, V(0, 12, 3), 3);
+    panel(6, 6, V(12, 4, 7), 2, 0xffe2b0);
+    panel(6, 5, V(-12, 3, -6), 1.3, 0xb8c8ff);
+    scene.environment = new THREE.PMREMGenerator(renderer).fromScene(env, 0.04).texture;
+  })();
+
+  /* --- свет --- */
+  scene.add(new THREE.HemisphereLight(0xe6ecd9, 0x16180f, 0.55));
+  const key = new THREE.DirectionalLight(0xfff0d6, 1.7);
+  key.position.set(4, 8, 5); key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: 1, far: 20 });
+  key.shadow.bias = -0.0004; key.shadow.normalBias = 0.02;
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xa9b8ff, 0.7); rim.position.set(-6, 3, -5); scene.add(rim);
+  const warm = new THREE.PointLight(0xe3aa3e, 0.6, 8); warm.position.set(3, 0.6, 2.5); scene.add(warm);
+
+  /* --- подиум --- */
+  (() => {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 256;
+    const cx = cv.getContext('2d'), gr = cx.createRadialGradient(128, 128, 20, 128, 128, 128);
+    gr.addColorStop(0, '#fff'); gr.addColorStop(.55, '#aaa'); gr.addColorStop(1, '#000');
+    cx.fillStyle = gr; cx.fillRect(0, 0, 256, 256);
+    const ground = new THREE.Mesh(new THREE.CircleGeometry(8, 64), new THREE.MeshStandardMaterial({
+      color: col(0x1b1f19), roughness: .9, metalness: .1, transparent: true, alphaMap: new THREE.CanvasTexture(cv) }));
+    ground.rotation.x = -PI / 2; ground.receiveShadow = true; scene.add(ground);
+    [2.7, 3.35].forEach((r, i) => {
+      const ring = new THREE.Mesh(new THREE.RingGeometry(r, r + (i ? .01 : .02), 128),
+        new THREE.MeshBasicMaterial({ color: 0xe3aa3e, transparent: true, opacity: i ? .15 : .35 }));
+      ring.rotation.x = -PI / 2; ring.position.y = .003; scene.add(ring);
+    });
+    const grid = new THREE.GridHelper(14, 28, 0x93a562, 0x93a562);
+    grid.material.transparent = true; grid.material.opacity = .06; grid.position.y = .001; scene.add(grid);
+  })();
+
+  /* --- материалы --- */
+  const std = (c, r, m, extra) => new THREE.MeshStandardMaterial(Object.assign({ color: col(c), roughness: r, metalness: m }, extra));
+  const M = {
+    paint: new THREE.MeshPhysicalMaterial({ color: col(0x55623a), roughness: .5, metalness: .2, clearcoat: .4, clearcoatRoughness: .35 }),
+    dark: std(0x23261f, .7, .4),
+    frame: std(0x191b17, .8, .3),
+    rubber: std(0x151515, .92, 0),
+    chrome: std(0xe8e8e8, .15, 1),
+    canvas: std(0x5f5c43, .95, 0),
+    canvasDark: std(0x46442f, .95, 0),
+    glass: new THREE.MeshPhysicalMaterial({ color: col(0xaecbc6), roughness: .05, metalness: .1, transparent: true, opacity: .22 }),
+    window: std(0x252a25, .2, .1, { transparent: true, opacity: .7 }),
+    lens: std(0xfff6dc, .1, 0, { emissive: col(0xffe7a8), emissiveIntensity: .9 }),
+    red: std(0xb3261e, .3, 0, { emissive: col(0x7a120c), emissiveIntensity: .8 }),
+    engine: std(0x3f463a, .45, .55),
+    head: std(0x8a7b4a, .35, .65),
+    radiator: std(0x2b2b27, .5, .6),
+    copper: std(0xa86b3c, .35, .8),
+    seat: std(0x3d2c22, .75, 0)
+  };
+
+  /* --- структура: узел -> группа --- */
+  const car = new THREE.Group(); scene.add(car);
+  const groups = {}; Object.keys(CATS).forEach(k => { groups[k] = new THREE.Group(); car.add(groups[k]); });
+  const EX = {   // смещения для режима «Разобрать»
+    engine: V(.35, 1.25, 0), cooling: V(.95, .55, 0), transmission: V(0, 0, 0), suspension: V(0, .05, 0),
+    brakes: V(0, 0, 0), wheels: V(0, 0, 0), electrics: V(.15, .8, 0), body: V(0, .55, 0), cabin: V(0, 1.35, 0)
+  };
+  const meshes = [], nodes = [];
+
+  function prep(obj, cat) {
+    obj.traverse(o => {
+      if (!o.isMesh) return;
+      const isPaint = o.material === M.paint;
+      o.material = o.material.clone();
+      o.material.transparent = true;
+      o.castShadow = o.receiveShadow = true;
+      Object.assign(o.userData, { cat, paint: isPaint, baseOp: o.material.opacity, op: 1,
+        baseEm: o.material.emissive ? o.material.emissive.clone() : null });
+      meshes.push(o);
+    });
+  }
+  function addNode(cat, obj, ex) {
+    prep(obj, cat); groups[cat].add(obj);
+    nodes.push({ obj, base: obj.position.clone(), ex: ex || EX[cat] });
+    return obj;
+  }
+  function part(cat, geo, mat, pos, rot, ex) {
+    const m = new THREE.Mesh(geo, mat); m.position.copy(pos);
+    if (rot) m.rotation.set(rot[0], rot[1], rot[2]);
+    return addNode(cat, m, ex);
+  }
+  function box(cat, w, h, d, mat, pos, rot, ex) { return part(cat, new THREE.BoxGeometry(w, h, d), mat, pos, rot, ex); }
+  function rod(cat, a, b, r, mat, ex) {
+    const d = b.clone().sub(a), m = part(cat, new THREE.CylinderGeometry(r, r, d.length(), 14), mat, a.clone().add(b).multiplyScalar(.5), null, ex);
+    m.quaternion.setFromUnitVectors(V(0, 1, 0), d.normalize()); return m;
+  }
+  function bend(geo, k, axis) {  // изгиб для рессор и крыши
+    const p = geo.attributes.position;
+    for (let i = 0; i < p.count; i++) { const a = axis === 'z' ? p.getZ(i) : p.getX(i); p.setY(i, p.getY(i) + k * a * a); }
+    geo.computeVertexNormals(); return geo;
+  }
+  function extrude(shape, depth, bevel) {
+    return new THREE.ExtrudeGeometry(shape, { depth, curveSegments: 28, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 3 });
+  }
+
+  /* ---------- КУЗОВ ---------- */
+  const R = .39, W = .24, BASE = 1.15, TRACK = .72;
+  (() => {
+    // корыто кузова с задними арками
+    const s = new THREE.Shape();
+    s.moveTo(-1.86, .62); s.lineTo(-1.64, .62);
+    s.absarc(-BASE, .38, .47, PI - .33, .33, true);
+    s.lineTo(-.66, .62); s.lineTo(.62, .62); s.lineTo(.62, 1.18); s.lineTo(-1.86, 1.18); s.closePath();
+    const tub = part('body', extrude(s, 1.6, .03), M.paint, V(0, 0, -.8));
+    // передние крылья
+    const f = new THREE.Shape();
+    f.moveTo(.6, .66); f.lineTo(.6, 1.02); f.lineTo(1.3, 1.02);
+    f.quadraticCurveTo(1.74, 1.0, 1.78, .74); f.lineTo(1.78, .6);
+    f.absarc(BASE, .38, .47, .33, PI - .33, false); f.lineTo(.6, .6); f.closePath();
+    const fg = extrude(f, .36, .03);
+    part('body', fg, M.paint, V(0, 0, .47));
+    part('body', fg, M.paint, V(0, 0, -.83));
+    // капот на шарнире
+    const h = new THREE.Shape();
+    h.moveTo(-.46, 0); h.lineTo(.46, 0); h.lineTo(.46, .2); h.quadraticCurveTo(.46, .3, .32, .3);
+    h.lineTo(-.32, .3); h.quadraticCurveTo(-.46, .3, -.46, .2); h.closePath();
+    const hg = extrude(h, 1.03, .012); hg.rotateY(PI / 2);
+    const hoodPivot = new THREE.Group(); hoodPivot.position.set(.62, 1.1, 0);
+    const hood = new THREE.Mesh(hg, M.paint); hood.position.y = -.3; hoodPivot.add(hood);
+    const seam = new THREE.Mesh(new THREE.BoxGeometry(1.0, .012, .02), M.dark); seam.position.set(.52, .005, 0); hoodPivot.add(seam);
+    addNode('body', hoodPivot);
+    car.userData.hood = hoodPivot;
+    // облицовка радиатора с вертикальными прорезями
+    box('body', .04, .46, .9, M.paint, V(1.69, .85, 0));
+    for (let i = -5; i <= 5; i++) box('body', .03, .34, .026, M.dark, V(1.712, .84, i * .07));
+    // бамперы и кронштейны
+    box('body', .11, .13, 1.8, M.paint, V(1.87, .55, 0));
+    box('body', .09, .11, 1.5, M.paint, V(-1.92, .56, 0));
+    [-.42, .42].forEach(z => { rod('body', V(1.72, .57, z), V(1.84, .55, z), .025, M.frame); });
+    // двери: швы, петли, ручки
+    [1, -1].forEach(sd => {
+      const z = sd * .837;
+      box('body', .012, .5, .01, M.dark, V(.5, .9, z));
+      box('body', .012, .5, .01, M.dark, V(-.42, .9, z));
+      box('body', .1, .022, .02, M.chrome, V(-.3, 1.07, sd * .845));
+      box('body', .04, .07, .02, M.dark, V(.53, 1.05, sd * .842));
+      box('body', .04, .07, .02, M.dark, V(.53, .74, sd * .842));
+    });
+  })();
+
+  /* ---------- ТЕНТ И САЛОН ---------- */
+  (() => {
+    const ws = new THREE.Group(); ws.position.set(.62, 1.13, 0); ws.rotation.z = .1;
+    const add = (g, mat, x, y, z) => { const m = new THREE.Mesh(g, mat); m.position.set(x, y, z); ws.add(m); return m; };
+    [-.8, .8].forEach(z => add(new THREE.BoxGeometry(.05, .62, .05), M.paint, 0, .31, z));
+    add(new THREE.BoxGeometry(.05, .05, 1.65), M.paint, 0, .62, 0);
+    add(new THREE.BoxGeometry(.05, .05, 1.65), M.paint, 0, .02, 0);
+    add(new THREE.BoxGeometry(.045, .56, .03), M.paint, 0, .31, 0);
+    add(new THREE.BoxGeometry(.01, .56, 1.54), M.glass, 0, .31, 0);
+    [-.38, .38].forEach(z => { const w = add(new THREE.BoxGeometry(.012, .3, .012), M.dark, .03, .16, z); w.rotation.x = .6; });
+    addNode('cabin', ws);
+    // тент
+    box('cabin', 2.42, .04, 1.7, M.canvas, V(-.67, 1.885, 0)).geometry = bend(new THREE.BoxGeometry(2.42, .04, 1.7, 1, 1, 14), -.06, 'z');
+    box('cabin', .04, .15, 1.66, M.canvas, V(.54, 1.81, 0), [0, 0, .25]);
+    [1, -1].forEach(sd => {
+      box('cabin', 2.4, .72, .03, M.canvas, V(-.67, 1.53, sd * .83));
+      [.15, -.55, -1.25].forEach(x => box('cabin', .5, .3, .006, M.window, V(x, 1.6, sd * .847)));
+      [-.2, -.9, -1.6].forEach(x => box('cabin', .035, .74, .036, M.canvasDark, V(x, 1.53, sd * .832)));
+    });
+    box('cabin', .03, .72, 1.66, M.canvas, V(-1.87, 1.53, 0));
+    box('cabin', .006, .26, .7, M.window, V(-1.888, 1.6, 0));
+    // сиденья, панель, руль, рычаг КПП
+    [-.38, .38].forEach(z => {
+      box('cabin', .46, .1, .5, M.seat, V(.02, 1.25, z));
+      box('cabin', .08, .5, .5, M.seat, V(-.24, 1.5, z), [0, 0, .12]);
+    });
+    box('cabin', .46, .1, 1.3, M.seat, V(-.95, 1.25, 0));
+    box('cabin', .08, .5, 1.3, M.seat, V(-1.22, 1.5, 0), [0, 0, .12]);
+    box('cabin', .12, .2, 1.52, M.paint, V(.5, 1.26, 0));
+    const a = V(.26, 1.5, .38), b = V(.52, 1.2, .38);
+    rod('cabin', a, b, .018, M.dark);
+    const sw = part('cabin', new THREE.TorusGeometry(.19, .017, 10, 36), M.dark, a);
+    sw.quaternion.setFromUnitVectors(V(0, 0, 1), b.clone().sub(a).normalize());
+    rod('cabin', V(.28, 1.19, 0), V(.16, 1.45, 0), .012, M.dark);
+    part('cabin', new THREE.SphereGeometry(.03, 12, 10), M.dark, V(.16, 1.46, 0));
+  })();
+
+  /* ---------- ДВИГАТЕЛЬ ---------- */
+  (() => {
+    box('engine', .62, .3, .28, M.engine, V(1.08, .81, 0));
+    box('engine', .6, .08, .24, M.head, V(1.08, 1.0, 0));
+    for (let i = 0; i < 8; i++) box('engine', .014, .035, .22, M.head, V(.84 + i * .068, 1.05, 0));
+    box('engine', .56, .08, .24, M.dark, V(1.08, .62, 0));
+    part('engine', new THREE.CylinderGeometry(.17, .17, .12, 28).rotateZ(PI / 2), M.engine, V(.72, .78, 0));
+    part('engine', new THREE.CylinderGeometry(.13, .13, .09, 28), M.dark, V(.93, 1.03, -.22));
+    part('engine', new THREE.CylinderGeometry(.05, .05, .14, 16), M.engine, V(.93, .93, -.22));
+    for (let i = 0; i < 4; i++) rod('engine', V(.86 + i * .15, 1.05, .1), V(1.0 + i * .02, 1.07, .2), .007, M.red);
+    part('engine', new THREE.CylinderGeometry(.045, .045, .16, 16), M.dark, V(1.25, .75, -.2));
+    rod('engine', V(.95, .72, -.17), V(.7, .45, -.3), .03, M.dark);
+    rod('engine', V(.7, .45, -.3), V(-1.95, .43, -.36), .03, M.dark);
+    part('engine', new THREE.CylinderGeometry(.075, .075, .55, 20).rotateZ(PI / 2), M.dark, V(-1.0, .43, -.36));
+  })();
+
+  /* ---------- ОХЛАЖДЕНИЕ ---------- */
+  let fan;
+  (() => {
+    box('cooling', .07, .44, .8, M.radiator, V(1.6, .84, 0));
+    for (let i = 0; i < 10; i++) box('cooling', .072, .006, .78, M.copper, V(1.6, .66 + i * .04, 0));
+    box('cooling', .09, .06, .5, M.copper, V(1.6, 1.08, 0));
+    part('cooling', new THREE.CylinderGeometry(.02, .02, .04, 12), M.chrome, V(1.6, 1.13, 0));
+    fan = new THREE.Group(); fan.position.set(1.49, .84, 0);
+    const hub = new THREE.Mesh(new THREE.CylinderGeometry(.035, .035, .05, 16).rotateZ(PI / 2), M.dark); fan.add(hub);
+    for (let i = 0; i < 4; i++) {
+      const bl = new THREE.Mesh(new THREE.BoxGeometry(.012, .19, .065), M.dark);
+      const piv = new THREE.Group(); piv.rotation.x = i * PI / 2; bl.position.y = .11; bl.rotation.y = .35; piv.add(bl); fan.add(piv);
+    }
+    addNode('cooling', fan);
+    rod('cooling', V(1.56, 1.02, .05), V(1.36, .99, .05), .025, M.dark);
+    rod('cooling', V(1.56, .68, .08), V(1.38, .72, .08), .025, M.dark);
+  })();
+
+  /* ---------- ЭЛЕКТРИКА ---------- */
+  (() => {
+    [1, -1].forEach(sd => {
+      const z = sd * .645;
+      part('electrics', new THREE.CylinderGeometry(.105, .11, .1, 28).rotateZ(PI / 2), M.paint, V(1.73, .88, z));
+      part('electrics', new THREE.TorusGeometry(.104, .014, 10, 32).rotateY(PI / 2), M.chrome, V(1.785, .88, z));
+      part('electrics', new THREE.SphereGeometry(.1, 24, 12, 0, PI * 2, 0, .55).rotateZ(-PI / 2), M.lens, V(1.705, .88, z));
+      box('electrics', .03, .08, .06, M.red, V(-1.9, .96, sd * .68));
+      part('electrics', new THREE.SphereGeometry(.03, 12, 10), M.lens, V(1.52, 1.0, sd * .72));
+    });
+    part('electrics', new THREE.CylinderGeometry(.07, .07, .22, 20).rotateZ(PI / 2), M.dark, V(1.3, .9, .28));
+    box('electrics', .26, .2, .17, M.dark, V(.8, .9, -.3));
+    [-.05, .05].forEach((dx, i) => part('electrics', new THREE.CylinderGeometry(.015, .015, .03, 10), i ? M.red : M.chrome, V(.8 + dx, 1.01, -.3)));
+  })();
+
+  /* ---------- РАМА И ПОДВЕСКА ---------- */
+  (() => {
+    [-.42, .42].forEach(z => box('suspension', 3.75, .13, .06, M.frame, V(-.1, .57, z)));
+    [1.72, .7, -.6, -1.85].forEach(x => box('suspension', .06, .1, .84, M.frame, V(x, .57, 0)));
+    [BASE, -BASE].forEach(x => [-.42, .42].forEach(z => {
+      for (let i = 0; i < 5; i++) {
+        const len = 1 - i * .15;
+        part('suspension', bend(new THREE.BoxGeometry(len, .016, .055, 16, 1, 1), .09), M.dark, V(x, .49 - i * .018, z));
+      }
+      [-.5, .5].forEach(dx => part('suspension', new THREE.CylinderGeometry(.026, .026, .07, 12).rotateX(PI / 2), M.frame, V(x + dx, .515, z)));
+      rod('suspension', V(x + .22, .44, z * 1.18), V(x + .3, .6, z * 1.18), .024, M.dark);
+    }));
+    rod('suspension', V(1.38, .42, -.62), V(1.38, .42, .62), .016, M.dark);
+  })();
+
+  /* ---------- ТРАНСМИССИЯ ---------- */
+  (() => {
+    box('transmission', .36, .22, .22, M.engine, V(.46, .66, 0));
+    box('transmission', .3, .24, .3, M.engine, V(.05, .5, .08));
+    rod('transmission', V(.2, .46, .12), V(1.08, .4, .1), .03, M.dark);
+    rod('transmission', V(-.1, .46, .12), V(-1.05, .4, .1), .03, M.dark);
+    [BASE, -BASE].forEach(x => {
+      rod('transmission', V(x, R, -.6), V(x, R, .6), .05, M.frame);
+      const d = part('transmission', new THREE.SphereGeometry(.15, 24, 16), M.frame, V(x, R, .1)); d.scale.set(1, .9, .8);
+    });
+  })();
+
+  /* ---------- КОЛЁСА И ТОРМОЗА ---------- */
+  const tireGeo = new THREE.CylinderGeometry(R - .005, R - .005, W - .1, 44).rotateX(PI / 2);
+  const wallGeo = new THREE.TorusGeometry(R - .06, .06, 14, 44);
+  const treadGeo = new THREE.BoxGeometry(.05, .034, W * .44);
+  function wheel(x, y, z, sd, brake) {
+    const g = new THREE.Group(); g.position.set(x, y, z);
+    g.add(new THREE.Mesh(tireGeo, M.rubber));
+    [-1, 1].forEach(s => { const t = new THREE.Mesh(wallGeo, M.rubber); t.position.z = s * (W / 2 - .06); g.add(t); });
+    const tread = new THREE.InstancedMesh(treadGeo, M.rubber, 52), dm = new THREE.Object3D();
+    for (let i = 0; i < 26; i++) [-1, 1].forEach((s, j) => {
+      const a = (i + j * .5) / 26 * PI * 2;
+      dm.position.set(Math.cos(a) * (R + .004), Math.sin(a) * (R + .004), s * W * .22);
+      dm.rotation.set(0, 0, a + PI / 2); dm.rotateY(s * .42); dm.updateMatrix();
+      tread.setMatrixAt(i * 2 + j, dm.matrix);
+    });
+    g.add(tread);
+    const rimM = new THREE.Mesh(new THREE.CylinderGeometry(R * .6, R * .6, W - .03, 30).rotateX(PI / 2), M.paint); g.add(rimM);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(R * .47, .014, 8, 36), M.dark); ring.position.z = sd * (W / 2 - .01); g.add(ring);
+    const cap = new THREE.Mesh(new THREE.CylinderGeometry(.085, .11, .07, 24).rotateX(PI / 2), M.chrome); cap.position.z = sd * (W / 2 + .01); g.add(cap);
+    for (let i = 0; i < 6; i++) {
+      const a = i / 6 * PI * 2, n = new THREE.Mesh(new THREE.CylinderGeometry(.014, .014, .03, 8).rotateX(PI / 2), M.chrome);
+      n.position.set(Math.cos(a) * .15, Math.sin(a) * .15, sd * (W / 2 - .005)); g.add(n);
+    }
+    addNode('wheels', g, V(0, 0, sd * .55));
+    if (brake) {
+      const bz = z - sd * (W / 2 + .05);
+      part('brakes', new THREE.CylinderGeometry(.21, .21, .1, 30).rotateX(PI / 2), M.frame, V(x, y, bz), null, V(0, 0, sd * .3));
+      part('brakes', new THREE.CylinderGeometry(.235, .235, .015, 30).rotateX(PI / 2), M.dark, V(x, y, bz - sd * .06), null, V(0, 0, sd * .3));
+    }
+  }
+  [[BASE, 1], [BASE, -1], [-BASE, 1], [-BASE, -1]].forEach(([x, sd]) => wheel(x, R, sd * TRACK, sd, true));
+  wheel(-.75, 1.0, -.97, -1, false);  // запасное колесо на левом борту
+
+  /* ---------- МЕТКИ ---------- */
+  const PINS = {
+    engine: V(1.1, 1.14, 0), cooling: V(1.72, .8, .2), transmission: V(-.1, .42, .5),
+    suspension: V(-.62, .5, .45), brakes: V(-BASE, R, .92), wheels: V(BASE, R, .92),
+    electrics: V(1.8, .88, .645), body: V(-.1, .9, .86), cabin: V(-.6, 1.95, 0)
+  };
+  const PIN_EX = { wheels: V(0, 0, .55), brakes: V(0, 0, .3) };
+  const pinEls = {};
+  Object.keys(PINS).forEach(k => {
+    const b = document.createElement('button');
+    b.className = 'pin'; b.dataset.cat = k;
+    b.innerHTML = `<span class="pin-dot">+</span><span class="pin-label">${CATS[k].name}</span>`;
+    b.addEventListener('click', () => selectCat(k));
+    b.addEventListener('mouseenter', () => { hover = k; });
+    b.addEventListener('mouseleave', () => { hover = null; });
+    pinsEl.appendChild(b); pinEls[k] = b;
+  });
+
+  /* ---------- КАМЕРА ---------- */
+  const controls = THREE.OrbitControls ? new THREE.OrbitControls(camera, renderer.domElement) : null;
+  const HOME = { pos: V(5.4, 2.5, 5.8), tgt: V(0, .85, 0) };
+  const VIEWS = {
+    engine: [V(4.2, 3.3, 3.4), V(.9, .9, 0)], cooling: [V(4.4, 1.5, 1.4), V(1.5, .85, 0)],
+    transmission: [V(1.2, .75, 4.4), V(0, .45, 0)], suspension: [V(-.2, .8, 3.8), V(-.7, .5, .3)],
+    brakes: [V(-1.4, .9, 3.4), V(-1.15, .42, .6)], wheels: [V(2.8, 1.1, 3.2), V(1.15, .45, .6)],
+    electrics: [V(4.2, 1.5, 2.8), V(1.6, .9, .3)], body: [V(1.8, 1.7, 5.6), V(-.1, .9, 0)],
+    cabin: [V(2.6, 3.6, 3.8), V(-.5, 1.5, 0)]
+  };
+  const distK = () => camera.aspect < .8 ? 2.1 : camera.aspect < 1.2 ? 1.25 : 1;
+  const scaled = (pos, tgt) => tgt.clone().add(pos.clone().sub(tgt).multiplyScalar(distK()));
+  camera.position.copy(scaled(HOME.pos, HOME.tgt));
+  if (controls) {
+    controls.target.copy(HOME.tgt);
+    Object.assign(controls, { enableDamping: true, dampingFactor: .08, enablePan: false, minDistance: 2.6, maxDistance: 14,
+      maxPolarAngle: PI / 2 - .04, autoRotate: true, autoRotateSpeed: .7, rotateSpeed: .7 });
+    controls.addEventListener('start', () => { tween = null; setSpin(false); });
+  } else camera.lookAt(HOME.tgt);
+
+  let tween = null;
+  function flyTo(pos, tgt, dur = 1.1) {
+    if (!controls) return;
+    tween = { p0: camera.position.clone(), t0: controls.target.clone(), p1: scaled(pos, tgt), t1: tgt.clone(), s: performance.now(), d: dur * 1000 };
+  }
+
+  /* ---------- СОСТОЯНИЕ ---------- */
+  let selected = null, hover = null, exploded = false, explodeK = 0, hoodOpen = false, hoodAuto = false, hoodK = 0, viewOff = 0, viewOffY = 0;
+  const toolBtn = n => document.querySelector(`[data-tool="${n}"]`);
+  function setSpin(on) { if (controls) controls.autoRotate = on; toolBtn('spin').classList.toggle('on', on); }
+  function setHood(on) { hoodOpen = on; toolBtn('hood').classList.toggle('on', on); }
+
+  onCatSelect = cat => {
+    selected = cat;
+    $('#top').classList.toggle('focus', !!cat);
+    if (cat) {
+      setSpin(false);
+      flyTo(VIEWS[cat][0], VIEWS[cat][1]);
+      if ((cat === 'engine' || cat === 'cooling') && !hoodOpen) { setHood(true); hoodAuto = true; }
+    } else {
+      if (hoodAuto) { setHood(false); hoodAuto = false; }
+      flyTo(HOME.pos, HOME.tgt);
+    }
+  };
+
+  $('#sceneTools').addEventListener('click', e => {
+    const t = e.target.closest('[data-tool]'), sw = e.target.closest('.swatch');
+    if (sw) {
+      document.querySelectorAll('.swatch').forEach(s => s.classList.toggle('on', s === sw));
+      const c = col(sw.dataset.color);
+      meshes.forEach(m => { if (m.userData.paint) m.material.color.copy(c); });
+      return;
+    }
+    if (!t) return;
+    const n = t.dataset.tool;
+    if (n === 'reset') { closePartDrawer(); setSpin(true); exploded = false; toolBtn('explode').classList.remove('on'); }
+    if (n === 'explode') { exploded = !exploded; t.classList.toggle('on', exploded); setSpin(false); if (!selected) flyTo(V(6.5, 3.6, 6.6), V(0, 1.2, 0)); }
+    if (n === 'hood') { setHood(!hoodOpen); hoodAuto = false; }
+    if (n === 'spin') setSpin(!(controls && controls.autoRotate));
+  });
+
+  /* ---------- ВЫБОР МЫШЬЮ ---------- */
+  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  function pickAt(cx, cy) {
+    const r = renderer.domElement.getBoundingClientRect();
+    ndc.set((cx - r.left) / r.width * 2 - 1, -(cy - r.top) / r.height * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const hit = ray.intersectObjects(meshes.filter(m => m.visible && m.userData.op > .5), false)[0];
+    return hit ? hit.object.userData.cat : null;
+  }
+  let down = null, lastMove = null;
+  renderer.domElement.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; });
+  renderer.domElement.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') lastMove = [e.clientX, e.clientY]; });
+  renderer.domElement.addEventListener('pointerleave', () => { lastMove = null; hover = null; });
+  renderer.domElement.addEventListener('pointerup', e => {
+    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
+    const c = pickAt(e.clientX, e.clientY);
+    if (c) selectCat(c);
+  });
+
+  /* ---------- РАЗМЕР ---------- */
+  function resize() {
+    const w = host.clientWidth, h = host.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(host); resize();
+
+  let visible = true;
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(host);
+
+  /* ---------- ЦИКЛ ---------- */
+  const brass = col(0xe3aa3e), tmp = V(0, 0, 0), clock = new THREE.Clock();
+  let frame = 0;
+  const ease = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+
+  function tick() {
+    requestAnimationFrame(tick);
+    if (!visible) { clock.getDelta(); return; }
+    const dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime, a = Math.min(1, dt * 6);
+    frame++;
+
+    // полёт камеры
+    if (tween) {
+      const k = Math.min(1, (performance.now() - tween.s) / tween.d), e = ease(k);
+      camera.position.lerpVectors(tween.p0, tween.p1, e); controls.target.lerpVectors(tween.t0, tween.t1, e);
+      if (k === 1) tween = null;
+    }
+    if (controls) controls.update();
+
+    // сдвиг кадра: на широком экране машина правее текста, при открытой панели — левее
+    const w = host.clientWidth, h = host.clientHeight, wide = w > 820;
+    const drawerOpen = $('#drawerPart').classList.contains('open');
+    const offT = wide ? (drawerOpen ? .1 : -.14) : 0;
+    viewOff += (offT - viewOff) * a;
+    viewOffY += ((!wide && drawerOpen ? .13 : 0) - viewOffY) * a;
+    camera.setViewOffset(w, h, viewOff * w, viewOffY * h, w, h);
+
+    // разборка и капот
+    explodeK += ((exploded ? 1 : 0) - explodeK) * Math.min(1, dt * 3.5);
+    const ek = ease(Math.max(0, Math.min(1, explodeK)));
+    nodes.forEach(n => n.obj.position.copy(n.base).addScaledVector(n.ex, ek));
+    hoodK += ((hoodOpen ? 1 : 0) - hoodK) * Math.min(1, dt * 4);
+    car.userData.hood.rotation.z = hoodK * .95;
+    fan.rotation.x += dt * (6 + hoodK * 10);
+
+    // подсветка и «рентген»
+    const hov = hover || null;
+    meshes.forEach(m => {
+      const c = m.userData.cat, isSel = c === selected;
+      const tOp = selected && !isSel ? .1 : 1;
+      m.userData.op += (tOp - m.userData.op) * a;
+      m.material.opacity = m.userData.baseOp * m.userData.op;
+      m.material.depthWrite = m.userData.op > .6 && m.userData.baseOp > .9;
+      m.castShadow = m.userData.op > .5;
+      m.visible = m.userData.op > .02;
+      if (m.userData.baseEm) {
+        const k = isSel ? .22 + .18 * Math.sin(t * 4) : (c === hov ? .3 : 0);
+        m.material.emissive.copy(m.userData.baseEm).lerp(brass, k);
+      }
+    });
+
+    // наведение мышью (раз в 3 кадра)
+    if (lastMove && frame % 3 === 0 && !tween) {
+      const c = pickAt(lastMove[0], lastMove[1]);
+      if (!pinEls[hover] || !pinEls[hover].matches(':hover')) hover = c;
+      renderer.domElement.style.cursor = c ? 'pointer' : '';
+    }
+
+    // позиции меток
+    const doOcc = frame % 8 === 0;
+    Object.entries(PINS).forEach(([k, p]) => {
+      tmp.copy(p).addScaledVector(PIN_EX[k] || EX[k], ek);
+      const world = tmp.clone();
+      tmp.project(camera);
+      const el = pinEls[k];
+      if (tmp.z > 1) { el.style.opacity = 0; return; }
+      el.style.opacity = '';
+      el.style.transform = `translate(${(tmp.x * .5 + .5) * w - 15}px, ${(-tmp.y * .5 + .5) * h - 15}px)`;
+      el.classList.toggle('hov', hover === k);
+      if (doOcc) {
+        const dir = world.clone().sub(camera.position), dist = dir.length();
+        ray.set(camera.position, dir.normalize());
+        const hit = ray.intersectObjects(meshes.filter(m => m.visible && m.userData.op > .5), false)[0];
+        el.classList.toggle('hidden', !!hit && hit.distance < dist - .12 && hit.object.userData.cat !== k && selected !== k || (!!selected && selected !== k));
+      }
+    });
+    pinsEl.classList.toggle('off', !!selected && window.innerWidth <= 820);
+
+    renderer.render(scene, camera);
+  }
+  tick();
+})();
+</script>
 </body>
 </html>
